@@ -17,7 +17,7 @@ public class WmController {
 	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String index(Model model) {
-		service.getAlerts(model);
+		service.index(model);
 		return "index";
 	}
 	

@@ -5,7 +5,6 @@ public class VEHICLE {
 	private String LICENSE;
 	private int IS_NOTIFIABLE;
 	private String MODEL;
-	private int COUNT_VISIT;
 	private String USER_NAME;
 	private String BIRTH;
 	private String PHONE_NUMBER;
@@ -33,12 +32,6 @@ public class VEHICLE {
 	}
 	public void setMODEL(String mODEL) {
 		MODEL = mODEL;
-	}
-	public int getCOUNT_VISIT() {
-		return COUNT_VISIT;
-	}
-	public void setCOUNT_VISIT(int cOUNT_VISIT) {
-		COUNT_VISIT = cOUNT_VISIT;
 	}
 	public String getUSER_NAME() {
 		return USER_NAME;

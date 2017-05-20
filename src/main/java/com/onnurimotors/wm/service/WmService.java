@@ -98,6 +98,10 @@ public class WmService {
         return msg;
 	}
 
+	public void index(Model model) {
+		getAlerts(model);
+	}
+
 	public void getAlerts(Model model) {
 		SqlSession session = sqlSession();
 		ArrayList<ALERT> alerts = new ArrayList<ALERT>();
@@ -133,5 +137,7 @@ public class WmService {
 			e.printStackTrace();
 		}
 		model.addAttribute("alerts", alerts);
+		
+		session.close();
 	}
 }
