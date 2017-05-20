@@ -3,7 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="watchman.mybatis">
-    <select id="selectTest" resultType="map">
-        SELECT * FROM EMPLOYEE
+    <select id="selectVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    	SELECT * FROM VEHICLE WHERE #{LICENSE} = "" OR LICENSE = #{LICENSE}
+    </select>
+    <insert id="insertVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" useGeneratedKeys="true" keyProperty="VEHICLE_ID">
+    	INSERT INTO VEHICLE(LICENSE, IS_NOTIFIABLE) VALUES(#{LICENSE}, #{IS_NOTIFIABLE})
+    </insert>
+    <insert id="insertHistory" parameterType="com.onnurimotors.wm.model.HISTORY">
+    	INSERT INTO HISTORY(VEHICLE_ID, DATE_VISIT, TIME_VISIT) VALUES(#{VEHICLE_ID}, #{DATE_VISIT}, #{TIME_VISIT})
+    </insert>
+    <select id="selectHistory" parameterType="com.onnurimotors.wm.model.HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT * FROM HISTORY WHERE #{HISTORY_ID} = -1 OR HISTORY_ID = #{HISTORY_ID}
+    </select>
+    <select id="selectHistoryVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE_HISTORY">
+    	SELECT V.*, H.* FROM VEHICLE V, HISTORY H WHERE V.VEHICLE_ID = H.VEHICLE_ID
+			AND (#{LICENSE} = "" OR V.LICENSE = #{LICENSE})
+		ORDER BY H.DATE_VISIT DESC, H.TIME_VISIT DESC
+    </select>
+    <select id="selectRecentHistoryVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE_HISTORY">
+    	SELECT V.*, H.* FROM VEHICLE V, HISTORY H WHERE V.VEHICLE_ID = H.VEHICLE_ID
+			AND date('now') = H.DATE_VISIT
+		ORDER BY H.DATE_VISIT DESC, H.TIME_VISIT DESC
+		LIMIT 5
     </select>
 </mapper>

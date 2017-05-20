@@ -1,4 +1,5 @@
-<%@ page contentType = "text/html;charset=utf-8" %>
+<%@ page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="kor"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js" lang="kor"> <!--<![endif]-->
@@ -164,7 +165,13 @@
 				                <span class="sidebar-header-title">활동</span>
 				            </div>
 				            <div class="sidebar-section sidebar-nav-mini-hide">
-				                <div class="alert alert-success alert-alt">
+				            	<c:forEach items="${alerts}" var="list_alerts">
+				            		<div class="alert alert-info alert-alt">
+				            			<small>${list_alerts.TIME_PASSED}</small>
+				            			<i class="fa fa-arrow-up fa-fw"></i> 차량입고 (${list_alerts.LICENSE})
+				            		</div>
+				            	</c:forEach>
+				                <!-- <div class="alert alert-success alert-alt">
 				                    <small>5분 전</small><br>
 				                    <i class="fa fa-thumbs-up fa-fw"></i> 새 차량입고 (30 고 3512)
 				                </div>
@@ -179,7 +186,7 @@
 				                <div class="alert alert-danger alert-alt">
 				                    <small>어제</small><br>
 				                    <i class="fa fa-bug fa-fw"></i> <a href="javascript:void(0)"><strong>New bug submitted</strong></a>
-				                </div>
+				                </div> -->
 				            </div>
 				            <!-- END Sidebar Notifications -->
 				        </div>
