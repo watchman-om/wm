@@ -1,5 +1,6 @@
 package com.onnurimotors.wm.controller;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +22,20 @@ public class WmController {
 		return "index";
 	}
 	
+	@RequestMapping(value="/list_vehicle", method = RequestMethod.GET)
+	public String list_vehicle(HttpServletRequest request, Model model) {
+		service.list_vehicle(request, model);
+		return "list_vehicle";
+	}
+	
 	@RequestMapping(value="/testPost", method = RequestMethod.GET)
 	public String testPost() {
 		return "exPost";
+	}
+	
+	@RequestMapping(value="/dbviewer", method = RequestMethod.GET)
+	public String dbviewer(Model model) {
+		service.dbviewer(model);
+		return "dbviewer";
 	}
 }

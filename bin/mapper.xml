@@ -26,4 +26,13 @@
 		ORDER BY H.DATE_VISIT DESC, H.TIME_VISIT DESC
 		LIMIT 5
     </select>
+    <select id="selectEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
+    	SELECT * FROM EMPLOYEE WHERE #{EMPLOYEE_ID} = -1 OR EMPLOYEE_ID = #{EMPLOYEE_ID}
+    </select>
+    <select id="selectVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT" resultType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    	SELECT * FROM VEHICLE_MANAGEMENT WHERE (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID}) AND (#{MANAGEMENT_ID} = -1 OR MANAGEMENT_ID = #{MANAGEMENT_ID})
+    </select>
+    <select id="selectManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT" resultType="com.onnurimotors.wm.model.MANAGEMENT">
+    	SELECT * FROM MANAGEMENT WHERE #{MANAGEMENT_ID} = -1 OR MANAGEMENT_ID = #{MANAGEMENT_ID}
+    </select>
 </mapper>

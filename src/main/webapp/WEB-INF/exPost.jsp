@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/vehicle" method="POST">
+<form action="/visit" method="POST">
 <input type="text" name="license" />
 <input type="submit" />
 </form>

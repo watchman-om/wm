@@ -45,6 +45,25 @@
 
         <!-- Modernizr (browser feature detection library) -->
         <script src="js/vendor/modernizr.min.js"></script>
+        <script src="js/ajax.js"></script>
+        <script>
+        	function refresh_alerts() {
+        		$("#alerts").empty();
+        		ajax_refresh_alerts(function(json) {
+        			var jsonObj = JSON.parse(JSON.stringify(json));
+        			var format = "";
+        			for(var i = 0, item; item = jsonObj[i]; i++) {
+        				item = JSON.parse(JSON.stringify(item));
+	            		format = format
+	            			+	"<div class='alert alert-info alert-alt'>"
+	            			+		"<small>"+item.time_PASSED+"</small>&nbsp;"
+	            			+		"<i class='fa fa-arrow-up fa-fw'></i> 차량입고 ("+item.license+")"
+	            			+	"</div>";
+        			}
+        			$("#alerts").append(format);
+        		});
+        	}
+        </script>
     </head>
     <body>
         <!-- Page Wrapper -->
@@ -106,7 +125,7 @@
 				        <!-- Sidebar Content -->
 				        <div class="sidebar-content">
 				            <!-- Brand -->
-				            <a href="index.html" class="sidebar-brand">
+				            <a href="index" class="sidebar-brand">
 				                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>온누리</strong>모터스</span>
 				            </a>
 				            <!-- END Brand -->
@@ -132,14 +151,14 @@
 				            <!-- Sidebar Navigation -->
 				            <ul class="sidebar-nav">
 				                <li>
-				                    <a href="index.html"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">메인</span></a>
+				                    <a href="index"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">메인</span></a>
 				                </li>
 				                <li class="sidebar-header">
 				                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a><a href="javascript:void(0)" data-toggle="tooltip" title="Create the most amazing pages with the widget kit!"><i class="gi gi-lightbulb"></i></a></span>
 				                    <span class="sidebar-header-title">관리</span>
 				                </li>
 				                <li>
-				                    <a href="page_tables_general.html"><i class="gi gi-charts sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">차량목록</span></a>
+				                    <a href="list_vehicle"><i class="gi gi-charts sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">차량목록</span></a>
 				                </li>
 				                <li>
 				                    <a href="page_visit_history.html"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">방문내역</span></a>
@@ -160,11 +179,11 @@
 				            <!-- Sidebar Notifications -->
 				            <div class="sidebar-header sidebar-nav-mini-hide">
 				                <span class="sidebar-header-options clearfix">
-				                    <a href="javascript:void(0)" data-toggle="tooltip" title="Refresh"><i class="gi gi-refresh"></i></a>
+				                    <a href="javascript:refresh_alerts()" data-toggle="tooltip" title="Refresh"><i class="gi gi-refresh"></i></a>
 				                </span>
 				                <span class="sidebar-header-title">활동</span>
 				            </div>
-				            <div class="sidebar-section sidebar-nav-mini-hide">
+				            <div id="alerts" class="sidebar-section sidebar-nav-mini-hide">
 				            	<c:forEach items="${alerts}" var="list_alerts">
 				            		<div class="alert alert-info alert-alt">
 				            			<small>${list_alerts.TIME_PASSED}</small>
@@ -810,7 +829,7 @@
 
                     <!-- Modal Body -->
                     <div class="modal-body">
-                        <form action="index.html" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" onsubmit="return false;">
+                        <form action="index" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" onsubmit="return false;">
                             <fieldset>
                                 <legend>Vital Info</legend>
                                 <div class="form-group">

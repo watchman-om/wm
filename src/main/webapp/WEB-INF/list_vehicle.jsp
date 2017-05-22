@@ -1,7 +1,9 @@
+<%@ page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10" lang="kor"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html class="no-js" lang="en">
+<html class="no-js" lang="kor">
 <!--<![endif]-->
 <head>
 <meta charset="utf-8">
@@ -113,7 +115,7 @@
 					<!-- Sidebar Content -->
 					<div class="sidebar-content">
 						<!-- Brand -->
-						<a href="index.html" class="sidebar-brand"> <i
+						<a href="index" class="sidebar-brand"> <i
 							class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Pro</strong>UI</span>
 						</a>
 						<!-- END Brand -->
@@ -126,7 +128,7 @@
 									src="img/placeholders/avatars/avatar2.jpg" alt="avatar">
 								</a>
 							</div>
-							<div class="sidebar-user-name">관리자</div>
+							<div class="sidebar-user-name">관리자</div>
 							<div class="sidebar-user-links">
 								<a href="page_car_profile.html" data-toggle="tooltip"
 									data-placement="bottom" title="Profile"><i
@@ -146,7 +148,7 @@
 
 						<!-- Sidebar Navigation -->
 						<ul class="sidebar-nav">
-							<li><a href="index.html"><i
+							<li><a href="index"><i
 									class="gi gi-stopwatch sidebar-nav-icon"></i><span
 									class="sidebar-nav-mini-hide">메인</span></a></li>
 							<li class="sidebar-header"><span
@@ -157,9 +159,9 @@
 									title="Create the most amazing pages with the widget kit!"><i
 										class="gi gi-lightbulb"></i></a></span> <span
 								class="sidebar-header-title">관리</span></li>
-							<li><a href="page_tables_general.html"><i
+							<li><a href="list_vehicle"><i
 									class="gi gi-charts sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">차량목록</span></a></li>
+									class="sidebar-nav-mini-hide">차량목록</span></a></li>
 							<li><a href="page_visit_history.html"><i
 									class="gi gi-share_alt sidebar-nav-icon"></i><span
 									class="sidebar-nav-mini-hide">방문내역</span></a></li>
@@ -170,10 +172,10 @@
 								class="sidebar-header-options clearfix"><a
 									href="javascript:void(0)" data-toggle="tooltip"
 									title="Quick Settings"><i class="gi gi-settings"></i></a></span> <span
-								class="sidebar-header-title">알림</span></li>
+								class="sidebar-header-title">수신자</span></li>
 							<li><a href="page_widgets_social.html"><i
 									class="gi gi-share_alt sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">수신자</span></a></li>
+									class="sidebar-nav-mini-hide">ìì ì</span></a></li>
 						</ul>
 						<!-- END Sidebar Navigation -->
 
@@ -182,24 +184,24 @@
 							<span class="sidebar-header-options clearfix"> <a
 								href="javascript:void(0)" data-toggle="tooltip" title="Refresh"><i
 									class="gi gi-refresh"></i></a>
-							</span> <span class="sidebar-header-title">활동</span>
+							</span> <span class="sidebar-header-title">íë</span>
 						</div>
 						<div class="sidebar-section sidebar-nav-mini-hide">
 							<div class="alert alert-success alert-alt">
-								<small>5분 전</small><br> <i class="fa fa-thumbs-up fa-fw"></i>
-								새 차량입고 (30 고 3512)
+								<small>5ë¶ ì </small><br> <i class="fa fa-thumbs-up fa-fw"></i>
+								ì ì°¨ëìê³  (30 ê³  3512)
 							</div>
 							<div class="alert alert-info alert-alt">
-								<small>10분 전</small><br> <i class="fa fa-arrow-up fa-fw"></i>
-								차량입고 (21 서 2017)
+								<small>10ë¶ ì </small><br> <i class="fa fa-arrow-up fa-fw"></i>
+								ì°¨ëìê³  (21 ì 2017)
 							</div>
 							<div class="alert alert-warning alert-alt">
-								<small>3시간전 </small><br> <i class="fa fa-exclamation fa-fw"></i>
+								<small>3ìê°ì  </small><br> <i class="fa fa-exclamation fa-fw"></i>
 								Running low on space<br>
 								<strong>18GB in use</strong> 2GB left
 							</div>
 							<div class="alert alert-danger alert-alt">
-								<small>어제</small><br> <i class="fa fa-bug fa-fw"></i> <a
+								<small>ì´ì </small><br> <i class="fa fa-bug fa-fw"></i> <a
 									href="javascript:void(0)"><strong>New bug
 										submitted</strong></a>
 							</div>
@@ -357,8 +359,8 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-table"></i>차량목록<br> <small>한번이라도
-									방문한 차량의 목록입니다.</small>
+								<i class="gi gi-table"></i>ì°¨ëëª©ë¡<br> <small>íë²ì´ë¼ë
+									ë°©ë¬¸í ì°¨ëì ëª©ë¡ìëë¤.</small>
 							</h1>
 						</div>
 					</div>
@@ -421,10 +423,10 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
-										<th>차량번호</th>
-										<th>차종</th>
-										<th>통보여부</th>
+										<th style="width: 150px;" class="text-center">ì¬ì§</th>
+										<th>ì°¨ëë²í¸</th>
+										<th>ì°¨ì¢</th>
+										<th>íµë³´ì¬ë¶</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
 									</tr>
 								</thead>
@@ -436,7 +438,7 @@
 											src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
 											class="img-circle"></td>
 										<td><a href="page_car_profile.html">client1</a></td>
-										<td>현대 카렌스</td>
+										<td>íë ì¹´ë ì¤</td>
 										<td><a href="javascript:void(0)"
 											class="label label-warning">Trial</a></td>
 										<td class="text-center">
@@ -456,7 +458,7 @@
 											src="img/placeholders/avatars/avatar11.jpg" alt="avatar"
 											class="img-circle"></td>
 										<td><a href="page_car_profile.html">client2</a></td>
-										<td>현대 그렌져</td>
+										<td>íë ê·¸ë ì ¸</td>
 										<td><a href="javascript:void(0)"
 											class="label label-success">VIP</a></td>
 										<td class="text-center">
@@ -476,7 +478,7 @@
 											src="img/placeholders/avatars/avatar2.jpg" alt="avatar"
 											class="img-circle"></td>
 										<td><a href="page_car_profile.html">client3</a></td>
-										<td>현대 소나타</td>
+										<td>íë ìëí</td>
 										<td><a href="javascript:void(0)" class="label label-info">Business</a></td>
 										<td class="text-center">
 											<div class="btn-group btn-group-xs">
@@ -515,7 +517,7 @@
 											src="img/placeholders/avatars/avatar3.jpg" alt="avatar"
 											class="img-circle"></td>
 										<td><a href="page_car_profile.html">client5</a></td>
-										<td>쉐보레 크루즈</td>
+										<td>ìë³´ë  í¬ë£¨ì¦</td>
 										<td><a href="javascript:void(0)"
 											class="label label-primary">Personal</a></td>
 										<td class="text-center">
@@ -535,7 +537,7 @@
 											src="img/placeholders/avatars/avatar9.jpg" alt="avatar"
 											class="img-circle"></td>
 										<td><a href="page_car_profile.html">client6</a></td>
-										<td>쉐보레 말리부</td>
+										<td>ìë³´ë  ë§ë¦¬ë¶</td>
 										<td><a href="javascript:void(0)" class="label label-info">Business</a></td>
 										<td class="text-center">
 											<div class="btn-group btn-group-xs">
@@ -644,7 +646,7 @@
 
 				<!-- Modal Body -->
 				<div class="modal-body">
-					<form action="index.html" method="post"
+					<form action="index" method="post"
 						enctype="multipart/form-data"
 						class="form-horizontal form-bordered" onsubmit="return false;">
 						<fieldset>

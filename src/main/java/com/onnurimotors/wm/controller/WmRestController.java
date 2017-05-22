@@ -27,8 +27,38 @@ public class WmRestController {
 	@Autowired
 	private WmService service;
 
-	@RequestMapping(value="/vehicle", method = RequestMethod.POST)
+	@RequestMapping(value="/visit", method = RequestMethod.POST)
 	public Object visit(HttpServletRequest request) {
 		return service.visit(request);
+	}
+	
+	@RequestMapping(value="/alerts", method = RequestMethod.POST)
+	public Object alerts() {
+		return service.getAlerts(null);
+	}
+	
+	@RequestMapping(value="/vehicle", method = RequestMethod.POST)
+	public Object vehicle(HttpServletRequest request) {
+		return service.getVehicle(request, null);
+	}
+	
+	@RequestMapping(value="/history", method = RequestMethod.POST)
+	public Object history(HttpServletRequest request) {
+		return service.getHistory(request, null);
+	}
+	
+	@RequestMapping(value="/employee", method = RequestMethod.POST)
+	public Object employee(HttpServletRequest request) {
+		return service.getEmployee(request, null);
+	}
+	
+	@RequestMapping(value="/vehicle_management", method = RequestMethod.POST)
+	public Object vehicle_management(HttpServletRequest request) {
+		return service.getVehicleManagement(request, null);
+	}
+	
+	@RequestMapping(value="/management", method = RequestMethod.POST)
+	public Object management(HttpServletRequest request) {
+		return service.getManagement(request, null);
 	}
 }
