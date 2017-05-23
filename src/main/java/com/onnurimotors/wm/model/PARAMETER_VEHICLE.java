@@ -1,6 +1,6 @@
 package com.onnurimotors.wm.model;
 
-public class VEHICLE {
+public class PARAMETER_VEHICLE {
 	private int VEHICLE_ID;
 	private String LICENSE;
 	private int IS_NOTIFIABLE;
@@ -9,6 +9,11 @@ public class VEHICLE {
 	private String BIRTH;
 	private String PHONE_NUMBER;
 	private String COMMENT;
+	
+	private int FROM_LIMIT;
+	private int NUM_LIMIT;
+	private String FROM_DATE;
+	private String TO_DATE;
 	
 	public int getVEHICLE_ID() {
 		return VEHICLE_ID;
@@ -57,5 +62,30 @@ public class VEHICLE {
 	}
 	public void setCOMMENT(String cOMMENT) {
 		COMMENT = cOMMENT;
+	}
+	
+	public int getFROM_LIMIT() {
+		return FROM_LIMIT;
+	}
+	public void setFROM_LIMIT(int fROM_LIMIT) {
+		FROM_LIMIT = fROM_LIMIT;
+	}
+	public int getNUM_LIMIT() {
+		return NUM_LIMIT;
+	}
+	public void setNUM_LIMIT(int nUM_LIMIT) {
+		NUM_LIMIT = nUM_LIMIT;
+	}
+	public String getFROM_DATE() {
+		return FROM_DATE;
+	}
+	public void setFROM_DATE(String fROM_DATE) {
+		FROM_DATE = fROM_DATE;
+	}
+	public String getTO_DATE() {
+		return TO_DATE;
+	}
+	public void setTO_DATE(String tO_DATE) {
+		TO_DATE = tO_DATE;
 	}
 }

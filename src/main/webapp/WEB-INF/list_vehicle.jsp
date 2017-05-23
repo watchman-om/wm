@@ -1,14 +1,13 @@
 <%@ page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="kor"> <![endif]-->
-<!--[if gt IE 9]><!-->
-<html class="no-js" lang="kor">
-<!--<![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="kor"> <!--<![endif]-->
 <head>
 <meta charset="utf-8">
 
-<title>ProUI - Responsive Bootstrap Admin Template</title>
+<title>온누리 모터스 - 방문차량 목록</title>
 
 <meta name="description"
 	content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
@@ -76,160 +75,12 @@
 		<!-- END Preloader -->
 
 		<!-- Page Container -->
-		<!-- In the PHP version you can set the following options from inc/config file -->
-		<!--
-                Available #page-container classes:
-
-                '' (None)                                       for a full main and alternative sidebar hidden by default (> 991px)
-
-                'sidebar-visible-lg'                            for a full main sidebar visible by default (> 991px)
-                'sidebar-partial'                               for a partial main sidebar which opens on mouse hover, hidden by default (> 991px)
-                'sidebar-partial sidebar-visible-lg'            for a partial main sidebar which opens on mouse hover, visible by default (> 991px)
-                'sidebar-mini sidebar-visible-lg-mini'          for a mini main sidebar with a flyout menu, enabled by default (> 991px + Best with static layout)
-                'sidebar-mini sidebar-visible-lg'               for a mini main sidebar with a flyout menu, disabled by default (> 991px + Best with static layout)
-
-                'sidebar-alt-visible-lg'                        for a full alternative sidebar visible by default (> 991px)
-                'sidebar-alt-partial'                           for a partial alternative sidebar which opens on mouse hover, hidden by default (> 991px)
-                'sidebar-alt-partial sidebar-alt-visible-lg'    for a partial alternative sidebar which opens on mouse hover, visible by default (> 991px)
-
-                'sidebar-partial sidebar-alt-partial'           for both sidebars partial which open on mouse hover, hidden by default (> 991px)
-
-                'sidebar-no-animations'                         add this as extra for disabling sidebar animations on large screens (> 991px) - Better performance with heavy pages!
-
-                'style-alt'                                     for an alternative main style (without it: the default style)
-                'footer-fixed'                                  for a fixed footer (without it: a static footer)
-
-                'disable-menu-autoscroll'                       add this to disable the main menu auto scrolling when opening a submenu
-
-                'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
-                'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
-
-                'enable-cookies'                                enables cookies for remembering active color theme when changed from the sidebar links
-            -->
 		<div id="page-container"
 			class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
-			<!-- Main Sidebar -->
-			<div id="sidebar">
-				<!-- Wrapper for scrolling functionality -->
-				<div id="sidebar-scroll">
-					<!-- Sidebar Content -->
-					<div class="sidebar-content">
-						<!-- Brand -->
-						<a href="index" class="sidebar-brand"> <i
-							class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Pro</strong>UI</span>
-						</a>
-						<!-- END Brand -->
-
-						<!-- User Info -->
-						<div
-							class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-							<div class="sidebar-user-avatar">
-								<a href="page_car_profile.html"> <img
-									src="img/placeholders/avatars/avatar2.jpg" alt="avatar">
-								</a>
-							</div>
-							<div class="sidebar-user-name">관리자</div>
-							<div class="sidebar-user-links">
-								<a href="page_car_profile.html" data-toggle="tooltip"
-									data-placement="bottom" title="Profile"><i
-									class="gi gi-user"></i></a> <a href="page_ready_inbox.html"
-									data-toggle="tooltip" data-placement="bottom" title="Messages"><i
-									class="gi gi-envelope"></i></a>
-								<!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-								<a href="javascript:void(0)" class="enable-tooltip"
-									data-placement="bottom" title="Settings"
-									onclick="$('#modal-user-settings').modal('show');"><i
-									class="gi gi-cogwheel"></i></a> <a href="login.html"
-									data-toggle="tooltip" data-placement="bottom" title="Logout"><i
-									class="gi gi-exit"></i></a>
-							</div>
-						</div>
-						<!-- END User Info -->
-
-						<!-- Sidebar Navigation -->
-						<ul class="sidebar-nav">
-							<li><a href="index"><i
-									class="gi gi-stopwatch sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">메인</span></a></li>
-							<li class="sidebar-header"><span
-								class="sidebar-header-options clearfix"><a
-									href="javascript:void(0)" data-toggle="tooltip"
-									title="Quick Settings"><i class="gi gi-settings"></i></a><a
-									href="javascript:void(0)" data-toggle="tooltip"
-									title="Create the most amazing pages with the widget kit!"><i
-										class="gi gi-lightbulb"></i></a></span> <span
-								class="sidebar-header-title">관리</span></li>
-							<li><a href="list_vehicle"><i
-									class="gi gi-charts sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">차량목록</span></a></li>
-							<li><a href="page_visit_history.html"><i
-									class="gi gi-share_alt sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">방문내역</span></a></li>
-							<li><a href="timeline.html"><i
-									class="gi gi-stopwatch sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">타임라인</span></a></li>
-							<li class="sidebar-header"><span
-								class="sidebar-header-options clearfix"><a
-									href="javascript:void(0)" data-toggle="tooltip"
-									title="Quick Settings"><i class="gi gi-settings"></i></a></span> <span
-								class="sidebar-header-title">수신자</span></li>
-							<li><a href="page_widgets_social.html"><i
-									class="gi gi-share_alt sidebar-nav-icon"></i><span
-									class="sidebar-nav-mini-hide">ìì ì</span></a></li>
-						</ul>
-						<!-- END Sidebar Navigation -->
-
-						<!-- Sidebar Notifications -->
-						<div class="sidebar-header sidebar-nav-mini-hide">
-							<span class="sidebar-header-options clearfix"> <a
-								href="javascript:void(0)" data-toggle="tooltip" title="Refresh"><i
-									class="gi gi-refresh"></i></a>
-							</span> <span class="sidebar-header-title">íë</span>
-						</div>
-						<div class="sidebar-section sidebar-nav-mini-hide">
-							<div class="alert alert-success alert-alt">
-								<small>5ë¶ ì </small><br> <i class="fa fa-thumbs-up fa-fw"></i>
-								ì ì°¨ëìê³  (30 ê³  3512)
-							</div>
-							<div class="alert alert-info alert-alt">
-								<small>10ë¶ ì </small><br> <i class="fa fa-arrow-up fa-fw"></i>
-								ì°¨ëìê³  (21 ì 2017)
-							</div>
-							<div class="alert alert-warning alert-alt">
-								<small>3ìê°ì  </small><br> <i class="fa fa-exclamation fa-fw"></i>
-								Running low on space<br>
-								<strong>18GB in use</strong> 2GB left
-							</div>
-							<div class="alert alert-danger alert-alt">
-								<small>ì´ì </small><br> <i class="fa fa-bug fa-fw"></i> <a
-									href="javascript:void(0)"><strong>New bug
-										submitted</strong></a>
-							</div>
-						</div>
-						<!-- END Sidebar Notifications -->
-					</div>
-					<!-- END Sidebar Content -->
-				</div>
-				<!-- END Wrapper for scrolling functionality -->
-			</div>
-			<!-- END Main Sidebar -->
+			<jsp:include page="sidebar.jsp"/>
 
 			<!-- Main Container -->
 			<div id="main-container">
-				<!-- Header -->
-				<!-- In the PHP version you can set the following options from inc/config file -->
-				<!--
-                        Available header.navbar classes:
-
-                        'navbar-default'            for the default light header
-                        'navbar-inverse'            for an alternative dark header
-
-                        'navbar-fixed-top'          for a top fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
-                            'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
-
-                        'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
-                            'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
-                    -->
 				<header class="navbar navbar-default">
 					<!-- Left Header Navigation -->
 					<ul class="nav navbar-nav-custom">
@@ -239,34 +90,6 @@
 								class="fa fa-bars fa-fw"></i>
 						</a></li>
 						<!-- END Main Sidebar Toggle Button -->
-
-						<!-- Template Options -->
-						<!-- Change Options functionality can be found in js/app.js - templateOptions() -->
-						<li class="dropdown"><a href="javascript:void(0)"
-							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="gi gi-settings"></i>
-						</a>
-							<ul class="dropdown-menu dropdown-custom dropdown-options">
-								<li class="dropdown-header text-center">Header Style</li>
-								<li>
-									<div class="btn-group btn-group-justified btn-group-sm">
-										<a href="javascript:void(0)" class="btn btn-primary"
-											id="options-header-default">Light</a> <a
-											href="javascript:void(0)" class="btn btn-primary"
-											id="options-header-inverse">Dark</a>
-									</div>
-								</li>
-								<li class="dropdown-header text-center">Page Style</li>
-								<li>
-									<div class="btn-group btn-group-justified btn-group-sm">
-										<a href="javascript:void(0)" class="btn btn-primary"
-											id="options-main-style">Default</a> <a
-											href="javascript:void(0)" class="btn btn-primary"
-											id="options-main-style-alt">Alternative</a>
-									</div>
-								</li>
-							</ul></li>
-						<!-- END Template Options -->
 					</ul>
 					<!-- END Left Header Navigation -->
 
@@ -279,77 +102,6 @@
 						</div>
 					</form>
 					<!-- END Search Form -->
-
-					<!-- Right Header Navigation -->
-					<ul class="nav navbar-nav-custom pull-right">
-						<!-- Alternative Sidebar Toggle Button -->
-						<li>
-							<!-- If you do not want the main sidebar to open when the alternative sidebar is closed, just remove the second parameter: App.sidebar('toggle-sidebar-alt'); -->
-							<a href="javascript:void(0)"
-							onclick="App.sidebar('toggle-sidebar-alt', 'toggle-other');this.blur();">
-								<i class="gi gi-share_alt"></i> <span
-								class="label label-primary label-indicator animation-floating">4</span>
-						</a>
-						</li>
-						<!-- END Alternative Sidebar Toggle Button -->
-
-						<!-- User Dropdown -->
-						<li class="dropdown"><a href="javascript:void(0)"
-							class="dropdown-toggle" data-toggle="dropdown"> <img
-								src="img/placeholders/avatars/avatar2.jpg" alt="avatar"> <i
-								class="fa fa-angle-down"></i>
-						</a>
-							<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-								<li class="dropdown-header text-center">Account</li>
-								<li><a href="page_ready_timeline.html"> <i
-										class="fa fa-clock-o fa-fw pull-right"></i> <span
-										class="badge pull-right">10</span> Updates
-								</a> <a href="page_ready_inbox.html"> <i
-										class="fa fa-envelope-o fa-fw pull-right"></i> <span
-										class="badge pull-right">5</span> Messages
-								</a> <a href="page_ready_pricing_tables.html"><i
-										class="fa fa-magnet fa-fw pull-right"></i> <span
-										class="badge pull-right">3</span> Subscriptions </a> <a
-									href="page_ready_faq.html"><i
-										class="fa fa-question fa-fw pull-right"></i> <span
-										class="badge pull-right">11</span> FAQ </a></li>
-								<li class="divider"></li>
-								<li><a href="page_car_profile.html"> <i
-										class="fa fa-user fa-fw pull-right"></i> Profile
-								</a> <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-									<a href="#modal-user-settings" data-toggle="modal"> <i
-										class="fa fa-cog fa-fw pull-right"></i> Settings
-								</a></li>
-								<li class="divider"></li>
-								<li><a href="page_ready_lock_screen.html"><i
-										class="fa fa-lock fa-fw pull-right"></i> Lock Account</a> <a
-									href="login.html"><i class="fa fa-ban fa-fw pull-right"></i>
-										Logout</a></li>
-								<li class="dropdown-header text-center">Activity</li>
-								<li>
-									<div class="alert alert-success alert-alt">
-										<small>5 min ago</small><br> <i
-											class="fa fa-thumbs-up fa-fw"></i> You had a new sale ($10)
-									</div>
-									<div class="alert alert-info alert-alt">
-										<small>10 min ago</small><br> <i
-											class="fa fa-arrow-up fa-fw"></i> Upgraded to Pro plan
-									</div>
-									<div class="alert alert-warning alert-alt">
-										<small>3 hours ago</small><br> <i
-											class="fa fa-exclamation fa-fw"></i> Running low on space<br>
-										<strong>18GB in use</strong> 2GB left
-									</div>
-									<div class="alert alert-danger alert-alt">
-										<small>Yesterday</small><br> <i class="fa fa-bug fa-fw"></i>
-										<a href="javascript:void(0)" class="alert-link">New bug
-											submitted</a>
-									</div>
-								</li>
-							</ul></li>
-						<!-- END User Dropdown -->
-					</ul>
-					<!-- END Right Header Navigation -->
 				</header>
 				<!-- END Header -->
 
@@ -359,13 +111,13 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-table"></i>ì°¨ëëª©ë¡<br> <small>íë²ì´ë¼ë
-									ë°©ë¬¸í ì°¨ëì ëª©ë¡ìëë¤.</small>
+								<i class="gi gi-table"></i>차량목록<br> 
+								<small>방문한 차량들의 목록을 확인할 수 있습니다.</small>
 							</h1>
 						</div>
 					</div>
 					<ul class="breadcrumb breadcrumb-top">
-						<li>Tables</li>
+						<li>차량목록</li>
 						<li><a href="">General</a></li>
 					</ul>
 					<!-- END Table Styles Header -->
@@ -386,9 +138,7 @@
 							<div class="btn-group btn-group-sm pull-right">
 								<a href="javascript:void(0)" class="btn btn-primary active"
 									id="style-striped" data-toggle="tooltip" title=".table-striped">Striped</a>
-								<a href="javascript:void(0)" class="btn btn-primary"
-									id="style-condensed" data-toggle="tooltip"
-									title=".table-condensed">Condensed</a> <a
+								<a
 									href="javascript:void(0)" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">Hover</a>
 							</div>
@@ -400,23 +150,10 @@
 								</label> <label id="style-bordered" class="btn btn-primary"
 									data-toggle="tooltip" title=".table-bordered"> <input
 									type="radio" name="style-options"> Bordered
-								</label> <label id="style-borderless" class="btn btn-primary"
-									data-toggle="tooltip" title=".table-borderless"> <input
-									type="radio" name="style-options"> Borderless
 								</label>
 							</div>
 						</div>
 						<div class="table-responsive">
-							<!--
-                                Available Table Classes:
-                                    'table'             - basic table
-                                    'table-bordered'    - table with full borders
-                                    'table-borderless'  - table with no borders
-                                    'table-striped'     - striped table
-                                    'table-condensed'   - table with smaller top and bottom cell padding
-                                    'table-hover'       - rows highlighted on mouse hover
-                                    'table-vcenter'     - middle align content vertically
-                                -->
 							<table id="general-table"
 								class="table table-striped table-vcenter">
 								<thead>

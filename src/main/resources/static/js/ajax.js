@@ -93,3 +93,35 @@ function ajax_get_management(callback) {
 	    }
 	});
 }
+
+function ajax_toggle_notifiable(vehicle_id, is_notifiable, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/toggle_notifiable",
+		data : {VEHICLE_ID: vehicle_id, IS_NOTIFIABLE: is_notifiable},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_update_vehicle_model(vehicle_id, model, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/update_vehicle_model",
+		data : {VEHICLE_ID: vehicle_id, MODEL: model},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
