@@ -290,6 +290,9 @@ public class WmService {
 	}
 
 	public void getManagementCondition(HttpServletRequest request, Model model) {
+		if(request != null && request.getParameter("is_new") != null && request.getParameter("is_new").equals("1")) {
+			return;
+		}
 		SqlSession session = sqlSession();
 		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
 		String vehicle_id = request.getParameter("vehicle_id");
