@@ -1,12 +1,13 @@
 package com.onnurimotors.wm.controller;
 
+import java.util.Map;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.onnurimotors.wm.service.WmService;
 
@@ -54,5 +55,10 @@ public class WmController {
 	public String dbviewer(Model model) {
 		service.dbViewer(model);
 		return "dbviewer";
+	}
+	@RequestMapping(value="/timeline", method = RequestMethod.GET)
+	public String timeline(HttpServletRequest request, Model model) {
+		service.listHistory(request, model);
+		return "timeline";
 	}
 }
