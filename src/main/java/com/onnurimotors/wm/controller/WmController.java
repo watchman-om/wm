@@ -24,8 +24,25 @@ public class WmController {
 	
 	@RequestMapping(value="/list_vehicle", method = RequestMethod.GET)
 	public String list_vehicle(HttpServletRequest request, Model model) {
-		service.list_vehicle(request, model);
+		service.listVehicle(request, model);
 		return "list_vehicle";
+	}
+	
+	@RequestMapping(value="/list_history", method = RequestMethod.GET)
+	public String list_history(HttpServletRequest request, Model model) {
+		service.listHistory(request, model);
+		return "list_history";
+	}
+	
+	@RequestMapping(value="/list_management", method = RequestMethod.GET)
+	public String list_management(HttpServletRequest request, Model model) {
+		service.listManagement(request, model);
+		return "list_management";
+	}
+	
+	@RequestMapping(value="/form_management", method = RequestMethod.GET)
+	public String form_management(HttpServletRequest request, Model model) {
+		return "form_management";
 	}
 	
 	@RequestMapping(value="/testPost", method = RequestMethod.GET)
@@ -35,7 +52,7 @@ public class WmController {
 	
 	@RequestMapping(value="/dbviewer", method = RequestMethod.GET)
 	public String dbviewer(Model model) {
-		service.dbviewer(model);
+		service.dbViewer(model);
 		return "dbviewer";
 	}
 }

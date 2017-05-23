@@ -61,4 +61,14 @@ public class WmRestController {
 	public Object management(HttpServletRequest request) {
 		return service.getManagement(request, null);
 	}
+	
+	@RequestMapping(value="/toggle_notifiable", method = RequestMethod.POST)
+	public Object toggle_notifiable(HttpServletRequest request) {
+		return service.toggleNotifiable(request);
+	}
+	
+	@RequestMapping(value="/update_vehicle_model", method = RequestMethod.POST)
+	public Object update_vehicle_model(HttpServletRequest request) {
+		return service.updateVehicleModel(request);
+	}
 }
