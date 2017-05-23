@@ -14,6 +14,7 @@ public class PARAMETER_VEHICLE {
 	private int NUM_LIMIT;
 	private String FROM_DATE;
 	private String TO_DATE;
+	private int MANAGEMENT_ID;
 	
 	public int getVEHICLE_ID() {
 		return VEHICLE_ID;
@@ -87,5 +88,11 @@ public class PARAMETER_VEHICLE {
 	}
 	public void setTO_DATE(String tO_DATE) {
 		TO_DATE = tO_DATE;
+	}
+	public int getMANAGEMENT_ID() {
+		return MANAGEMENT_ID;
+	}
+	public void setMANAGEMENT_ID(int mANAGEMENT_ID) {
+		MANAGEMENT_ID = mANAGEMENT_ID;
 	}
 }

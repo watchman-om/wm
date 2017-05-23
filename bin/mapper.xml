@@ -47,7 +47,8 @@
     </select>
     <select id="selectManagementOfVehicle" parameterType="com.onnurimotors.wm.model.PARAMETER_VEHICLE" resultType="com.onnurimotors.wm.model.MANAGEMENT">
     	SELECT M.* FROM MANAGEMENT M, VEHICLE_MANAGEMENT VM	WHERE M.MANAGEMENT_ID = VM.MANAGEMENT_ID
-    		AND VM.VEHICLE_ID = #{VEHICLE_ID}
+    		AND (#{VEHICLE_ID} = -1 OR VM.VEHICLE_ID = #{VEHICLE_ID})
+    		AND (#{MANAGEMENT_ID} = -1 OR VM.MANAGEMENT_ID = #{MANAGEMENT_ID})
     	ORDER BY M.MANAGEMENT_ID DESC
     	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
     </select>
@@ -57,4 +58,14 @@
     <update id="updateVehicleModel" parameterType="com.onnurimotors.wm.model.VEHICLE">
     	UPDATE VEHICLE SET MODEL = #{MODEL} WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
+    <insert id="insertManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT" useGeneratedKeys="true" keyProperty="MANAGEMENT_ID">
+    	INSERT INTO MANAGEMENT(DATE_MNG, COMMENT) VALUES(#{DATE_MNG}, #{COMMENT})
+    </insert>
+    <update id="updateManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT">
+    	UPDATE MANAGEMENT SET DATE_MNG = #{DATE_MNG}, COMMENT = #{COMMENT}
+    	WHERE MANAGEMENT_ID = #{MANAGEMENT_ID}
+    </update>
+    <insert id="insertVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    	INSERT INTO VEHICLE_MANAGEMENT(VEHICLE_ID, MANAGEMENT_ID) VALUES(#{VEHICLE_ID}, #{MANAGEMENT_ID})
+    </insert>
 </mapper>

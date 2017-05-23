@@ -7,26 +7,30 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<script src="js/vendor/jquery.min.js"></script>
+	<script src="js/ajax.js?ver=5"></script>
+	<script src="js/refinestring.js"></script>
 	<script>
 		function submit() {
-			if($("#is_new") == "1") {
-				form.management_form.action = "";
-			}
+			ajax_submit_management("${param.is_new}", "${param.vehicle_id}", "${param.management_id}", $("#date_mng").val(), refineContent($("#comment").val()), function(json) {
+				var jsonObj = JSON.parse(JSON.stringify(json));
+				history.back();
+			});
 		}
 	</script>
 </head>
 <body>
 	<div>
-		<form name="management_form" action="" method="POST">
-			점검날짜: <input type="text" id="date_mng" />
-			<br />
-			점검내용: <input type="text" id="comment" />
-			<br />
-			<a href="javascript:submit()">저장</a>
-			<a href="javascript:history.back()">취소</a>
-			<input type="hidden" id="is_new" value="${param.is_new}" />
-			<input type="hidden" id="vehicle_id" value="${param.vehicle_id}" />
-		</form>
+		점검날짜: <input type="text" id="date_mng" value="${managements[0].DATE_MNG}"/>
+		<br />
+		점검내용: <textarea id="comment"></textarea>
+		<br />
+		<a href="javascript:submit()">저장</a>
+		<a href="javascript:history.back()">취소</a>
 	</div>
+	<script>
+		$(function() {
+			$("#comment").val(refineContentRev("${managements[0].COMMENT}"));
+		});
+	</script>
 </body>
 </html>

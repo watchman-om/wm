@@ -83,14 +83,12 @@
 		<br />
 		<table>
 			<tr>
-				<td colspan="2"><a href="form_management?is_new=1&vehicle_id=${param.vehicle_id}">점검 추가</a></td>
+				<td colspan="4"><a href="form_management?is_new=1&vehicle_id=${param.vehicle_id}">점검 추가</a></td>
 			</tr>
 			<c:forEach items="${managements}" var="list">
-				<tr>
-					<td>${list.DATE_VISIT} ${list.TIME_VISIT}</td>
-					<td><a href="vehicle_detail?vehicle_id=${list.VEHICLE_ID}">${list.LICENSE}</a></td>
-				</tr>
-				<tr>
+				<tr onclick="location.href='form_management?is_new=0&mangement_id=${list.MANAGEMENT_ID}'">
+					<td>${list.DATE_MNG}</td>
+					<td>${param.vehicle_id}</td>
 					<td>메모</td>
 					<td>${list.COMMENT}</td>
 				</tr>

@@ -42,6 +42,7 @@ public class WmController {
 	
 	@RequestMapping(value="/form_management", method = RequestMethod.GET)
 	public String form_management(HttpServletRequest request, Model model) {
+		service.getManagementCondition(request, model);
 		return "form_management";
 	}
 	
