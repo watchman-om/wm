@@ -290,11 +290,25 @@ public class WmService {
 	}
 
 	public void getManagementCondition(HttpServletRequest request, Model model) {
+		if(request != null && request.getParameter("is_new") != null && request.getParameter("is_new").equals("1")) {
+			return;
+		}
 		SqlSession session = sqlSession();
 		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
+		String vehicle_id = request.getParameter("vehicle_id");
+		String management_id = request.getParameter("management_id");
 		String flimit = request.getParameter("flimit");
 		String nlimit = request.getParameter("nlimit");
-		parameter_vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("vehicle_id")));
+		if(vehicle_id != null && !vehicle_id.equals("")) {
+			parameter_vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
+		} else {
+			parameter_vehicle.setVEHICLE_ID(-1);
+		}
+		if(management_id != null && !management_id.equals("")) {
+			parameter_vehicle.setMANAGEMENT_ID(Integer.parseInt(management_id));
+		} else {
+			parameter_vehicle.setMANAGEMENT_ID(-1);
+		}
 		if(flimit != null && !flimit.equals("")) {
 			parameter_vehicle.setFROM_LIMIT(Integer.parseInt(flimit));
 		} else {
@@ -346,7 +360,30 @@ public class WmService {
 		session.commit();
 		
 		session.close();
-		
+
 		return vehicle;
+	}
+	
+	public Object submitManagement(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		MANAGEMENT management = new MANAGEMENT();
+		management.setDATE_MNG(request.getParameter("DATE_MNG"));
+		management.setCOMMENT(request.getParameter("COMMENT"));
+		if(request.getParameter("IS_NEW").equals("1")) {
+			VEHICLE_MANAGEMENT vm = new VEHICLE_MANAGEMENT();
+			session.insert("watchman.mybatis.insertManagement", management);
+			session.commit();
+			vm.setMANAGEMENT_ID(management.getMANAGEMENT_ID());
+			vm.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+			session.insert("watchman.mybatis.insertVehicleManagement", vm);
+			session.commit();
+		} else {
+			management.setMANAGEMENT_ID(Integer.parseInt(request.getParameter("MANAGEMENT_ID")));
+			session.update("watchman.mybatis.updateManagement", management);
+			session.commit();
+		}
+		session.close();
+		
+		return management;
 	}
 }

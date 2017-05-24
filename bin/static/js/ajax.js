@@ -125,3 +125,19 @@ function ajax_update_vehicle_model(vehicle_id, model, callback) {
 	    }
 	});
 }
+
+function ajax_submit_management(is_new, vehicle_id, management_id, date_mng, comment, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/submit_management",
+		data : {IS_NEW: is_new, VEHICLE_ID: vehicle_id, MANAGEMENT_ID: management_id, DATE_MNG: date_mng, COMMENT: comment},
+		dataType : "json",
+		async: true,
+		success: function(json) {
+			callback(json);
+		},
+		error: function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}
