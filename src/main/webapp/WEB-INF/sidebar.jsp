@@ -27,30 +27,27 @@
 	            <!-- Sidebar Navigation -->
 	            <ul class="sidebar-nav">
 	                <li>
-	                    <a href="index"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">메인</span></a>
+	                    <a href="/index"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">메인</span></a>
 	                </li>
 	                <li class="sidebar-header">
 	                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a><a href="javascript:void(0)" data-toggle="tooltip" title="Create the most amazing pages with the widget kit!"><i class="gi gi-lightbulb"></i></a></span>
 	                    <span class="sidebar-header-title">관리</span>
 	                </li>
 	                <li>
-	                    <a href="list_vehicle"><i class="gi gi-charts sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">차량목록</span></a>
+	                    <a href="/list_vehicle"><i class="gi gi-charts sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">차량목록</span></a>
 	                </li>
 	                <li>
-	                    <a href="list_history"><i class="gi gi-charts sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">히스토리</span></a>
+	                    <a href="/list_history"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">방문내역</span></a>
 	                </li>
 	                <li>
-	                    <a href="page_visit_history"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">방문내역</span></a>
-	                </li>
-	                <li>
-	                    <a href="timeline"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">타임라인</span></a>
+	                    <a href="/timeline"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">타임라인</span></a>
 	                </li>
 	                <li class="sidebar-header">
 	                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
 	                    <span class="sidebar-header-title">알림</span>
 	                </li>
 	                <li>
-	                    <a href="page_widgets_social.html"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">수신자</span></a>
+	                    <a href="/receivers"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">수신자</span></a>
 	                </li>
 	            </ul>
 	            <!-- END Sidebar Navigation -->

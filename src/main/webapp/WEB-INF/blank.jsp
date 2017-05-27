@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="kor"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js" lang="kor"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-
-	<title>온누리 모터스 - 방문차량 관리 시스템</title>
+	<head>
+		<meta charset="utf-8">
+	
+		<title>온누리 모터스 - 방문차량 관리 시스템</title>
 
         <meta name="description" content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
         <meta name="author" content="pixelcave">
@@ -17,64 +17,35 @@
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="img/favicon.png">
-        <link rel="apple-touch-icon" href="img/icon57.png" sizes="57x57">
-        <link rel="apple-touch-icon" href="img/icon72.png" sizes="72x72">
-        <link rel="apple-touch-icon" href="img/icon76.png" sizes="76x76">
-        <link rel="apple-touch-icon" href="img/icon114.png" sizes="114x114">
-        <link rel="apple-touch-icon" href="img/icon120.png" sizes="120x120">
-        <link rel="apple-touch-icon" href="img/icon144.png" sizes="144x144">
-        <link rel="apple-touch-icon" href="img/icon152.png" sizes="152x152">
-        <link rel="apple-touch-icon" href="img/icon180.png" sizes="180x180">
+        <link rel="shortcut icon" href="<c:url value='/'/>img/favicon.png">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon57.png" sizes="57x57">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon72.png" sizes="72x72">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon76.png" sizes="76x76">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon114.png" sizes="114x114">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon120.png" sizes="120x120">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon144.png" sizes="144x144">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon152.png" sizes="152x152">
+        <link rel="apple-touch-icon" href="<c:url value='/'/>img/icon180.png" sizes="180x180">
         <!-- END Icons -->
 
         <!-- Stylesheets -->
         <!-- Bootstrap is included in its original form, unaltered -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="<c:url value='/'/>css/bootstrap.min.css">
 
         <!-- Related styles of various icon packs and plugins -->
-        <link rel="stylesheet" href="css/plugins.css">
+        <link rel="stylesheet" href="<c:url value='/'/>css/plugins.css">
 
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="<c:url value='/'/>css/main.css">
 
         <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
 
         <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
-        <link rel="stylesheet" href="css/themes.css">
+        <link rel="stylesheet" href="<c:url value='/'/>css/themes.css">
         <!-- END Stylesheets -->
 
         <!-- Modernizr (browser feature detection library) -->
-        <script src="js/vendor/modernizr.min.js"></script>
-		<script src="js/ajax.js?ver=5"></script>
-        <script>
-			function edit_model() {
-				if($("#btn_edit_model").html() == "수정") {
-					$("#btn_edit_model").html("적용");
-					$("#model").css("display", "none");
-					$("#input_model").css("display", "");
-					$("#input_model").val($("#model").html());
-				} else {
-					ajax_update_vehicle_model("${param.vehicle_id}", $("#input_model").val(), function(json) {
-						var jsonObj = JSON.parse(JSON.stringify(json));
-						$("#btn_edit_model").html("수정");
-						$("#model").css("display", "");
-						$("#input_model").css("display", "none");
-						$("#model").html(jsonObj.model);
-					});
-				}
-			}
-			function toggle_notifiable() {
-				ajax_toggle_notifiable("${param.vehicle_id}", $("#is_notifiable").html(), function(json) {
-					var jsonObj = JSON.parse(JSON.stringify(json));
-					if(jsonObj.is_NOTIFIABLE == "1") {
-						$("#is_notifiable").html("on");
-					} else {
-						$("#is_notifiable").html("off");
-					}
-				});
-			}
-		</script>
+        <script src="<c:url value='/'/>js/vendor/modernizr.min.js"></script>
     </head>
     <body>
         <!-- Page Wrapper -->
@@ -131,14 +102,13 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>차량관리<br><small>차량을 관리하세요</small>
+                                    <i class="gi gi-brush"></i>Page Title<br><small>Subtitle</small>
                                 </h1>
                             </div>
                         </div>
                         <ul class="breadcrumb breadcrumb-top">
-                        	<li><a href="list_history">방문내역 목록</a></li>
-                            <li>차량관리</li>
-                            
+                            <li>Category</li>
+                            <li><a href="">Page</a></li>
                         </ul>
                         <!-- END Page Header -->
 
@@ -147,58 +117,27 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
+                                    <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="Settings"><i class="fa fa-cog"></i></a>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default dropdown-toggle enable-tooltip" data-toggle="dropdown" title="Options"><span class="caret"></span></a>
+                                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                            <li>
+                                                <a href="javascript:void(0)"><i class="gi gi-cloud pull-right"></i>Simple Action</a>
+                                                <a href="javascript:void(0)"><i class="gi gi-airplane pull-right"></i>Another Action</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="javascript:void(0)"><i class="fa fa-wrench fa-fw pull-right"></i>Separated Action</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <h2>차량관리</h2>
+                                <h2>Block</h2>
                             </div>
                             <!-- END Example Title -->
 
                             <!-- Example Content -->
-                            <table class="table table-striped table-vcenter">
-								<tr>
-									<td>차량번호</td>
-									<td>${vehicles[0].LICENSE}</td>
-									<td>모델</td>
-									<td>
-										<span id="model">${vehicles[0].MODEL}</span>
-										<input id="input_model" type="text" style="display:none" />
-										<a href="javascript:edit_model()"><span id="btn_edit_model">수정</span></a>
-									</td>
-									<td>알림 on/off</td>
-									<td>
-										<a href="javascript:toggle_notifiable()"><span id="is_notifiable"><c:choose><c:when test="${vehicles[0].IS_NOTIFIABLE eq 0}">off</c:when><c:otherwise>on</c:otherwise></c:choose></span></a>
-									</td>
-								</tr>
-								<tr>
-									<td>고객명</td>
-									<td>${vehicles[0].USER_NAME}</td>
-									<td>연락처</td>
-									<td>${vehicles[0].PHONE_NUMBER}</td>
-									<td>생년월일</td>
-									<td>${vehicles[0].BIRTH}</td>
-								</tr>
-								<tr>
-									<td colspan="6">${vehicles[0].COMMENT}</td>
-								</tr>
-							</table>
-						</div>
-						<div class="block">
-                            <!-- Example Title -->
-                            <div class="block-title">
-                                <div class="block-options pull-right">
-                                	<a href="vehicle_detail?vehicle_id=${vehicles[0].VEHICLE_ID}" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="점검 추가" ><i class="fa fa-plus"></i></a>
-                                </div>
-                                <h2>차량 점검 내역</h2>
-                            </div>
-							<table class="table table-striped table-vcenter">
-								<c:forEach items="${managements}" var="list">
-									<tr onclick="location.href='form_management?is_new=0&mangement_id=${list.MANAGEMENT_ID}'">
-										<td>${list.DATE_MNG}</td>
-										<td>${param.vehicle_id}</td>
-										<td>메모</td>
-										<td>${list.COMMENT}</td>
-									</tr>
-								</c:forEach>
-							</table>
+                            <p>...</p>
                             <!-- END Example Content -->
                         </div>
                         <!-- END Example Block -->
@@ -226,9 +165,9 @@
         <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 
         <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
-        <script src="js/vendor/jquery.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/app.js"></script>
+        <script src="<c:url value='/'/>js/vendor/jquery.min.js"></script>
+        <script src="<c:url value='/'/>js/vendor/bootstrap.min.js"></script>
+        <script src="<c:url value='/'/>js/plugins.js"></script>
+        <script src="<c:url value='/'/>js/app.js"></script>
     </body>
 </html>

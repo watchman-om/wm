@@ -71,9 +71,4 @@ public class WmRestController {
 	public Object update_vehicle_model(HttpServletRequest request) {
 		return service.updateVehicleModel(request);
 	}
-	
-	@RequestMapping(value="/submit_management", method = RequestMethod.POST)
-	public Object submit_management(HttpServletRequest request) {
-		return service.submitManagement(request);
-	}
 }

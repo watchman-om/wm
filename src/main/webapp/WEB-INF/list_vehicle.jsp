@@ -51,12 +51,6 @@
 </head>
 <body>
 	<!-- Page Wrapper -->
-	<!-- In the PHP version you can set the following options from inc/config file -->
-	<!--
-            Available classes:
-
-            'page-loading'      enables page preloader
-        -->
 	<div id="page-wrapper">
 		<!-- Preloader -->
 		<!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
@@ -127,7 +121,7 @@
 						<!-- Table Styles Title -->
 						<div class="block-title">
 							<h2>
-								<strong>Table</strong> Styles
+								<strong>차량</strong> 목록
 							</h2>
 						</div>
 						<!-- END Table Styles Title -->
@@ -136,179 +130,53 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="javascript:void(0)" class="btn btn-primary active"
-									id="style-striped" data-toggle="tooltip" title=".table-striped">Striped</a>
-								<a
-									href="javascript:void(0)" class="btn btn-primary"
-									id="style-hover" data-toggle="tooltip" title=".table-hover">Hover</a>
+								<a href="javascript:void(0)" class="btn btn-primary"
+									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 추가</a>
 							</div>
-							<div class="btn-group btn-group-sm pull-left"
-								data-toggle="buttons">
-								<label id="style-default" class="btn btn-primary active"
-									data-toggle="tooltip" title=".table"> <input
-									type="radio" name="style-options"> Default
-								</label> <label id="style-bordered" class="btn btn-primary"
-									data-toggle="tooltip" title=".table-bordered"> <input
-									type="radio" name="style-options"> Bordered
-								</label>
+							<div class="btn-group btn-group-sm pull-left">
+								<a href="javascript:void(0)" class="btn btn-primary"
+									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 삭제</a>
 							</div>
 						</div>
 						<div class="table-responsive">
-							<table id="general-table"
-								class="table table-striped table-vcenter">
+							<table id="general-table" class="table table-striped table-vcenter">
 								<thead>
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">ì¬ì§</th>
-										<th>ì°¨ëë²í¸</th>
-										<th>ì°¨ì¢</th>
-										<th>íµë³´ì¬ë¶</th>
+										<th style="width: 150px;" class="text-center">사진</th>
+										<th>차량번호</th>
+										<th>차종</th>
+										<th>소유주</th>
+										<th>상태</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-1" name="checkbox1-1"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client1</a></td>
-										<td>íë ì¹´ë ì¤</td>
-										<td><a href="javascript:void(0)"
-											class="label label-warning">Trial</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-2" name="checkbox1-2"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar11.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client2</a></td>
-										<td>íë ê·¸ë ì ¸</td>
-										<td><a href="javascript:void(0)"
-											class="label label-success">VIP</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-3" name="checkbox1-3"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar2.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client3</a></td>
-										<td>íë ìëí</td>
-										<td><a href="javascript:void(0)" class="label label-info">Business</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-4" name="checkbox1-4"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar8.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client4</a></td>
-										<td>BMW 720</td>
-										<td><a href="javascript:void(0)"
-											class="label label-success">VIP</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-5" name="checkbox1-5"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar3.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client5</a></td>
-										<td>ìë³´ë  í¬ë£¨ì¦</td>
-										<td><a href="javascript:void(0)"
-											class="label label-primary">Personal</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-6" name="checkbox1-6"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar9.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client6</a></td>
-										<td>ìë³´ë  ë§ë¦¬ë¶</td>
-										<td><a href="javascript:void(0)" class="label label-info">Business</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-7" name="checkbox1-7"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="page_car_profile.html">client7</a></td>
-										<td><a href="javascript:void(0)"
-											class="label label-primary">Personal</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
+									<c:forEach items="${vehicles}" var="vehicle">
+										<tr>
+											<td class="text-center"><input type="checkbox" id="checkbox1-1" name="checkbox1-1"></td>
+											<td class="text-center"><img
+												src="img/placeholders/avatars/avatar1.jpg" alt="avatar"class="img-circle"></td>
+											<td><a href="list_management?vehicle_id=${vehicle.VEHICLE_ID}">${vehicle.LICENSE}</a></td>
+											<td>${vehicle.MODEL}</td>
+											<td>${vehicle.USER_NAME}</td>
+											<td><a href="javascript:void(0)" class="label label-warning">Trial</a></td>
+											<td class="text-center">
+												<div class="btn-group btn-group-xs">
+													<a href="javascript:void(0)" data-toggle="tooltip"
+														title="Edit" class="btn btn-default"><i
+														class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
+														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
+														class="fa fa-times"></i></a>
+												</div>
+											</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="6">
+										<td colspan="7">
 											<div class="btn-group btn-group-sm pull-right">
 												<a href="javascript:void(0)" class="btn btn-primary"
 													data-toggle="tooltip" title="Settings"><i
@@ -367,89 +235,6 @@
 
 	<!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
 	<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
-
-	<!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
-	<div id="modal-user-settings" class="modal fade" tabindex="-1"
-		role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header text-center">
-					<h2 class="modal-title">
-						<i class="fa fa-pencil"></i> Settings
-					</h2>
-				</div>
-				<!-- END Modal Header -->
-
-				<!-- Modal Body -->
-				<div class="modal-body">
-					<form action="index" method="post"
-						enctype="multipart/form-data"
-						class="form-horizontal form-bordered" onsubmit="return false;">
-						<fieldset>
-							<legend>Vital Info</legend>
-							<div class="form-group">
-								<label class="col-md-4 control-label">Username</label>
-								<div class="col-md-8">
-									<p class="form-control-static">Admin</p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="user-settings-email">Email</label>
-								<div class="col-md-8">
-									<input type="email" id="user-settings-email"
-										name="user-settings-email" class="form-control"
-										value="admin@example.com">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-notifications">Email Notifications</label>
-								<div class="col-md-8">
-									<label class="switch switch-primary"> <input
-										type="checkbox" id="user-settings-notifications"
-										name="user-settings-notifications" value="1" checked>
-										<span></span>
-									</label>
-								</div>
-							</div>
-						</fieldset>
-						<fieldset>
-							<legend>Password Update</legend>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-password">New Password</label>
-								<div class="col-md-8">
-									<input type="password" id="user-settings-password"
-										name="user-settings-password" class="form-control"
-										placeholder="Please choose a complex one..">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-repassword">Confirm New Password</label>
-								<div class="col-md-8">
-									<input type="password" id="user-settings-repassword"
-										name="user-settings-repassword" class="form-control"
-										placeholder="..and confirm it!">
-								</div>
-							</div>
-						</fieldset>
-						<div class="form-group form-actions">
-							<div class="col-xs-12 text-right">
-								<button type="button" class="btn btn-sm btn-default"
-									data-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-sm btn-primary">Save
-									Changes</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<!-- END Modal Body -->
-			</div>
-		</div>
-	</div>
-	<!-- END User Settings -->
 
 	<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
 	<script src="js/vendor/jquery.min.js"></script>
