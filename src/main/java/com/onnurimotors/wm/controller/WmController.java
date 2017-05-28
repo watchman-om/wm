@@ -82,7 +82,7 @@ public class WmController {
             for (int i = 0; i < 500; i++) {
                 try {
                     emitter.send(service.getVehicle(request, null));
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (Exception e) {
                     e.printStackTrace();
                     emitter.completeWithError(e);

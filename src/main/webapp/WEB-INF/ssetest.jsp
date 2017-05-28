@@ -1,5 +1,13 @@
 <html>
-<head></head>
+<head>
+	<style>
+		span {
+			display: inline-block;
+			width: 100px;
+			padding: 5px;
+		}
+	</style>
+</head>
 <body>
 <div id="vehicle_list"></div>
     <script src="js/vendor/jquery.min.js"></script>
@@ -8,6 +16,7 @@
 		var msg;
 		var format;
 		var columnsIn;
+		var value;
 		if(typeof(EventSource) !== "undefined") {
 		    var source = new EventSource("/sseTest");
 		    source.onmessage = function(event) {
@@ -19,7 +28,10 @@
 		    			vehicle_id = item.vehicle_ID;
 			    		format = format + "<div id='vehicle"+item.vehicle_ID+"'>";
 						for(var key in item) {
-							format = format + "<span class='"+key.toUpperCase()+"'>"+item[key]+"</span>";
+							value = item[key];
+							if(value == null)
+								value = "";
+							format = format + "<span class='"+key.toUpperCase()+"'>"+value+"</span>";
 						}
 			    		format = format + "</div>";
 		    		}
