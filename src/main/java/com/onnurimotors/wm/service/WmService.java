@@ -386,4 +386,16 @@ public class WmService {
 		
 		return management;
 	}
+
+	public Object getOneVehicle(int vehicle_id) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		vehicle.setVEHICLE_ID(vehicle_id);
+		vehicle.setLICENSE("");
+		vehicle = (VEHICLE) session.selectOne("watchman.mybatis.selectVehicle", vehicle);
+		
+		session.close();
+		
+		return vehicle;
+	}
 }

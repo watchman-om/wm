@@ -17,7 +17,7 @@
 		}
 	</style>
 	<script src="js/vendor/jquery.min.js"></script>
-	<script src="js/ajax.js?ver=4"></script>
+	<script src="js/ajax.js?ver=6"></script>
 	<script src="js/json-to-table.js"></script>
 	<script>
 		function jsonToTable(title, results) {

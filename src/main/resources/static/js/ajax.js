@@ -16,7 +16,7 @@ function ajax_refresh_alerts(callback) {
 
 function ajax_get_vehicle(callback) {
 	$.ajax({
-		type:"POST",
+		type:"GET",
 		url:"/vehicle",
 		data : {},
 		dataType : "json",

@@ -13,12 +13,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.service.WmService;
 
 @RestController
@@ -37,9 +39,29 @@ public class WmRestController {
 		return service.getAlerts(null);
 	}
 	
-	@RequestMapping(value="/vehicle", method = RequestMethod.POST)
-	public Object vehicle(HttpServletRequest request) {
+	@RequestMapping(value="/vehicle", method = RequestMethod.GET)
+	public Object vehicle_get(HttpServletRequest request) {
 		return service.getVehicle(request, null);
+	}
+	
+	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.GET)
+	public Object vehicle_get_one(@PathVariable int vehicle_id) {
+		return service.getOneVehicle(vehicle_id);
+	}
+	
+	@RequestMapping(value="/vehicle", method = RequestMethod.POST)
+	public Object vehicle_post(HttpServletRequest request, @RequestBody VEHICLE vehicle) {
+		return null;
+	}
+	
+	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.PUT)
+	public Object vehicle_put(HttpServletRequest request, @RequestBody VEHICLE vehicle, @PathVariable int vehicle_id) {
+		return null;
+	}
+	
+	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.DELETE)
+	public Object vehicle_delete(HttpServletRequest request, @PathVariable int vehicle_id) {
+		return null;
 	}
 	
 	@RequestMapping(value="/history", method = RequestMethod.POST)

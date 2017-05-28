@@ -7,6 +7,7 @@
     	SELECT * FROM VEHICLE
     	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
     		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
+    	ORDER BY VEHICLE_ID
     </select>
     <insert id="insertVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" useGeneratedKeys="true" keyProperty="VEHICLE_ID">
     	INSERT INTO VEHICLE(LICENSE, IS_NOTIFIABLE) VALUES(#{LICENSE}, #{IS_NOTIFIABLE})
@@ -57,4 +58,9 @@
     <update id="updateVehicleModel" parameterType="com.onnurimotors.wm.model.VEHICLE">
     	UPDATE VEHICLE SET MODEL = #{MODEL} WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
+    <select id="selectMoreVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    	SELECT * FROM VEHICLE
+    	WHERE (#{VEHICLE_ID} = -1 OR VEHICLE_ID > #{VEHICLE_ID})
+    	ORDER BY VEHICLE_ID
+    </select>
 </mapper>
