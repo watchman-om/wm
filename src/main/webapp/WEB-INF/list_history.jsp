@@ -162,7 +162,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${historys}" var="list">
+									<c:forEach items="${histories}" var="list">
 										<tr>
 											<td class="text-center">
 												<input type="checkbox"

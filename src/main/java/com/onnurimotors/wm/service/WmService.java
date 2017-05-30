@@ -284,7 +284,7 @@ public class WmService {
 		
 		ArrayList<VEHICLE_HISTORY> vhs = (ArrayList<VEHICLE_HISTORY>)session.selectList("watchman.mybatis.selectHistoryVehicleCondition", parameter_vehicle);
 		
-		model.addAttribute("historys", vhs);
+		model.addAttribute("histories", vhs);
 		
 		session.close();
 	}
@@ -320,7 +320,9 @@ public class WmService {
 			parameter_vehicle.setNUM_LIMIT(10);
 		}
 		
-		ArrayList<MANAGEMENT> managements = (ArrayList<MANAGEMENT>)session.selectList("watchman.mybatis.selectManagementOfVehicle", parameter_vehicle);
+		List<MANAGEMENT> managements = (ArrayList<MANAGEMENT>)session.selectList("watchman.mybatis.selectManagementOfVehicle", parameter_vehicle);
+		
+		System.out.println("managements size: " + managements.size());
 		
 		model.addAttribute("managements", managements);
 		

@@ -130,11 +130,11 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/vehicle/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 추가</a>
 							</div>
 							<div class="btn-group btn-group-sm pull-left">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/vehicle/delete" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 삭제</a>
 							</div>
 						</div>

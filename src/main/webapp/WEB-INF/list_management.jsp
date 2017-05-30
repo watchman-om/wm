@@ -146,7 +146,8 @@
                         <div class="block">
                             <!-- Example Title -->
                             <div class="block-title">
-                                <div class="block-options pull-right">
+                            	<div class="block-options pull-right">
+                                    <a href="/vehicle/${vehicles[0].VEHICLE_ID}/editview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="" data-original-title="Settings"><i class="fa fa-pencil"></i></a>
                                 </div>
                                 <h2>차량관리</h2>
                             </div>
