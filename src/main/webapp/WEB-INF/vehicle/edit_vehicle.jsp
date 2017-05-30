@@ -102,13 +102,13 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>차량 추가<br><small>관리할 차량을 수동으로 추가 하세요.</small>
+                                    <i class="gi gi-brush"></i>차량 수정<br><small>관리할 차량의 정보를 수정 하세요.</small>
                                 </h1>
                             </div>
                         </div>
                         <ul class="breadcrumb breadcrumb-top">
                             <li><a href="/list_vehicle">차량 목록</a></li>
-                            <li>차량 추가</li>
+                            <li>차량 정</li>
                         </ul>
                         <!-- END Page Header -->
 
@@ -116,14 +116,14 @@
 	                        <!-- Basic Form Elements Title -->
 	                        <div class="block-title">
 	                            <div class="block-options pull-right">
-	                                <a href="list_vehicle" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
+	                                <a href="/list_vehicle" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
 	                            </div>
-	                            <h2><strong>차량</strong> 정보입력</h2>
+	                            <h2><strong>차량</strong> 수정입력</h2>
 	                        </div>
 	                        <!-- END Form Elements Title -->
 	
 	                        <!-- Basic Form Elements Content -->
-	                        <form action="add" method="post" class="form-horizontal form-bordered">
+	                        <form action="edit" method="post" class="form-horizontal form-bordered">
 	                        	<div class="form-group">
 	                                <label class="col-md-3 control-label" for="NAME">차량번호</label>
 	                                <div class="col-md-9">

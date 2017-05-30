@@ -165,10 +165,11 @@
 											</td>
 											<td class="text-center">
 												<div class="btn-group btn-group-xs">
-													<a href="javascript:void(0)" data-toggle="tooltip"
-														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
+													<a href="/vehicle/${vehicle.VEHICLE_ID}/editview" data-toggle="tooltip"
+														title="수정" class="btn btn-default"><i
+														class="fa fa-pencil"></i></a>
+													<a href="/vehicle/${vehicle.VEHICLE_ID}/delete"
+														data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
 														class="fa fa-times"></i></a>
 												</div>
 											</td>
