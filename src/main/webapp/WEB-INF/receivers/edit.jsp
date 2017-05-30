@@ -102,7 +102,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>수신자 수정<br><small>알림을 받을 수신자 정보를 수정 하세요.</small>
+                                    <i class="gi gi-group"></i>수신자 수정<br><small>알림을 받을 수신자 정보를 수정 하세요.</small>
                                 </h1>
                             </div>
                         </div>

@@ -107,7 +107,7 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-brush"></i>타임라인<br><small>오늘 벌어진 일을
+								<i class="gi gi-stopwatch"></i>타임라인<br><small>오늘 벌어진 일을
 										여기에!</small>
 							</h1>
 						</div>

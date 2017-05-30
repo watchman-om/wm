@@ -102,7 +102,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>수신자 관리<br><small>통보를 받을 수신자를 관리하세요.</small>
+                                    <i class="gi gi-group"></i>수신자 관리<br><small>통보를 받을 수신자를 관리하세요.</small>
                                 </h1>
                             </div>
                         </div>

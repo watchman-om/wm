@@ -105,7 +105,7 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-table"></i>차량목록<br> 
+								<i class="gi gi-cars"></i>차량목록<br> 
 								<small>방문한 차량들의 목록을 확인할 수 있습니다.</small>
 							</h1>
 						</div>
@@ -144,7 +144,6 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
 										<th>차량번호</th>
 										<th>차종</th>
 										<th>소유주</th>
@@ -156,8 +155,6 @@
 									<c:forEach items="${vehicles}" var="vehicle">
 										<tr>
 											<td class="text-center"><input type="checkbox" id="checkbox1-1" name="checkbox1-1"></td>
-											<td class="text-center"><img
-												src="img/placeholders/avatars/avatar1.jpg" alt="avatar"class="img-circle"></td>
 											<td><a href="list_management?vehicle_id=${vehicle.VEHICLE_ID}">${vehicle.LICENSE}</a></td>
 											<td>${vehicle.MODEL}</td>
 											<td>${vehicle.USER_NAME}</td>
@@ -175,6 +172,13 @@
 											</td>
 										</tr>
 									</c:forEach>
+									<c:if test="${fn:length(vehicles) == 0}">
+										<tr>
+											<td colspan="7">
+												등록된 차량이 없습니다.
+											</td>
+										</tr>
+									</c:if>
 								</tbody>
 								<tfoot>
 									<tr>

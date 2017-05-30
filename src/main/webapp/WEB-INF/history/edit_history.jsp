@@ -102,7 +102,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>방문내역 수정<br><small>차량의 방문내역을 수정 하세요.</small>
+                                    <i class="gi gi-list"></i>방문내역 수정<br><small>차량의 방문내역을 수정 하세요.</small>
                                 </h1>
                             </div>
                         </div>

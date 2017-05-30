@@ -334,7 +334,7 @@ public class WmService {
 		getManagementCondition(request, model);
 	}
 
-	public Object toggleNotifiable(HttpServletRequest request) {
+	public VEHICLE toggleNotifiable(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		String is_notifiable = request.getParameter("IS_NOTIFIABLE");
@@ -352,7 +352,7 @@ public class WmService {
 		return vehicle;
 	}
 
-	public Object updateVehicleModel(HttpServletRequest request) {
+	public VEHICLE updateVehicleModel(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		String model = request.getParameter("MODEL");
@@ -366,7 +366,7 @@ public class WmService {
 		return vehicle;
 	}
 	
-	public Object submitManagement(HttpServletRequest request) {
+	public MANAGEMENT submitManagement(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		MANAGEMENT management = new MANAGEMENT();
 		management.setDATE_MNG(request.getParameter("DATE_MNG"));
@@ -389,7 +389,7 @@ public class WmService {
 		return management;
 	}
 
-	public Object getOneVehicle(int vehicle_id) {
+	public VEHICLE getOneVehicle(int vehicle_id) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setVEHICLE_ID(vehicle_id);

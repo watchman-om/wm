@@ -102,7 +102,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>차량 추가<br><small>관리할 차량을 수동으로 추가 하세요.</small>
+                                    <i class="gi gi-cars"></i>차량 추가<br><small>관리할 차량을 수동으로 추가 하세요.</small>
                                 </h1>
                             </div>
                         </div>

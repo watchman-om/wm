@@ -131,7 +131,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>차량관리<br><small>차량을 관리하세요</small>
+                                    <i class="gi gi-car"></i>차량관리<br><small>차량을 관리하세요</small>
                                 </h1>
                             </div>
                         </div>
@@ -186,19 +186,41 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
-                                	<a href="vehicle_detail?vehicle_id=${vehicles[0].VEHICLE_ID}" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="점검 추가" ><i class="fa fa-plus"></i></a>
+                                	<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="차량 점검 내역 추가" ><i class="fa fa-plus"></i></a>
                                 </div>
                                 <h2>차량 점검 내역</h2>
                             </div>
 							<table class="table table-striped table-vcenter">
-								<c:forEach items="${managements}" var="list">
-									<tr onclick="location.href='form_management?is_new=0&mangement_id=${list.MANAGEMENT_ID}'">
-										<td>${list.DATE_MNG}</td>
+								<thead>
+									<tr>
+										<th>점검 날짜</th>
+										<th>차량ID</th>
+										<th>기록</th>
+										<th style="width: 150px;" class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<c:forEach items="${managements}" var="management">
+									<tr onclick="location.href='form_management?is_new=0&mangement_id=${management.MANAGEMENT_ID}'">
+										<td>${management.DATE_MNG}</td>
 										<td>${param.vehicle_id}</td>
-										<td>메모</td>
-										<td>${list.COMMENT}</td>
+										<td>${management.COMMENT}</td>
+										<td>
+											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"
+												title="수정" class="btn btn-default"><i
+												class="fa fa-pencil"></i></a>
+											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/delete"
+												data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
+												class="fa fa-times"></i></a>
+										</td>
 									</tr>
 								</c:forEach>
+								<c:if test="${fn:length(managements) == 0}">
+									<tr>
+										<td colspan="4">
+											점검 내역이 없습니다.
+										</td>
+									</tr>
+								</c:if>
 							</table>
                             <!-- END Example Content -->
                         </div>
