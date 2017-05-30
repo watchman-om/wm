@@ -136,7 +136,7 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/history/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title="방문내역 추가">추가</a>
 							</div>
 							<div class="btn-group btn-group-sm pull-left"
@@ -154,7 +154,6 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
 										<th>차량번호</th>
 										<th>날짜</th>
 										<th>상태</th>
@@ -162,23 +161,21 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${histories}" var="list">
+									<c:forEach items="${histories}" var="item">
 										<tr>
 											<td class="text-center">
 												<input type="checkbox"
 												id="checkbox1-1" name="checkbox1-1"></td>
-											<td class="text-center"><img
-												src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-												class="img-circle"></td>
-											<td><a href="list_management?vehicle_id=${list.VEHICLE_ID}">${list.LICENSE}</a></td>
-											<td>${list.DATE_VISIT} ${list.TIME_VISIT}</td>
-											<td><a href="javascript:void(0)" class="label label-warning">상태값</a>${list.COMMENT}</td>
+											<td><a href="list_management?vehicle_id=${item.VEHICLE_ID}">${item.LICENSE}</a></td>
+											<td>${item.DATE_VISIT} ${item.TIME_VISIT}</td>
+											<td><a href="javascript:void(0)" class="label label-warning">상태값</a>${item.COMMENT}</td>
 											<td class="text-center">
 												<div class="btn-group btn-group-xs">
-													<a href="javascript:void(0)" data-toggle="tooltip"
-														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
+													<a href="/history/${item.HISTORY_ID}/editview" data-toggle="tooltip"
+														title="수정" class="btn btn-default"><i
+														class="fa fa-pencil"></i></a>
+													<a href="/history/${item.HISTORY_ID}/delete"
+														data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
 														class="fa fa-times"></i></a>
 												</div>
 											</td>
@@ -188,25 +185,6 @@
 								<tfoot>
 									<tr>
 										<td colspan="6">
-											<div class="btn-group btn-group-sm pull-right">
-												<a href="javascript:void(0)" class="btn btn-primary"
-													data-toggle="tooltip" title="Settings"><i
-													class="fa fa-cog"></i></a>
-												<div class="btn-group btn-group-sm dropup">
-													<a href="javascript:void(0)"
-														class="btn btn-primary pull-right dropdown-toggle"
-														data-toggle="dropdown"><span class="caret"></span></a>
-													<ul
-														class="dropdown-menu dropdown-custom dropdown-menu-right">
-														<li><a href="javascript:void(0)"><i
-																class="fa fa-print pull-right"></i> Print</a></li>
-														<li class="dropdown-header"><i
-															class="fa fa-share pull-right"></i> Export As</li>
-														<li><a href="javascript:void(0)">.pdf</a> <a
-															href="javascript:void(0)">.cvs</a></li>
-													</ul>
-												</div>
-											</div>
 											<div class="btn-group btn-group-sm">
 												<a href="javascript:void(0)" class="btn btn-primary"
 													data-toggle="tooltip" title="Edit Selected"><i
