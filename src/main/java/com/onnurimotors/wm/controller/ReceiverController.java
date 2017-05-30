@@ -19,15 +19,15 @@ public class ReceiverController {
 	public String listReceiver(HttpServletRequest request, Map<String,Object> model) {
 		List<EMPLOYEE> list = new ArrayList<EMPLOYEE>();
 		EMPLOYEE e = new EMPLOYEE();
-		e.setNAME("ÀÓ½ÃÀÌ¸§");
-		e.setKAKAO_ACCOUNT("ÀÓ½ÃID");
+		e.setNAME("ì„ì‹œì´ë¦„");
+		e.setKAKAO_ACCOUNT("ì„ì‹œID");
 		e.setIS_RECEIVING_KAKAO(1);
 		list.add(e);
 		list.add(e);
 		
 		EMPLOYEE a = new EMPLOYEE();
-		a.setNAME("Á¾¾÷¿ø");
-		a.setKAKAO_ACCOUNT("ÀÓ½ÃID2");
+		a.setNAME("ì¢…ì—…ì›");
+		a.setKAKAO_ACCOUNT("ì„ì‹œID2");
 		a.setIS_RECEIVING_KAKAO(0);
 		list.add(a);
 		
@@ -45,8 +45,8 @@ public class ReceiverController {
 	public String detailReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
 		
 		EMPLOYEE e = new EMPLOYEE();
-		e.setNAME("ÀÓ½ÃÀÌ¸§");
-		e.setKAKAO_ACCOUNT("ÀÓ½ÃID");
+		e.setNAME("ì„ì‹œì´ë¦„");
+		e.setKAKAO_ACCOUNT("ì„ì‹œID");
 		e.setIS_RECEIVING_KAKAO(1);
 		
 		model.put("employee", e);
@@ -67,8 +67,8 @@ public class ReceiverController {
 	@RequestMapping("/receivers/{empId}/editview")
 	public String editViewReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
 		EMPLOYEE e = new EMPLOYEE();
-		e.setNAME("ÀÓ½ÃÀÌ¸§");
-		e.setKAKAO_ACCOUNT("ÀÓ½ÃID");
+		e.setNAME("ì„ì‹œì´ë¦„");
+		e.setKAKAO_ACCOUNT("ì„ì‹œID");
 		e.setIS_RECEIVING_KAKAO(1);
 		
 		model.put("employee", e);
