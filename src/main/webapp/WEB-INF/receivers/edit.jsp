@@ -102,89 +102,67 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>수신자 상세<br><small>수신할 사람의 상세 정보를 확인하세요.</small>
+                                    <i class="gi gi-brush"></i>수신자 수정<br><small>알림을 받을 수신자 정보를 수정 하세요.</small>
                                 </h1>
                             </div>
                         </div>
                         <ul class="breadcrumb breadcrumb-top">
-                        	<li><a href="/receivers">수신자 목록</a></li>
-                            <li>수신자 상세</li>
+                            <li><a href="/receivers">수신자 목록</a></li>
+                            <li>수신자 수정</li>
                         </ul>
                         <!-- END Page Header -->
 
-                        <!-- Example Block -->
                         <div class="block">
-                            <!-- Example Title -->
-                            <div class="block-title">
-                                <div class="block-options pull-right">
-                                    <a href="/receivers/${employee.EMPLOYEE_ID}/editview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수정"><i class="fa fa-pencil"></i></a>
-                                </div>
-                                <h2>수신자 상세</h2>
-                            </div>
-                            <!-- END Example Title -->
-
-                            <!-- Example Content -->
-                            <div class="widget">
-	                            <div class="widget-simple themed-background-autumn">
-	                                <h4 class="widget-content widget-content-light">
-	                                    <a href="" class="themed-color-dark-autumn">
-	                                        <strong>${employee.NAME}</strong>
-	                                    </a>
-	                                    <small>${employee.KAKAO_ACCOUNT}</small>
-	                                </h4>
+	                        <!-- Basic Form Elements Title -->
+	                        <div class="block-title">
+	                            <div class="block-options pull-right">
+	                                <a href="/receivers" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
 	                            </div>
-	                            <div class="widget-extra themed-background-dark-autumn">
-	                                <div class="row text-center">
-	                                    <div class="col-xs-4">
-	                                        <h3 class="widget-content-light">
-	                                        	<c:choose>
-													<c:when test="${employee.IS_RECEIVING_KAKAO==1}">
-														<a href="javascript:void(0)" class="themed-color-autumn">수신중</a>
-													</c:when>
-													<c:otherwise>
-														<a href="javascript:void(0)" class="themed-color-autumn">거부중</a>
-													</c:otherwise>
-												</c:choose>
-	                                            <small>수신 상태</small>
-	                                        </h3>
-	                                    </div>
-	                                    <div class="col-xs-4">
-	                                        <h3 class="widget-content-light">
-	                                            <a href="javascript:void(0)" class="themed-color-autumn"><strong>개발자</strong></a><br>
-	                                            <small>직급</small>
-	                                        </h3>
-	                                    </div>
-	                                    <div class="col-xs-4">
-	                                        <h3 class="widget-content-light">
-	                                            <a href="javascript:void(0)" class="themed-color-autumn"><strong>3</strong></a><br>
-	                                            <small>진행중</small>
-	                                        </h3>
-	                                    </div>
+	                            <h2><strong>수신자 수정</strong> 정보입력</h2>
+	                        </div>
+	                        <!-- END Form Elements Title -->
+	
+	                        <!-- Basic Form Elements Content -->
+	                        <form action="edit" method="post" class="form-horizontal form-bordered">
+	                        	<input type="hidden" name="EMPLOYEE_ID" value="${employee.EMPLOYEE_ID}">
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="NAME">이름</label>
+	                                <div class="col-md-9">
+	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름" value="${employee.NAME}">
 	                                </div>
 	                            </div>
-	                            <div class="widget-extra-full">
-	                                <form action="page_widgets_social.html" method="post" class="form-horizontal" onsubmit="return false;">
-	                                    <div class="form-group">
-	                                        <div class="col-xs-12">
-	                                            <textarea id="widget-post3" name="widget-post3" rows="4" class="form-control" placeholder="카카오톡 메세지.."></textarea>
-	                                        </div>
-	                                    </div>
-	                                    <div class="form-group remove-margin-bottom">
-	                                        <div class="col-xs-6">
-	                                            <div class="btn-group">
-	                                                <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add Image"><i class="fa fa-picture-o"></i></button>
-	                                                <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add Location"><i class="fa fa-location-arrow"></i></button>
-	                                                <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add Recording"><i class="fa fa-microphone"></i></button>
-	                                            </div>
-	                                        </div>
-	                                        <div class="col-xs-6 text-right">
-	                                            <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i> 보내기</button>
-	                                        </div>
-	                                    </div>
-	                                </form>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
+	                                <div class="col-md-9">
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID" value="${employee.KAKAO_ACCOUNT}">
+	                                </div>
 	                            </div>
-	                        </div>
-                            <!-- END Example Content -->
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="IS_RECEIVING_KAKAO">수신 상태</label>
+	                                <div class="col-md-9">
+	                                    <input type="text" id="IS_RECEIVING_KAKAO" name="IS_RECEIVING_KAKAO" class="form-control" placeholder="ID" value="${employee.IS_RECEIVING_KAKAO}">
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="example-select">직급</label>
+	                                <div class="col-md-9">
+	                                    <select id="example-select" name="example-select" class="form-control" size="1">
+	                                        <option value="0">Please select</option>
+	                                        <option value="1">Option #1</option>
+	                                        <option value="2">Option #2</option>
+	                                        <option value="3">Option #3</option>
+	                                    </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group form-actions">
+	                                <div class="col-md-9 col-md-offset-3">
+	                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> 제출</button>
+	                                    <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 리셋</button>
+	                                </div>
+	                            </div>
+	                        </form>
+	                        <!-- END Basic Form Elements Content -->
+	                    </div>
                         </div>
                         <!-- END Example Block -->
                     </div>

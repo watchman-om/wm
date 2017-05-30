@@ -116,7 +116,7 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
-                                    <a href="/receivers/add" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수신자 추가" ><i class="fa fa-plus"></i></a>
+                                    <a href="/receivers/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수신자 추가" ><i class="fa fa-plus"></i></a>
                                 </div>
                                 <h2>수신자 목록</h2>
                             </div>
@@ -126,20 +126,45 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
 										<th>이름</th>
-										<th>카카오톡 번호</th>
+										<th>푸쉬ID</th>
 										<th>상태</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach items="${employees}" var="employee">
+										<tr>
+											<td class="text-center">
+												<input type="checkbox" id="${employee.EMPLOYEE_ID}" name="checkbox1-1">
+											</td>
+											<td><a href="receivers/${employee.EMPLOYEE_ID}">${employee.NAME}</a></td>
+											<td>${employee.KAKAO_ACCOUNT}</td>
+											<td>
+												<c:choose>
+													<c:when test="${employee.IS_RECEIVING_KAKAO==1}">
+														<a href="javascript:void(0)" class="label label-success">수신중</a>
+													</c:when>
+													<c:otherwise>
+														<a href="javascript:void(0)" class="label label-danger">거부중</a>
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td class="text-center">
+												<div class="btn-group btn-group-xs">
+													<a href="receivers/${employee.EMPLOYEE_ID}/editview" data-toggle="tooltip"
+														title="Edit" class="btn btn-default"><i
+														class="fa fa-pencil"></i></a> 
+													<a href="receivers/${employee.EMPLOYEE_ID}/delete"
+														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
+														class="fa fa-times"></i></a>
+												</div>
+											</td>
+										</tr>
+									</c:forEach>
 									<tr>
 										<td class="text-center"><input type="checkbox"
 											id="checkbox1-1" name="checkbox1-1"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-											class="img-circle"></td>
 										<td><a href="receivers/detail">이승훈</a></td>
 										<td>123asd56767</td>
 										<td><a href="javascript:void(0)"
@@ -154,151 +179,12 @@
 											</div>
 										</td>
 									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-2" name="checkbox1-2"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar11.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">쯔위</a></td>
-										<td>sadfasdfsaf1</td>
-										<td><a href="javascript:void(0)"
-											class="label label-success">출고</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-3" name="checkbox1-3"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar2.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">정연</a></td>
-										<td>fgd12312sddf</td>
-										<td><a href="javascript:void(0)" class="label label-info">입고</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-4" name="checkbox1-4"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar8.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">나연</a></td>
-										<td>ewrg12331</td>
-										<td><a href="javascript:void(0)"
-											class="label label-success">입고</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-5" name="checkbox1-5"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar3.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">이성달</a></td>
-										<td>2017년 4월 29일</td>
-										<td><a href="javascript:void(0)"
-											class="label label-primary">수리중</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-6" name="checkbox1-6"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar9.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">성주한</a></td>
-										<td>qrwqrweds123df</td>
-										<td><a href="javascript:void(0)" class="label label-info">출고</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center"><input type="checkbox"
-											id="checkbox1-7" name="checkbox1-7"></td>
-										<td class="text-center"><img
-											src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-											class="img-circle"></td>
-										<td><a href="receivers/detail">이성욱</a></td>
-										<td>e1werfsdf</td>
-										<td><a href="javascript:void(0)"
-											class="label label-primary">수리중</a></td>
-										<td class="text-center">
-											<div class="btn-group btn-group-xs">
-												<a href="javascript:void(0)" data-toggle="tooltip"
-													title="Edit" class="btn btn-default"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-													data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-													class="fa fa-times"></i></a>
-											</div>
-										</td>
-									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
 										<td colspan="6">
-											<div class="btn-group btn-group-sm pull-right">
-												<a href="javascript:void(0)" class="btn btn-primary"
-													data-toggle="tooltip" title="Settings"><i
-													class="fa fa-cog"></i></a>
-												<div class="btn-group btn-group-sm dropup">
-													<a href="javascript:void(0)"
-														class="btn btn-primary pull-right dropdown-toggle"
-														data-toggle="dropdown"><span class="caret"></span></a>
-													<ul
-														class="dropdown-menu dropdown-custom dropdown-menu-right">
-														<li><a href="javascript:void(0)"><i
-																class="fa fa-print pull-right"></i> Print</a></li>
-														<li class="dropdown-header"><i
-															class="fa fa-share pull-right"></i> Export As</li>
-														<li><a href="javascript:void(0)">.pdf</a> <a
-															href="javascript:void(0)">.cvs</a></li>
-													</ul>
-												</div>
-											</div>
 											<div class="btn-group btn-group-sm">
-												<a href="javascript:void(0)" class="btn btn-primary"
-													data-toggle="tooltip" title="Edit Selected"><i
-													class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
+												<a href="javascript:void(0)"
 													class="btn btn-primary" data-toggle="tooltip"
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>

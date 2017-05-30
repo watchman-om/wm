@@ -161,7 +161,8 @@
 											<td><a href="list_management?vehicle_id=${vehicle.VEHICLE_ID}">${vehicle.LICENSE}</a></td>
 											<td>${vehicle.MODEL}</td>
 											<td>${vehicle.USER_NAME}</td>
-											<td><a href="javascript:void(0)" class="label label-warning">Trial</a></td>
+											<td><a href="javascript:void(0)" class="label label-warning">Trial</a>
+											</td>
 											<td class="text-center">
 												<div class="btn-group btn-group-xs">
 													<a href="javascript:void(0)" data-toggle="tooltip"

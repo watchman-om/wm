@@ -29,4 +29,9 @@ public class EMPLOYEE {
 	public void setNAME(String nAME) {
 		NAME = nAME;
 	}
+	@Override
+	public String toString() {
+		return "EMPLOYEE [EMPLOYEE_ID=" + EMPLOYEE_ID + ", KAKAO_ACCOUNT=" + KAKAO_ACCOUNT + ", IS_RECEIVING_KAKAO="
+				+ IS_RECEIVING_KAKAO + ", NAME=" + NAME + "]";
+	}
 }

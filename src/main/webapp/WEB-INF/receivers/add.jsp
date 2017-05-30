@@ -87,7 +87,7 @@
                         <!-- END Left Header Navigation -->
 
                         <!-- Search Form -->
-                        <form action="index.html" method="post" class="navbar-form-custom">
+                        <form action="index" method="post" class="navbar-form-custom">
                             <div class="form-group">
                                 <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
                             </div>
@@ -123,23 +123,17 @@
 	                        <!-- END Form Elements Title -->
 	
 	                        <!-- Basic Form Elements Content -->
-	                        <form action="page_forms_general.html" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" onsubmit="return false;">
-	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-text-input">이름</label>
+	                        <form action="add" method="post" class="form-horizontal form-bordered">
+	                        	<div class="form-group">
+	                                <label class="col-md-3 control-label" for="NAME">이름</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="example-text-input" name="example-text-input" class="form-control" placeholder="이름">
+	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-email-input">카카오톡ID</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
 	                                <div class="col-md-9">
-	                                    <input type="email" id="example-email-input" name="example-email-input" class="form-control" placeholder="카카오톡ID">
-	                                </div>
-	                            </div>
-	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-textarea-input">설명</label>
-	                                <div class="col-md-9">
-	                                    <textarea id="example-textarea-input" name="example-textarea-input" rows="9" class="form-control" placeholder="Content.."></textarea>
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -151,12 +145,6 @@
 	                                        <option value="2">Option #2</option>
 	                                        <option value="3">Option #3</option>
 	                                    </select>
-	                                </div>
-	                            </div>
-	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-file-input">사진 파일</label>
-	                                <div class="col-md-9">
-	                                    <input type="file" id="example-file-input" name="example-file-input">
 	                                </div>
 	                            </div>
 	                            <div class="form-group form-actions">
