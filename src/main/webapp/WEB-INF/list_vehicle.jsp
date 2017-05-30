@@ -48,6 +48,14 @@
 
 <!-- Modernizr (browser feature detection library) -->
 <script src="js/vendor/modernizr.min.js"></script>
+<script src="js/ajax.js?ver=7"></script>
+<script>
+	function delete_vehicle(vehicle_id) {
+		ajax_delete_vehicle(vehicle_id, function(json) {
+			alert("삭제하였습니다");
+		});
+	}
+</script>
 </head>
 <body>
 	<!-- Page Wrapper -->
@@ -130,7 +138,7 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/form_vehicle?is_new=1" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 추가</a>
 							</div>
 							<div class="btn-group btn-group-sm pull-left">
@@ -167,7 +175,7 @@
 												<div class="btn-group btn-group-xs">
 													<a href="javascript:void(0)" data-toggle="tooltip"
 														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
+														class="fa fa-pencil"></i></a> <a href="javascript:delete_vehicle(${vehicle.VEHICLE_ID})"
 														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
 														class="fa fa-times"></i></a>
 												</div>

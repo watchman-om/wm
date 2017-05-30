@@ -52,9 +52,16 @@ public class WmController {
 		return "form_management";
 	}
 	
-	@RequestMapping(value="/testPost")
-	public String testPost() {
-		return "exPost";
+	@RequestMapping(value="/form_vehicle")
+	public String form_vehicle(HttpServletRequest request, Model model) {
+		service.getVehicleCondition(request, model);
+		return "form_vehicle";
+	}
+	
+	@RequestMapping(value="/timeline")
+	public String timeline(HttpServletRequest request, Model model) {
+		service.listHistory(request, model);
+		return "timeline";
 	}
 	
 	@RequestMapping(value="/dbviewer")
@@ -62,10 +69,10 @@ public class WmController {
 		service.dbViewer(model);
 		return "dbviewer";
 	}
-	@RequestMapping(value="/timeline")
-	public String timeline(HttpServletRequest request, Model model) {
-		service.listHistory(request, model);
-		return "timeline";
+	
+	@RequestMapping(value="/testPost")
+	public String testPost() {
+		return "exPost";
 	}
 	
 	@RequestMapping("/sstestview")

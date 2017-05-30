@@ -50,18 +50,19 @@ public class WmRestController {
 	}
 	
 	@RequestMapping(value="/vehicle", method = RequestMethod.POST)
-	public Object vehicle_post(HttpServletRequest request, @RequestBody VEHICLE vehicle) {
-		return null;
+	public Object vehicle_post(HttpServletRequest request) {
+		return service.insertVehicle(request);
 	}
 	
-	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.PUT)
-	public Object vehicle_put(HttpServletRequest request, @RequestBody VEHICLE vehicle, @PathVariable int vehicle_id) {
-		return null;
+	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.POST)
+	public Object vehicle_put(HttpServletRequest request) {
+		System.out.println(request.getParameter("LICENSE"));
+		return service.updateVehicle(request);
 	}
 	
 	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.DELETE)
-	public Object vehicle_delete(HttpServletRequest request, @PathVariable int vehicle_id) {
-		return null;
+	public Object vehicle_delete(@PathVariable int vehicle_id) {
+		return service.deleteVehicle(vehicle_id);
 	}
 	
 	@RequestMapping(value="/history", method = RequestMethod.POST)

@@ -58,9 +58,11 @@
     <update id="updateVehicleModel" parameterType="com.onnurimotors.wm.model.VEHICLE">
     	UPDATE VEHICLE SET MODEL = #{MODEL} WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
-    <select id="selectMoreVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
-    	SELECT * FROM VEHICLE
-    	WHERE (#{VEHICLE_ID} = -1 OR VEHICLE_ID > #{VEHICLE_ID})
-    	ORDER BY VEHICLE_ID
-    </select>
+    <update id="updateVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	UPDATE VEHICLE SET LICENSE = #{LICENSE}, IS_NOTIFIABLE = #{IS_NOTIFIABLE}, MODEL = #{MODEL}, USER_NAME = #{USER_NAME}, BIRTH = #{BIRTH}, PHONE_NUMBER = #{PHONE_NUMBER}, COMMENT = #{COMMENT} 
+    	WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </update>
+    <delete id="deleteVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	DELETE FROM VEHICLE WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </delete>
 </mapper>

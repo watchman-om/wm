@@ -141,3 +141,51 @@ function ajax_submit_management(is_new, vehicle_id, management_id, date_mng, com
 		}
 	});
 }
+
+function ajax_insert_vehicle(license, is_notifiable, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/vehicle",
+		data : {LICENSE: license, IS_NOTIFIABLE: is_notifiable},
+		dataType : "json",
+		async: true,
+		success: function(json) {
+			callback(json);
+		},
+		error: function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}
+
+function ajax_update_vehicle(vehicle_id, license, is_notifiable, model, user_name, birth, phone_number, comment, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/vehicle/"+vehicle_id,
+		data : {VEHICLE_ID: vehicle_id, LICENSE: license, IS_NOTIFIABLE: is_notifiable, MODEL: model, USER_NAME: user_name, BIRTH: birth, PHONE_NUMBER: phone_number, COMMENT: comment},
+		dataType : "json",
+		async: true,
+		success: function(json) {
+			callback(json);
+		},
+		error: function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}
+
+function ajax_delete_vehicle(vehicle_id, callback) {
+	$.ajax({
+		type:"DELETE",
+		url:"/vehicle/"+vehicle_id,
+		data : {},
+		dataType : "json",
+		async: true,
+		success: function(json) {
+			callback(json);
+		},
+		error: function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}

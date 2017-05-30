@@ -398,4 +398,75 @@ public class WmService {
 		
 		return vehicle;
 	}
+
+	public Object insertVehicle(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		ArrayList<VEHICLE> vehicles = null;
+		VEHICLE vehicle = new VEHICLE();
+		vehicle.setLICENSE(request.getParameter("LICENSE"));
+		vehicle.setVEHICLE_ID(-1);
+		vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
+		if(vehicles.size() == 0) {
+			vehicle.setIS_NOTIFIABLE(Integer.parseInt(request.getParameter("IS_NOTIFIABLE")));
+			session.insert("watchman.mybatis.insertVehicle", vehicle);
+			session.commit();
+		}
+		else {
+			vehicle.setIS_NOTIFIABLE(-1);
+		}
+		
+		session.close();
+		
+		return vehicle;
+	}
+
+	public Object updateVehicle(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+
+		/*vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		vehicle.setLICENSE(request.getParameter("LICENSE"));
+		vehicle.setIS_NOTIFIABLE(Integer.parseInt(request.getParameter("IS_NOTIFIABLE")));
+		vehicle.setMODEL(request.getParameter("MODEL"));
+		vehicle.setUSER_NAME(request.getParameter("USER_NAME"));
+		vehicle.setBIRTH(request.getParameter("BIRTH"));
+		vehicle.setPHONE_NUMBER(request.getParameter("PHONE_NUMBER"));
+		vehicle.setCOMMENT(request.getParameter("COMMENT"));
+		
+		session.update("watchman.mybatis.updateVehicle", vehicle);
+		session.commit();*/
+		
+		session.close();
+		
+		return request;
+	}
+	
+	public Object deleteVehicle(int vehicle_id) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		vehicle.setVEHICLE_ID(vehicle_id);
+		session.delete("watchman.mybatis.deleteVehicle", vehicle);
+		session.commit();
+		
+		session.close();
+		
+		return vehicle;
+	}
+
+	public Object getVehicleCondition(HttpServletRequest request, Model model) {
+		if(request != null && request.getParameter("is_new") != null && request.getParameter("is_new").equals("1")) {
+			return null;
+		}
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("vehicle_id")));
+		vehicle.setLICENSE("");
+		ArrayList<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
+		
+		session.close();
+		
+		model.addAttribute("vehicles", vehicles);
+		
+		return vehicles;
+	}
 }
