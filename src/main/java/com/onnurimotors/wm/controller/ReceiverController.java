@@ -5,15 +5,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.onnurimotors.wm.model.EMPLOYEE;
+import com.onnurimotors.wm.service.PushService;
+import com.onnurimotors.wm.service.ReceiverService;
 
 @Controller
 public class ReceiverController {
+	@Autowired
+	private PushService pService;
+	
+	@Autowired
+	private ReceiverService rService;
 	
 	@RequestMapping("/receivers")
 	public String listReceiver(HttpServletRequest request, Map<String,Object> model) {
@@ -36,6 +45,22 @@ public class ReceiverController {
 		System.out.println("list: " + list.size());
 		return "receivers/list_receivers";
 	}
+	@RequestMapping("/receivers/register")
+	public String registerReceiver(HttpServletRequest request, Map<String,Object> model) {
+		System.out.println("registerReceiver");
+		
+		String token = request.getParameter("token");
+		
+		EMPLOYEE emp = new EMPLOYEE();
+		emp.setNAME("name");
+		emp.setKAKAO_ACCOUNT(token);
+		
+		System.out.println("emp:" +emp.toString());
+		
+		rService.saveReceiver(emp);
+		return "redirect:/receivers";
+	}
+	
 	@RequestMapping("/receivers/toggle")
 	public String toggleReceiver(HttpServletRequest request, Map<String,Object> model) {
 		return "redirect:/receivers";
@@ -84,5 +109,12 @@ public class ReceiverController {
 	@RequestMapping("/receivers/{empId}/delete")
 	public String delReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
 		return "receivers/receivers";
+	}
+	
+	@RequestMapping("/messages/send")
+	public String sendMsg(HttpServletRequest request, Model model) {
+		List<EMPLOYEE> list = rService.getEmployee(request, model);
+		pService.sendAll("온누리TEST 메세지 입니다", list);
+		return "redirect:/receivers";
 	}
 }

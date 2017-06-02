@@ -171,7 +171,7 @@ public class WmService {
 		return historys;
 	}
 
-	public Object getVehicle(HttpServletRequest request, Model model) {
+	public List<VEHICLE> getVehicle(HttpServletRequest request, Model model) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setLICENSE("");
@@ -186,7 +186,7 @@ public class WmService {
 				vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
 			}
 		}
-		ArrayList<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
+		List<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
 		
 		if(model != null) {
 			model.addAttribute("vehicles", vehicles);
@@ -199,21 +199,6 @@ public class WmService {
 
 	public void dbViewer(Model model) {
 		getVehicle(null, model);
-	}
-
-	public Object getEmployee(HttpServletRequest request, Model model) {
-		SqlSession session = sqlSession();
-		EMPLOYEE employee = new EMPLOYEE();
-		employee.setEMPLOYEE_ID(-1);
-		ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>) session.selectList("watchman.mybatis.selectEmployee", employee);
-		
-		if(model != null) {
-			model.addAttribute("employees", employees);
-		}
-		
-		session.close();
-		
-		return employees;
 	}
 
 	public Object getVehicleManagement(HttpServletRequest request, Model model) {
