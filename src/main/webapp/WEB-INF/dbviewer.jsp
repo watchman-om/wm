@@ -58,7 +58,7 @@
 	<script>
 		ajax_get_vehicle(function(json) {
 			jsonToTable("vehicle", json);
-			ajax_get_history(function(json) {
+			ajax_get_all_history(function(json) {
 				jsonToTable("history", json);
 				ajax_get_vehicle_management(function(json) {
 					jsonToTable("vehicle_management", json);

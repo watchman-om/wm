@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.ibatis.io.Resources;
@@ -18,6 +20,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEventBuilder;
 
 import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.model.VEHICLE_HISTORY;
@@ -26,6 +31,7 @@ import com.onnurimotors.wm.model.ALERT;
 import com.onnurimotors.wm.model.EMPLOYEE;
 import com.onnurimotors.wm.model.HISTORY;
 import com.onnurimotors.wm.model.MANAGEMENT;
+import com.onnurimotors.wm.model.PARAMETER_HISTORY;
 import com.onnurimotors.wm.model.PARAMETER_VEHICLE;
 
 @Service
@@ -64,6 +70,11 @@ public class WmService {
         	vehicle = new VEHICLE();
     		vehicle.setIS_NOTIFIABLE(1);
     		vehicle.setLICENSE(license);
+			vehicle.setMODEL("");
+			vehicle.setUSER_NAME("");
+			vehicle.setBIRTH("");
+			vehicle.setPHONE_NUMBER("");
+			vehicle.setCOMMENT("");
         	session.insert("watchman.mybatis.insertVehicle", vehicle);
         	session.commit();
         	is_new_customer = 1;
@@ -82,7 +93,7 @@ public class WmService {
         // SSE
         
         // TODO
-        // kakao msg
+        // msg to app used by employee of onnurimotors
         msg = "";
         if(vehicle.getIS_NOTIFIABLE() == 1) {
         	if(is_new_customer == 0) {
@@ -91,7 +102,7 @@ public class WmService {
         		msg = msg + "처음 방문한 고객<br />";
         	}
         	msg = msg + "차량번호: " + vehicle.getLICENSE() + "<br />";
-            ArrayList<VEHICLE_HISTORY> result2 = (ArrayList<VEHICLE_HISTORY>) session.selectList("watchman.mybatis.selectHistoryVehicle", vehicle);
+            ArrayList<VEHICLE_HISTORY> result2 = (ArrayList<VEHICLE_HISTORY>) session.selectList("watchman.mybatis.selectAllHistoryVehicle", vehicle);
             for(int i = 0; i < result2.size(); i++) {
             	msg = msg + result2.get(i).getDATE_VISIT() + " " + result2.get(i).getTIME_VISIT() + "<br />";
             }
@@ -108,8 +119,8 @@ public class WmService {
 	}
 
 	public void listVehicle(HttpServletRequest request, Model model) {
-		getAlerts(model);
-		getVehicle(request, model);
+		//getAlerts(model);
+		getVehicle(request, model, -1);
 	}
 
 	public Object getAlerts(Model model) {
@@ -158,9 +169,33 @@ public class WmService {
 	
 	public Object getHistory(HttpServletRequest request, Model model) {
 		SqlSession session = sqlSession();
-		HISTORY history = new HISTORY();
-		history.setHISTORY_ID(-1);
-		ArrayList<HISTORY> historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectHistory", history);
+		ArrayList<HISTORY> historys = null;
+		PARAMETER_HISTORY param = new PARAMETER_HISTORY();
+		
+		String history_id = request.getParameter("HISTORY_ID");
+		param.setHISTORY_ID(-1);
+		if(history_id != null && !history_id.equals("")) {
+			param.setHISTORY_ID(Integer.parseInt(history_id));
+		}
+		
+		String page = request.getParameter("PAGE");
+		String size_page = request.getParameter("SIZE_PAGE");
+		param.setPAGE(0);
+		param.setSIZE_PAGE(10);
+		if(page != null && !page.equals("")) {
+			if(size_page != null && !size_page.equals("")) {
+				param.setPAGE((Integer.parseInt(page)-1) * Integer.parseInt(size_page));
+				param.setSIZE_PAGE(Integer.parseInt(size_page));
+			} else {
+				param.setPAGE((Integer.parseInt(page)-1) * 10);
+			}
+			historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectHistory", param);
+		} else if(size_page != null && !size_page.equals("")) {
+			param.setSIZE_PAGE(Integer.parseInt(size_page));
+			historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectHistory", param);
+		} else {
+			historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectAllHistory", param);
+		}
 		
 		if(model != null) {
 			model.addAttribute("historys", historys);
@@ -171,7 +206,7 @@ public class WmService {
 		return historys;
 	}
 
-	public Object getVehicle(HttpServletRequest request, Model model) {
+	public Object getVehicle(HttpServletRequest request, Model model, int vid) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setLICENSE("");
@@ -186,6 +221,9 @@ public class WmService {
 				vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
 			}
 		}
+		if(vid != -1) {
+			vehicle.setVEHICLE_ID(vid);
+		}
 		ArrayList<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
 		
 		if(model != null) {
@@ -198,7 +236,7 @@ public class WmService {
 	}
 
 	public void dbViewer(Model model) {
-		getVehicle(null, model);
+		getVehicle(null, model, -1);
 	}
 
 	public Object getEmployee(HttpServletRequest request, Model model) {
@@ -248,7 +286,7 @@ public class WmService {
 		return managements;
 	}
 
-	public void listHistory(HttpServletRequest request, Model model) {
+	public Object listHistory(HttpServletRequest request, Model model, int hid) {
 		SqlSession session = sqlSession();
 		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
 		String license = request.getParameter("license");
@@ -256,6 +294,7 @@ public class WmService {
 		String tdate = request.getParameter("tdate");
 		String flimit = request.getParameter("flimit");
 		String nlimit = request.getParameter("nlimit");
+		parameter_vehicle.setHISTORY_ID(hid);
 		if(license != null && !license.equals("")) {
 			parameter_vehicle.setLICENSE(license);
 		} else {
@@ -284,9 +323,31 @@ public class WmService {
 		
 		ArrayList<VEHICLE_HISTORY> vhs = (ArrayList<VEHICLE_HISTORY>)session.selectList("watchman.mybatis.selectHistoryVehicleCondition", parameter_vehicle);
 		
-		model.addAttribute("historys", vhs);
+		if(model != null) {
+			model.addAttribute("histories", vhs);
+		}
 		
 		session.close();
+		
+		return vhs;
+	}
+	
+	public ResponseBodyEmitter sseHistory(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(listHistory(request, null, -1));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
 	}
 
 	public void getManagementCondition(HttpServletRequest request, Model model) {
@@ -320,7 +381,9 @@ public class WmService {
 			parameter_vehicle.setNUM_LIMIT(10);
 		}
 		
-		ArrayList<MANAGEMENT> managements = (ArrayList<MANAGEMENT>)session.selectList("watchman.mybatis.selectManagementOfVehicle", parameter_vehicle);
+		List<MANAGEMENT> managements = (ArrayList<MANAGEMENT>)session.selectList("watchman.mybatis.selectManagementOfVehicle", parameter_vehicle);
+		
+		System.out.println("managements size: " + managements.size());
 		
 		model.addAttribute("managements", managements);
 		
@@ -328,11 +391,11 @@ public class WmService {
 	}
 	
 	public void listManagement(HttpServletRequest request, Model model) {
-		getVehicle(request, model);
+		getVehicle(request, model, -1);
 		getManagementCondition(request, model);
 	}
 
-	public Object toggleNotifiable(HttpServletRequest request) {
+	public VEHICLE toggleNotifiable(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		String is_notifiable = request.getParameter("IS_NOTIFIABLE");
@@ -350,7 +413,7 @@ public class WmService {
 		return vehicle;
 	}
 
-	public Object updateVehicleModel(HttpServletRequest request) {
+	public VEHICLE updateVehicleModel(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		String model = request.getParameter("MODEL");
@@ -364,7 +427,7 @@ public class WmService {
 		return vehicle;
 	}
 	
-	public Object submitManagement(HttpServletRequest request) {
+	public MANAGEMENT submitManagement(HttpServletRequest request) {
 		SqlSession session = sqlSession();
 		MANAGEMENT management = new MANAGEMENT();
 		management.setDATE_MNG(request.getParameter("DATE_MNG"));
@@ -387,7 +450,7 @@ public class WmService {
 		return management;
 	}
 
-	public Object getOneVehicle(int vehicle_id) {
+	public VEHICLE getOneVehicle(int vehicle_id) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setVEHICLE_ID(vehicle_id);
@@ -408,6 +471,36 @@ public class WmService {
 		vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
 		if(vehicles.size() == 0) {
 			vehicle.setIS_NOTIFIABLE(Integer.parseInt(request.getParameter("IS_NOTIFIABLE")));
+			String model = request.getParameter("MODEL");
+			if(model != null && !model.equals("")) {
+				vehicle.setMODEL(model);
+			} else {
+				vehicle.setMODEL("");
+			}
+			String user_name = request.getParameter("USER_NAME");
+			if(user_name != null && !user_name.equals("")) {
+				vehicle.setUSER_NAME(user_name);
+			} else {
+				vehicle.setUSER_NAME("");
+			}
+			String birth = request.getParameter("BIRTH");
+			if(birth != null && !birth.equals("")) {
+				vehicle.setBIRTH(birth);
+			} else {
+				vehicle.setBIRTH("");
+			}
+			String phone_number = request.getParameter("PHONE_NUMBER");
+			if(phone_number != null && !phone_number.equals("")) {
+				vehicle.setPHONE_NUMBER(phone_number);
+			} else {
+				vehicle.setPHONE_NUMBER("");
+			}
+			String comment = request.getParameter("COMMENT");
+			if(comment != null && !comment.equals("")) {
+				vehicle.setCOMMENT(comment);
+			} else {
+				vehicle.setCOMMENT("");
+			}
 			session.insert("watchman.mybatis.insertVehicle", vehicle);
 			session.commit();
 		}
@@ -420,12 +513,14 @@ public class WmService {
 		return vehicle;
 	}
 
-	public Object updateVehicle(HttpServletRequest request) {
+	public Object updateVehicle(HttpServletRequest request, int vid) {
 		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 
-		/*vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
-		vehicle.setLICENSE(request.getParameter("LICENSE"));
+		vehicle.setVEHICLE_ID(vid);
+		if(vid == -1) {
+			vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		}
 		vehicle.setIS_NOTIFIABLE(Integer.parseInt(request.getParameter("IS_NOTIFIABLE")));
 		vehicle.setMODEL(request.getParameter("MODEL"));
 		vehicle.setUSER_NAME(request.getParameter("USER_NAME"));
@@ -434,11 +529,11 @@ public class WmService {
 		vehicle.setCOMMENT(request.getParameter("COMMENT"));
 		
 		session.update("watchman.mybatis.updateVehicle", vehicle);
-		session.commit();*/
+		session.commit();
 		
 		session.close();
 		
-		return request;
+		return vehicle;
 	}
 	
 	public Object deleteVehicle(int vehicle_id) {
@@ -468,5 +563,233 @@ public class WmService {
 		model.addAttribute("vehicles", vehicles);
 		
 		return vehicles;
+	}
+
+	public Object getVehicleHistory(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		ArrayList<VEHICLE_HISTORY> historys = null;
+		PARAMETER_HISTORY param = new PARAMETER_HISTORY();
+		
+		String history_id = request.getParameter("HISTORY_ID");
+		param.setHISTORY_ID(-1);
+		if(history_id != null && !history_id.equals("")) {
+			param.setHISTORY_ID(Integer.parseInt(history_id));
+		}
+		
+		String page = request.getParameter("PAGE");
+		String size_page = request.getParameter("SIZE_PAGE");
+		param.setPAGE(0);
+		param.setSIZE_PAGE(10);
+		if(page != null && !page.equals("")) {
+			if(size_page != null && !size_page.equals("")) {
+				param.setPAGE((Integer.parseInt(page)-1) * Integer.parseInt(size_page));
+				param.setSIZE_PAGE(Integer.parseInt(size_page));
+			} else {
+				param.setPAGE((Integer.parseInt(page)-1) * 10);
+			}
+		} else if(size_page != null && !size_page.equals("")) {
+			param.setSIZE_PAGE(Integer.parseInt(size_page));
+		}
+		
+		historys = (ArrayList<VEHICLE_HISTORY>) session.selectList("watchman.mybatis.selectHistory", param);
+		
+		session.close();
+		
+		return historys;
+	}
+
+	public Object deleteHistory(HttpServletRequest request, Model model, int hid) {
+		SqlSession session = sqlSession();
+		HISTORY history = new HISTORY();
+		history.setHISTORY_ID(hid);
+		session.delete("watchman.mybatis.deleteHistory", history);
+		session.commit();
+		
+		session.close();
+		
+		return history;
+	}
+	
+	public ResponseBodyEmitter sseHistoryCount(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(getHistoryCount(request));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
+	}
+
+	private int getHistoryCount(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		HISTORY history = new HISTORY();
+		history.setHISTORY_ID(-1);
+		ArrayList<HISTORY> historys = (ArrayList<HISTORY>)session.selectList("watchman.mybatis.selectAllHistory", history);
+		session.close();
+		return historys.size();
+	}
+
+	public ResponseBodyEmitter sseVehicle(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(getVehiclePage(request, null));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
+	}
+
+	public ResponseBodyEmitter sseVehicleCount(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(getVehicleCount(request));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
+	}
+
+	private int getVehicleCount(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		String license = request.getParameter("license");
+		String vehicle_id = request.getParameter("vehicle_id");
+		String flimit = request.getParameter("flimit");
+		String nlimit = request.getParameter("nlimit");
+		vehicle.setLICENSE("");
+		vehicle.setVEHICLE_ID(-1);
+		vehicle.setFROM_LIMIT(0);
+		vehicle.setNUM_LIMIT(10);
+		if(license != null && !license.equals("")) {
+			vehicle.setLICENSE(license);
+		}
+		if(vehicle_id != null && !vehicle_id.equals("")) {
+			vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
+		}
+		if(flimit != null && !flimit.equals("")) {
+			vehicle.setFROM_LIMIT(Integer.parseInt(flimit));
+		}
+		if(nlimit != null && !nlimit.equals("")) {
+			vehicle.setNUM_LIMIT(Integer.parseInt(nlimit));
+		}
+		ArrayList<HISTORY> historys = (ArrayList<HISTORY>)session.selectList("watchman.mybatis.selectAllVehicle", vehicle);
+		session.close();
+		return historys.size();
+	}
+
+	public Object getVehiclePage(HttpServletRequest request, Model model) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		if(request != null) {
+			String license = request.getParameter("license");
+			String vehicle_id = request.getParameter("vehicle_id");
+			String flimit = request.getParameter("flimit");
+			String nlimit = request.getParameter("nlimit");
+			vehicle.setLICENSE("");
+			vehicle.setVEHICLE_ID(-1);
+			vehicle.setFROM_LIMIT(0);
+			vehicle.setNUM_LIMIT(10);
+			if(license != null && !license.equals("")) {
+				vehicle.setLICENSE(license);
+			}
+			if(vehicle_id != null && !vehicle_id.equals("")) {
+				vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
+			}
+			if(flimit != null && !flimit.equals("")) {
+				vehicle.setFROM_LIMIT(Integer.parseInt(flimit));
+			}
+			if(nlimit != null && !nlimit.equals("")) {
+				vehicle.setNUM_LIMIT(Integer.parseInt(nlimit));
+			}
+		}
+		ArrayList<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehiclePage", vehicle);
+		
+		if(model != null) {
+			model.addAttribute("vehicles", vehicles);
+		}
+		
+		session.close();
+		
+		return vehicles;
+	}
+
+	public VEHICLE updateVehicleUserName(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		String user_name = request.getParameter("USER_NAME");
+		vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		vehicle.setUSER_NAME(user_name);
+		session.update("watchman.mybatis.updateVehicleUserName", vehicle);
+		session.commit();
+		
+		session.close();
+
+		return vehicle;
+	}
+
+	public VEHICLE updateVehiclePhoneNumber(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		String phone_number = request.getParameter("PHONE_NUMBER");
+		vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		vehicle.setPHONE_NUMBER(phone_number);
+		session.update("watchman.mybatis.updateVehiclePhoneNumber", vehicle);
+		session.commit();
+		
+		session.close();
+
+		return vehicle;
+	}
+
+	public VEHICLE updateVehicleBirth(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		String birth = request.getParameter("BIRTH");
+		vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		vehicle.setBIRTH(birth);
+		session.update("watchman.mybatis.updateVehicleBirth", vehicle);
+		session.commit();
+		
+		session.close();
+
+		return vehicle;
+	}
+
+	public VEHICLE updateVehicleComment(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		VEHICLE vehicle = new VEHICLE();
+		String comment = request.getParameter("COMMENT");
+		vehicle.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
+		vehicle.setCOMMENT(comment);
+		session.update("watchman.mybatis.updateVehicleComment", vehicle);
+		session.commit();
+		
+		session.close();
+
+		return vehicle;
 	}
 }

@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 
-	<title>ProUI - Responsive Bootstrap Admin Template</title>
+	<title>온누리 모터스 - 방문차량 관리 시스템</title>
 
 	<meta name="description"
 		content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
@@ -63,7 +63,7 @@
 		<!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
 		<div class="preloader themed-background">
 			<h1 class="push-top-bottom text-light text-center">
-				<strong>Pro</strong>UI
+				<strong>온누리</strong>모터스
 			</h1>
 			<div class="inner">
 				<h3 class="text-light visible-lt-ie10">
@@ -76,7 +76,7 @@
 
 		<div id="page-container"
 			class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
-			<jsp:include page="sidebar.jsp"/>
+			<jsp:include page="../sidebar.jsp"/>
 
 			<!-- Main Container -->
 			<div id="main-container">
@@ -107,7 +107,7 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-brush"></i>타임라인<br><small>오늘 벌어진 일을
+								<i class="gi gi-stopwatch"></i>타임라인<br><small>오늘 벌어진 일을
 										여기에!</small>
 							</h1>
 						</div>
@@ -129,7 +129,7 @@
 										class="fa fa-cog"></i></a>
 								</div>
 								<h2>
-									<strong>Timeline</strong> Style
+									<strong>관리내역</strong> 타임라인
 								</h2>
 							</div>
 							<!-- END Timeline Style Title -->
@@ -138,10 +138,28 @@
 							<!-- You can remove the class .block-content-full if you want the block to have its regular padding -->
 							<div class="timeline block-content-full">
 								<h3 class="timeline-header">
-									Web Conference <small><strong>June 14, 2014</strong></small>
+									오늘의 활동 내역 <small><strong>June 14, 2014</strong></small>
 								</h3>
 								<!-- You can remove the class .timeline-hover if you don't want each event to be highlighted on mouse hover -->
 								<ul class="timeline-list timeline-hover">
+									<c:forEach var="management" items="${managements}" >
+										<li>
+											<div class="timeline-icon">
+												<i class="gi gi-cake"></i>
+											</div>
+											<div class="timeline-time">
+												${management.DATE_MNG} <strong>am</strong>
+											</div>
+											<div class="timeline-content">
+												<p class="push-bit">
+													<strong>Breakfast</strong>
+												</p>
+												<p class="push-bit">
+													${management.COMMENT}
+												</p>
+											</div>
+										</li>
+									</c:forEach>
 									<li>
 										<div class="timeline-icon">
 											<i class="gi gi-cake"></i>
@@ -155,18 +173,6 @@
 											</p>
 											<p class="push-bit">An awesome breakfast will wait for
 												you at the lobby!</p>
-											<div class="row push">
-												<div class="col-sm-6 col-md-4">
-													<a href="img/placeholders/photos/photo6.jpg"
-														data-toggle="lightbox-image"> <img
-														src="img/placeholders/photos/photo6.jpg" alt="image"></a>
-												</div>
-												<div class="col-sm-6 col-md-4">
-													<a href="img/placeholders/photos/photo7.jpg"
-														data-toggle="lightbox-image"> <img
-														src="img/placeholders/photos/photo7.jpg" alt="image"></a>
-												</div>
-											</div>
 										</div>
 									</li>
 									<li class="active">
@@ -221,13 +227,6 @@
 											</p>
 											<p class="push-bit">Awesome food prepared by our awesome
 												chefs!</p>
-											<div class="row push">
-												<div class="col-sm-6 col-md-4">
-													<a href="img/placeholders/photos/photo23.jpg"
-														data-toggle="lightbox-image"> <img
-														src="img/placeholders/photos/photo23.jpg" alt="image"></a>
-												</div>
-											</div>
 										</div>
 									</li>
 									<li>
@@ -273,29 +272,6 @@
 												Free drinks at <a href="javascript:void(0)">Cafe-Bar</a>!
 											</p>
 											<div id="gmap-timeline" class="gmap" style="height: 200px;"></div>
-										</div>
-									</li>
-									<li>
-										<div class="timeline-icon">
-											<i class="fa fa-globe"></i>
-										</div>
-										<div class="timeline-content">
-											<p class="push-bit">
-												<strong>End of first day</strong>
-											</p>
-											<p class="push-bit">Lorem ipsum dolor sit amet,
-												consectetur adipiscing elit. Maecenas ultrices, justo vel
-												imperdiet gravida, urna ligula hendrerit nibh, ac cursus
-												nibh sapien in purus. Mauris tincidunt tincidunt turpis in
-												porta. Integer fermentum tincidunt auctor. Vestibulum
-												ullamcorper, odio sed rhoncus imperdiet, enim elit
-												sollicitudin orci, eget dictum leo mi nec lectus.</p>
-											<p>Nam commodo turpis id lectus scelerisque vulputate.
-												Integer sed dolor erat. Fusce erat ipsum, varius vel euismod
-												sed, tristique et lectus? Etiam egestas fringilla enim, id
-												convallis lectus laoreet at. Fusce purus nisi, gravida sed
-												consectetur ut, interdum quis nisi. Quisque egestas nisl id
-												lectus facilisis scelerisque!</p>
 										</div>
 									</li>
 								</ul>

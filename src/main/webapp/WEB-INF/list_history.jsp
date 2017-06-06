@@ -136,7 +136,7 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/history/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title="방문내역 추가">추가</a>
 							</div>
 							<div class="btn-group btn-group-sm pull-left"
@@ -154,7 +154,6 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
 										<th>차량번호</th>
 										<th>날짜</th>
 										<th>상태</th>
@@ -162,51 +161,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${historys}" var="list">
-										<tr>
-											<td class="text-center">
-												<input type="checkbox"
-												id="checkbox1-1" name="checkbox1-1"></td>
-											<td class="text-center"><img
-												src="img/placeholders/avatars/avatar1.jpg" alt="avatar"
-												class="img-circle"></td>
-											<td><a href="list_management?vehicle_id=${list.VEHICLE_ID}">${list.LICENSE}</a></td>
-											<td>${list.DATE_VISIT} ${list.TIME_VISIT}</td>
-											<td><a href="javascript:void(0)" class="label label-warning">상태값</a>${list.COMMENT}</td>
-											<td class="text-center">
-												<div class="btn-group btn-group-xs">
-													<a href="javascript:void(0)" data-toggle="tooltip"
-														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> <a href="javascript:void(0)"
-														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-														class="fa fa-times"></i></a>
-												</div>
-											</td>
-										</tr>
-									</c:forEach>
 								</tbody>
 								<tfoot>
 									<tr>
 										<td colspan="6">
-											<div class="btn-group btn-group-sm pull-right">
-												<a href="javascript:void(0)" class="btn btn-primary"
-													data-toggle="tooltip" title="Settings"><i
-													class="fa fa-cog"></i></a>
-												<div class="btn-group btn-group-sm dropup">
-													<a href="javascript:void(0)"
-														class="btn btn-primary pull-right dropdown-toggle"
-														data-toggle="dropdown"><span class="caret"></span></a>
-													<ul
-														class="dropdown-menu dropdown-custom dropdown-menu-right">
-														<li><a href="javascript:void(0)"><i
-																class="fa fa-print pull-right"></i> Print</a></li>
-														<li class="dropdown-header"><i
-															class="fa fa-share pull-right"></i> Export As</li>
-														<li><a href="javascript:void(0)">.pdf</a> <a
-															href="javascript:void(0)">.cvs</a></li>
-													</ul>
-												</div>
-											</div>
 											<div class="btn-group btn-group-sm">
 												<a href="javascript:void(0)" class="btn btn-primary"
 													data-toggle="tooltip" title="Edit Selected"><i
@@ -214,6 +172,10 @@
 													class="btn btn-primary" data-toggle="tooltip"
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
+										</td>
+									</tr>
+									<tr>
+										<td id="page_wrapper" colspan="6" style="text-align: center;">
 										</td>
 									</tr>
 								</tfoot>
@@ -247,89 +209,6 @@
 	<!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
 	<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 
-	<!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
-	<div id="modal-user-settings" class="modal fade" tabindex="-1"
-		role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header text-center">
-					<h2 class="modal-title">
-						<i class="fa fa-pencil"></i> Settings
-					</h2>
-				</div>
-				<!-- END Modal Header -->
-
-				<!-- Modal Body -->
-				<div class="modal-body">
-					<form action="index" method="post"
-						enctype="multipart/form-data"
-						class="form-horizontal form-bordered" onsubmit="return false;">
-						<fieldset>
-							<legend>Vital Info</legend>
-							<div class="form-group">
-								<label class="col-md-4 control-label">Username</label>
-								<div class="col-md-8">
-									<p class="form-control-static">Admin</p>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="user-settings-email">Email</label>
-								<div class="col-md-8">
-									<input type="email" id="user-settings-email"
-										name="user-settings-email" class="form-control"
-										value="admin@example.com">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-notifications">Email Notifications</label>
-								<div class="col-md-8">
-									<label class="switch switch-primary"> <input
-										type="checkbox" id="user-settings-notifications"
-										name="user-settings-notifications" value="1" checked>
-										<span></span>
-									</label>
-								</div>
-							</div>
-						</fieldset>
-						<fieldset>
-							<legend>Password Update</legend>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-password">New Password</label>
-								<div class="col-md-8">
-									<input type="password" id="user-settings-password"
-										name="user-settings-password" class="form-control"
-										placeholder="Please choose a complex one..">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label"
-									for="user-settings-repassword">Confirm New Password</label>
-								<div class="col-md-8">
-									<input type="password" id="user-settings-repassword"
-										name="user-settings-repassword" class="form-control"
-										placeholder="..and confirm it!">
-								</div>
-							</div>
-						</fieldset>
-						<div class="form-group form-actions">
-							<div class="col-xs-12 text-right">
-								<button type="button" class="btn btn-sm btn-default"
-									data-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-sm btn-primary">Save
-									Changes</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<!-- END Modal Body -->
-			</div>
-		</div>
-	</div>
-	<!-- END User Settings -->
-
 	<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
 	<script src="js/vendor/jquery.min.js"></script>
 	<script src="js/vendor/bootstrap.min.js"></script>
@@ -339,5 +218,105 @@
 	<!-- Load and execute javascript code used only in this page -->
 	<script src="js/pages/tablesGeneral.js"></script>
 	<script>$(function(){ TablesGeneral.init(); });</script>
+	<script>
+		var page, size_page;
+		var source, source2;
+		$(function() {
+			page = 1;
+			size_page = 10;
+			start_sse();
+		});
+		function start_sse() {
+			if(typeof(EventSource) !== "undefined") {
+				var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page;
+			    source = new EventSource("/sse/history"+param);
+			    source.onmessage = function(event) {
+			    	var msg = JSON.parse(event.data);
+			    	make_rows(msg);
+			    };
+			    source2 = new EventSource("/sse/history/count");
+			    source2.onmessage = function(event) {
+			    	make_pages(event.data);
+			    };
+			}
+		}
+		function stop_sse() {
+			source.close();
+			source2.close();
+		}
+		function set_page(to_page) {
+			stop_sse();
+			page = to_page;
+			start_sse();
+		}
+		function make_rows(list) {
+			var format;
+			var tbody = $("#general-table tbody");
+			tbody.empty();
+			if(list.keys(list).length == 0) {
+				format =	"<tr>"
+						+		"<td colspan='7'>등록된 기록이 없습니다.</td>"
+						+	"</tr>";
+				tbody.append(format);
+			}
+			else {
+				for(var idx = 0, item; item = list[idx]; idx++) {
+					format =	"<tr class='unit' id='"+item.history_ID+"'>"
+							+		"<td class='text-center'>"
+							+			"<input type='checkbox' id='checkbox1-1' name='checkbox1-1'>"
+							+		"</td>"
+							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
+							+		"<td>"+item.date_VISIT+" "+item.time_VISIT+"</td>"
+							+		"<td>"
+							+			"<a href='javascript:void(0)' class='label label-warning'>상태값</a>"
+							+		"</td>"
+							+		"<td class='text-center'>"
+							+			"<div class='btn-group btn-group-xs'>"
+							+				"<a href='/history/"+item.history_ID+"/editview' data-toggle='tooltip' title='수정' class='btn btn-default'>"
+							+					"<i class='fa fa-pencil'></i>"
+							+				"</a>"
+							+				"<a href='/history/"+item.history_ID+"/delete' data-toggle='tooltip' title='삭제' class='btn btn-danger'>"
+							+					"<i class='fa fa-times'></i>"
+							+				"</a>"
+							+			"</div>"
+							+		"</td>"
+							+	"</tr>";
+					tbody.append(format);
+				}
+			}
+		}
+		function make_pages(data) {
+			var first = page - 5;
+			var last = page + 5;
+			var format;
+			var page_wrapper = $("#page_wrapper");
+			
+			page_wrapper.empty();
+			
+			if(first < 1) {
+				first = 1;
+			}
+			if(last > (data-1)/size_page + 1) {
+				last = (data-1)/size_page + 1;
+			}
+			
+			if(first > 1) {
+				format = "<a href='javascript:set_page(1)' style='margin: 10px;'>&lt;&lt;</a>";
+				page_wrapper.append(format);
+			}
+			for(var idx = first; idx < last; idx++) {
+				if(idx != page) {
+					format = "<a href='javascript:set_page("+idx+")' style='margin: 10px;'>"+idx+"</a>";
+				} else {
+					format = "<span style='margin: 10px;'>"+idx+"</span>";
+				}
+				page_wrapper.append(format);
+			}
+			if(last < (data-1)/size_page+1) {
+				format = "<a href='javascript:set_page("+((data-1)/size_page+1)+")' style='margin: 10px;'>&gt;&gt;</a>";
+				page_wrapper.append(format);
+			}
+		}
+	</script>
 </body>
 </html>

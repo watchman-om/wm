@@ -102,13 +102,14 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-group"></i>수신자 추가<br><small>카카오톡 알림을 받을 수신자를 추가 하세요.</small>
+                                    <i class="gi gi-car"></i>차량 점검내역 추가<br><small>${vehicle.LICENSE} 차량의 점검 내역을 추가 하세요.</small>
                                 </h1>
                             </div>
                         </div>
                         <ul class="breadcrumb breadcrumb-top">
-                            <li><a href="/receivers">수신자 목록</a></li>
-                            <li>수신자 추가</li>
+                        	<li><a href="/list_vehicle">방문내역 목록</a></li>
+                            <li><a href="/list_management?vehicle_id=${vehicle.VEHICLE_ID}">차량관리</a></li>
+                            <li>점검내역 추가</li>
                         </ul>
                         <!-- END Page Header -->
 
@@ -116,35 +117,30 @@
 	                        <!-- Basic Form Elements Title -->
 	                        <div class="block-title">
 	                            <div class="block-options pull-right">
-	                                <a href="/receivers" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
+	                                <a href="/list_vehicle" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
 	                            </div>
-	                            <h2><strong>수신자 추가</strong> 정보입력</h2>
+	                            <h2><strong>점검내역</strong> 정보입력</h2>
 	                        </div>
 	                        <!-- END Form Elements Title -->
 	
 	                        <!-- Basic Form Elements Content -->
 	                        <form action="add" method="post" class="form-horizontal form-bordered">
 	                        	<div class="form-group">
-	                                <label class="col-md-3 control-label" for="NAME">이름</label>
+	                                <label class="col-md-3 control-label" for="NAME">차량번호</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름">
+	                                    ${vehicle.LICENSE}
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검내용</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID">
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="COMMENT" class="form-control" placeholder="점검내용">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-select">직급</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검일자</label>
 	                                <div class="col-md-9">
-	                                    <select id="example-select" name="example-select" class="form-control" size="1">
-	                                        <option value="0">Please select</option>
-	                                        <option value="1">Option #1</option>
-	                                        <option value="2">Option #2</option>
-	                                        <option value="3">Option #3</option>
-	                                    </select>
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="DATE_MNG" class="form-control" placeholder="점검일자">
 	                                </div>
 	                            </div>
 	                            <div class="form-group form-actions">
@@ -153,6 +149,8 @@
 	                                    <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 리셋</button>
 	                                </div>
 	                            </div>
+	                            <input type="hidden" name="IS_NEW" value="1">
+	                            <input type="hidden" name="VEHICLE_ID" value="${vehicle.VEHICLE_ID}">
 	                        </form>
 	                        <!-- END Basic Form Elements Content -->
 	                    </div>

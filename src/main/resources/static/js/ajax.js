@@ -30,9 +30,9 @@ function ajax_get_vehicle(callback) {
 	});
 }
 
-function ajax_get_history(callback) {
+function ajax_get_all_history(callback) {
 	$.ajax({
-		type:"POST",
+		type:"GET",
 		url:"/history",
 		data : {},
 		dataType : "json",
@@ -179,6 +179,102 @@ function ajax_delete_vehicle(vehicle_id, callback) {
 		type:"DELETE",
 		url:"/vehicle/"+vehicle_id,
 		data : {},
+		dataType : "json",
+		async: true,
+		success: function(json) {
+			callback(json);
+		},
+		error: function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}
+
+function ajax_get_history(param, callback) {
+	$.ajax({
+		type:"GET",
+		url:"/history"+param,
+		data : {},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_update_vehicle_user_name(vehicle_id, user_name, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/update_vehicle_user_name",
+		data : {VEHICLE_ID: vehicle_id, USER_NAME: user_name},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_update_vehicle_phone_number(vehicle_id, phone_number, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/update_vehicle_phone_number",
+		data : {VEHICLE_ID: vehicle_id, PHONE_NUMBER: phone_number},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_update_vehicle_birth(vehicle_id, birth, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/update_vehicle_birth",
+		data : {VEHICLE_ID: vehicle_id, BIRTH: birth},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_update_vehicle_comment(vehicle_id, comment, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/update_vehicle_comment",
+		data : {VEHICLE_ID: vehicle_id, COMMENT: comment},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}
+
+function ajax_insert_vehicle_total(license, is_notifiable, model, user_name, birth, phone_number, comment, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/vehicle",
+		data : {LICENSE: license, IS_NOTIFIABLE: is_notifiable, MODEL: model, USER_NAME: user_name, BIRTH: birth, PHONE_NUMBER: phone_number, COMMENT: comment},
 		dataType : "json",
 		async: true,
 		success: function(json) {

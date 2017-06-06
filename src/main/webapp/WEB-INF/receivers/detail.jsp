@@ -102,7 +102,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>수신자 상세<br><small>수신할 사람의 상세 정보를 확인하세요.</small>
+                                    <i class="gi gi-group"></i>수신자 상세<br><small>수신할 사람의 상세 정보를 확인하세요.</small>
                                 </h1>
                             </div>
                         </div>

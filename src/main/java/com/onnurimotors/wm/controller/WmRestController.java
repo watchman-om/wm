@@ -41,7 +41,7 @@ public class WmRestController {
 	
 	@RequestMapping(value="/vehicle", method = RequestMethod.GET)
 	public Object vehicle_get(HttpServletRequest request) {
-		return service.getVehicle(request, null);
+		return service.getVehicle(request, null, -1);
 	}
 	
 	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class WmRestController {
 	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.POST)
 	public Object vehicle_put(HttpServletRequest request) {
 		System.out.println(request.getParameter("LICENSE"));
-		return service.updateVehicle(request);
+		return service.updateVehicle(request, -1);
 	}
 	
 	@RequestMapping(value="/vehicle/{vehicle_id}", method = RequestMethod.DELETE)
@@ -65,9 +65,14 @@ public class WmRestController {
 		return service.deleteVehicle(vehicle_id);
 	}
 	
-	@RequestMapping(value="/history", method = RequestMethod.POST)
+	@RequestMapping(value="/history", method = RequestMethod.GET)
 	public Object history(HttpServletRequest request) {
-		return service.getHistory(request, null);
+		return service.listHistory(request, null, -1);
+	}
+
+	@RequestMapping(value={"/historyvehicle", "/vehiclehistory"}, method = RequestMethod.GET)
+	public Object history_vehicle(HttpServletRequest request) {
+		return service.getVehicleHistory(request);
 	}
 	
 	@RequestMapping(value="/employee", method = RequestMethod.POST)
@@ -93,5 +98,25 @@ public class WmRestController {
 	@RequestMapping(value="/update_vehicle_model", method = RequestMethod.POST)
 	public Object update_vehicle_model(HttpServletRequest request) {
 		return service.updateVehicleModel(request);
+	}
+	
+	@RequestMapping(value="/update_vehicle_user_name", method = RequestMethod.POST)
+	public Object update_vehicle_user_name(HttpServletRequest request) {
+		return service.updateVehicleUserName(request);
+	}
+	
+	@RequestMapping(value="/update_vehicle_phone_number", method = RequestMethod.POST)
+	public Object update_vehicle_phone_number(HttpServletRequest request) {
+		return service.updateVehiclePhoneNumber(request);
+	}
+	
+	@RequestMapping(value="/update_vehicle_birth", method = RequestMethod.POST)
+	public Object update_vehicle_birth(HttpServletRequest request) {
+		return service.updateVehicleBirth(request);
+	}
+	
+	@RequestMapping(value="/update_vehicle_comment", method = RequestMethod.POST)
+	public Object update_vehicle_comment(HttpServletRequest request) {
+		return service.updateVehicleComment(request);
 	}
 }

@@ -10,6 +10,7 @@
 </head>
 <body>
 <div id="vehicle_list"></div>
+<input id="stop_sse" type="button">
     <script src="js/vendor/jquery.min.js"></script>
 	<script>
 		var vehicle_id = 0;
@@ -17,8 +18,11 @@
 		var format;
 		var columnsIn;
 		var value;
+		var source;
 		if(typeof(EventSource) !== "undefined") {
-		    var source = new EventSource("/sseTest");
+		    source = new EventSource("/sseTest");
+		    // 끄기
+		    // source.onmessage.close();
 		    source.onmessage = function(event) {
 		    	msg = JSON.parse(event.data);
 		    	format = "";
@@ -44,9 +48,6 @@
 		} else {
 		    document.getElementById("sseDiv").innerHTML = "Your browser does not support server-sent events.";
 		}
-		function sleep(ms) {
-			return new Promise(resolve => setTimeout(resolve, ms));
-		}
 		function reset(item) {
 			for(var key in item) {
 				if($("#vehicle"+item.vehicle_ID+" ."+key.toUpperCase()).html() != item[key]) {
@@ -54,6 +55,9 @@
 				}
 			}
 		}
+		$("#stop_sse").click(function() {
+			source.close();
+		});
 	</script>
 </body>
 </html>

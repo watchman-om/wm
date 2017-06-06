@@ -10,15 +10,23 @@
     	ORDER BY VEHICLE_ID
     </select>
     <insert id="insertVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" useGeneratedKeys="true" keyProperty="VEHICLE_ID">
-    	INSERT INTO VEHICLE(LICENSE, IS_NOTIFIABLE) VALUES(#{LICENSE}, #{IS_NOTIFIABLE})
+    	INSERT INTO VEHICLE(LICENSE, IS_NOTIFIABLE, MODEL, USER_NAME, BIRTH, PHONE_NUMBER, COMMENT) VALUES(#{LICENSE}, #{IS_NOTIFIABLE}, #{MODEL}, #{USER_NAME}, #{BIRTH}, #{PHONE_NUMBER}, #{COMMENT})
     </insert>
     <insert id="insertHistory" parameterType="com.onnurimotors.wm.model.HISTORY">
     	INSERT INTO HISTORY(VEHICLE_ID, DATE_VISIT, TIME_VISIT) VALUES(#{VEHICLE_ID}, #{DATE_VISIT}, #{TIME_VISIT})
     </insert>
-    <select id="selectHistory" parameterType="com.onnurimotors.wm.model.HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
-    	SELECT * FROM HISTORY WHERE #{HISTORY_ID} = -1 OR HISTORY_ID = #{HISTORY_ID}
+    <select id="selectHistory" parameterType="com.onnurimotors.wm.model.PARAMETER_HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT * FROM HISTORY
+    	WHERE #{HISTORY_ID} = -1 OR HISTORY_ID = #{HISTORY_ID}
+    	ORDER BY HISTORY_ID DESC
+    	LIMIT #{PAGE}, #{SIZE_PAGE}
     </select>
-    <select id="selectHistoryVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE_HISTORY">
+    <select id="selectAllHistory" parameterType="com.onnurimotors.wm.model.PARAMETER_HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT * FROM HISTORY
+    	WHERE #{HISTORY_ID} = -1 OR HISTORY_ID = #{HISTORY_ID}
+    	ORDER BY HISTORY_ID DESC
+    </select>
+    <select id="selectAllHistoryVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE_HISTORY">
     	SELECT V.*, H.* FROM VEHICLE V, HISTORY H WHERE V.VEHICLE_ID = H.VEHICLE_ID
 			AND (#{LICENSE} = "" OR V.LICENSE = #{LICENSE})
 		ORDER BY H.DATE_VISIT DESC, H.TIME_VISIT DESC
@@ -43,6 +51,7 @@
 			AND (#{LICENSE} = "" OR V.LICENSE = #{LICENSE})
 			AND (#{FROM_DATE} = "" OR H.DATE_VISIT &gt;= #{FROM_DATE})
 			AND (#{TO_DATE} = "" OR H.DATE_VISIT &lt;= #{TO_DATE})
+			AND (#{HISTORY_ID} = -1 OR H.HISTORY_ID = #{HISTORY_ID})
 		ORDER BY H.DATE_VISIT DESC, H.TIME_VISIT DESC
 		LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
     </select>
@@ -59,10 +68,44 @@
     	UPDATE VEHICLE SET MODEL = #{MODEL} WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
     <update id="updateVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE">
-    	UPDATE VEHICLE SET LICENSE = #{LICENSE}, IS_NOTIFIABLE = #{IS_NOTIFIABLE}, MODEL = #{MODEL}, USER_NAME = #{USER_NAME}, BIRTH = #{BIRTH}, PHONE_NUMBER = #{PHONE_NUMBER}, COMMENT = #{COMMENT} 
+    	UPDATE VEHICLE SET IS_NOTIFIABLE = #{IS_NOTIFIABLE}, MODEL = #{MODEL}, USER_NAME = #{USER_NAME}, BIRTH = #{BIRTH}, PHONE_NUMBER = #{PHONE_NUMBER}, COMMENT = #{COMMENT} 
     	WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
     <delete id="deleteVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE">
     	DELETE FROM VEHICLE WHERE VEHICLE_ID = #{VEHICLE_ID}
     </delete>
+    <delete id="deleteHistory" parameterType="com.onnurimotors.wm.model.HISTORY">
+    	DELETE FROM HISTORY WHERE HISTORY_ID = #{HISTORY_ID}
+    </delete>
+    <select id="selectVehiclePage" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    	SELECT * FROM VEHICLE
+    	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
+    		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
+    	ORDER BY VEHICLE_ID
+    	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
+    </select>
+    <select id="selectAllVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    	SELECT * FROM VEHICLE
+    	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
+    		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
+    	ORDER BY VEHICLE_ID
+    </select>
+    <update id="updateVehicleUserName" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	UPDATE VEHICLE SET USER_NAME = #{USER_NAME} WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </update>
+    <update id="updateVehiclePhoneNumber" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	UPDATE VEHICLE SET PHONE_NUMBER = #{PHONE_NUMBER} WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </update>
+    <update id="updateVehicleBirth" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	UPDATE VEHICLE SET BIRTH = #{BIRTH} WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </update>
+    <update id="updateVehicleComment" parameterType="com.onnurimotors.wm.model.VEHICLE">
+    	UPDATE VEHICLE SET COMMENT = #{COMMENT} WHERE VEHICLE_ID = #{VEHICLE_ID}
+    </update>
+    <insert id="insertManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT" useGeneratedKeys="true" keyProperty="MANAGEMENT_ID">
+    	INSERT INTO MANAGEMENT(DATE_MNG, COMMENT) VALUES(#{DATE_MNG}, #{COMMENT})
+    </insert>
+    <insert id="insertVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    	INSERT INTO VEHICLE_MANAGEMENT(VEHICLE_ID, MANAGEMENT_ID) VALUES(#{VEHICLE_ID}, #{MANAGEMENT_ID})
+    </insert>
 </mapper>

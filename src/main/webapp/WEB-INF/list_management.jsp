@@ -46,7 +46,8 @@
 
         <!-- Modernizr (browser feature detection library) -->
         <script src="js/vendor/modernizr.min.js"></script>
-		<script src="js/ajax.js?ver=5"></script>
+		<script src="js/ajax.js?ver=13"></script>
+		<script src="js/refinestring.js?ver=2"></script>
         <script>
 			function edit_model() {
 				if($("#btn_edit_model").html() == "수정") {
@@ -61,6 +62,70 @@
 						$("#model").css("display", "");
 						$("#input_model").css("display", "none");
 						$("#model").html(jsonObj.model);
+					});
+				}
+			}
+			function edit_user_name() {
+				if($("#btn_edit_user_name").html() == "수정") {
+					$("#btn_edit_user_name").html("적용");
+					$("#user_name").css("display", "none");
+					$("#input_user_name").css("display", "");
+					$("#input_user_name").val($("#user_name").html());
+				} else {
+					ajax_update_vehicle_user_name("${param.vehicle_id}", $("#input_user_name").val(), function(json) {
+						var jsonObj = JSON.parse(JSON.stringify(json));
+						$("#btn_edit_user_name").html("수정");
+						$("#user_name").css("display", "");
+						$("#input_user_name").css("display", "none");
+						$("#user_name").html(jsonObj.user_NAME);
+					});
+				}
+			}
+			function edit_phone_number() {
+				if($("#btn_edit_phone_number").html() == "수정") {
+					$("#btn_edit_phone_number").html("적용");
+					$("#phone_number").css("display", "none");
+					$("#input_phone_number").css("display", "");
+					$("#input_phone_number").val($("#phone_number").html());
+				} else {
+					ajax_update_vehicle_phone_number("${param.vehicle_id}", $("#input_phone_number").val(), function(json) {
+						var jsonObj = JSON.parse(JSON.stringify(json));
+						$("#btn_edit_phone_number").html("수정");
+						$("#phone_number").css("display", "");
+						$("#input_phone_number").css("display", "none");
+						$("#phone_number").html(jsonObj.phone_NUMBER);
+					});
+				}
+			}
+			function edit_birth() {
+				if($("#btn_edit_birth").html() == "수정") {
+					$("#btn_edit_birth").html("적용");
+					$("#birth").css("display", "none");
+					$("#input_birth").css("display", "");
+					$("#input_birth").val($("#birth").html());
+				} else {
+					ajax_update_vehicle_birth("${param.vehicle_id}", $("#input_birth").val(), function(json) {
+						var jsonObj = JSON.parse(JSON.stringify(json));
+						$("#btn_edit_birth").html("수정");
+						$("#birth").css("display", "");
+						$("#input_birth").css("display", "none");
+						$("#birth").html(jsonObj.birth);
+					});
+				}
+			}
+			function edit_comment() {
+				if($("#btn_edit_comment").html() == "수정") {
+					$("#btn_edit_comment").html("적용");
+					$("#comment").css("display", "none");
+					$("#input_comment").css("display", "");
+					$("#input_comment").val(refineContentRev($("#comment").html()));
+				} else {
+					ajax_update_vehicle_comment("${param.vehicle_id}", refineContent($("#input_comment").val()), function(json) {
+						var jsonObj = JSON.parse(JSON.stringify(json));
+						$("#btn_edit_comment").html("수정");
+						$("#comment").css("display", "");
+						$("#input_comment").css("display", "none");
+						$("#comment").html(jsonObj.comment);
 					});
 				}
 			}
@@ -131,7 +196,7 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-brush"></i>차량관리<br><small>차량을 관리하세요</small>
+                                    <i class="gi gi-car"></i>차량관리<br><small>차량을 관리하세요</small>
                                 </h1>
                             </div>
                         </div>
@@ -146,7 +211,8 @@
                         <div class="block">
                             <!-- Example Title -->
                             <div class="block-title">
-                                <div class="block-options pull-right">
+                            	<div class="block-options pull-right">
+                                    <a href="/vehicle/${vehicles[0].VEHICLE_ID}/editview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="" data-original-title="Settings"><i class="fa fa-pencil"></i></a>
                                 </div>
                                 <h2>차량관리</h2>
                             </div>
@@ -170,14 +236,31 @@
 								</tr>
 								<tr>
 									<td>고객명</td>
-									<td>${vehicles[0].USER_NAME}</td>
+									<td>
+										<span id="user_name">${vehicles[0].USER_NAME}</span>
+										<input id="input_user_name" type="text" style="display:none" />
+										<a href="javascript:edit_user_name()"><span id="btn_edit_user_name">수정</span></a>
+									</td>
 									<td>연락처</td>
-									<td>${vehicles[0].PHONE_NUMBER}</td>
+									<td>
+										<span id="phone_number">${vehicles[0].PHONE_NUMBER}</span>
+										<input id="input_phone_number" type="text" style="display:none" />
+										<a href="javascript:edit_phone_number()"><span id="btn_edit_phone_number">수정</span></a>
+									</td>
 									<td>생년월일</td>
-									<td>${vehicles[0].BIRTH}</td>
+									<td>
+										<span id="birth">${vehicles[0].BIRTH}</span>
+										<input id="input_birth" type="text" style="display:none" />
+										<a href="javascript:edit_birth()"><span id="btn_edit_birth">수정</span></a>
+									</td>
 								</tr>
 								<tr>
-									<td colspan="6">${vehicles[0].COMMENT}</td>
+									<td>메모</td>
+									<td colspan="5">
+										<span id="comment">${vehicles[0].COMMENT}</span>
+										<textarea id="input_comment" style="display:none"></textarea>
+										<a href="javascript:edit_comment()"><span id="btn_edit_comment">수정</span></a>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -185,19 +268,41 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
-                                	<a href="vehicle_detail?vehicle_id=${vehicles[0].VEHICLE_ID}" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="점검 추가" ><i class="fa fa-plus"></i></a>
+                                	<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="차량 점검 내역 추가" ><i class="fa fa-plus"></i></a>
                                 </div>
                                 <h2>차량 점검 내역</h2>
                             </div>
 							<table class="table table-striped table-vcenter">
-								<c:forEach items="${managements}" var="list">
-									<tr onclick="location.href='form_management?is_new=0&mangement_id=${list.MANAGEMENT_ID}'">
-										<td>${list.DATE_MNG}</td>
+								<thead>
+									<tr>
+										<th>점검 날짜</th>
+										<th>차량ID</th>
+										<th>기록</th>
+										<th style="width: 150px;" class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<c:forEach items="${managements}" var="management">
+									<tr onclick="location.href='form_management?is_new=0&mangement_id=${management.MANAGEMENT_ID}'">
+										<td>${management.DATE_MNG}</td>
 										<td>${param.vehicle_id}</td>
-										<td>메모</td>
-										<td>${list.COMMENT}</td>
+										<td>${management.COMMENT}</td>
+										<td>
+											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"
+												title="수정" class="btn btn-default"><i
+												class="fa fa-pencil"></i></a>
+											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/delete"
+												data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
+												class="fa fa-times"></i></a>
+										</td>
 									</tr>
 								</c:forEach>
+								<c:if test="${fn:length(managements) == 0}">
+									<tr>
+										<td colspan="4">
+											점검 내역이 없습니다.
+										</td>
+									</tr>
+								</c:if>
 							</table>
                             <!-- END Example Content -->
                         </div>

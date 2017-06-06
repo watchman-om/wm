@@ -113,7 +113,7 @@
 					<div class="content-header">
 						<div class="header-section">
 							<h1>
-								<i class="gi gi-table"></i>차량목록<br> 
+								<i class="gi gi-cars"></i>차량목록<br> 
 								<small>방문한 차량들의 목록을 확인할 수 있습니다.</small>
 							</h1>
 						</div>
@@ -138,11 +138,11 @@
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
 						<div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
-								<a href="/form_vehicle?is_new=1" class="btn btn-primary"
+								<a href="/vehicle/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 추가</a>
 							</div>
 							<div class="btn-group btn-group-sm pull-left">
-								<a href="javascript:void(0)" class="btn btn-primary"
+								<a href="/vehicle/delete" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 삭제</a>
 							</div>
 						</div>
@@ -152,7 +152,6 @@
 									<tr>
 										<th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th>
-										<th style="width: 150px;" class="text-center">사진</th>
 										<th>차량번호</th>
 										<th>차종</th>
 										<th>소유주</th>
@@ -161,27 +160,6 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${vehicles}" var="vehicle">
-										<tr>
-											<td class="text-center"><input type="checkbox" id="checkbox1-1" name="checkbox1-1"></td>
-											<td class="text-center"><img
-												src="img/placeholders/avatars/avatar1.jpg" alt="avatar"class="img-circle"></td>
-											<td><a href="list_management?vehicle_id=${vehicle.VEHICLE_ID}">${vehicle.LICENSE}</a></td>
-											<td>${vehicle.MODEL}</td>
-											<td>${vehicle.USER_NAME}</td>
-											<td><a href="javascript:void(0)" class="label label-warning">Trial</a>
-											</td>
-											<td class="text-center">
-												<div class="btn-group btn-group-xs">
-													<a href="javascript:void(0)" data-toggle="tooltip"
-														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> <a href="javascript:delete_vehicle(${vehicle.VEHICLE_ID})"
-														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-														class="fa fa-times"></i></a>
-												</div>
-											</td>
-										</tr>
-									</c:forEach>
 								</tbody>
 								<tfoot>
 									<tr>
@@ -212,6 +190,10 @@
 													class="btn btn-primary" data-toggle="tooltip"
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
+										</td>
+									</tr>
+									<tr>
+										<td id="page_wrapper" colspan="7" style="text-align: center;">
 										</td>
 									</tr>
 								</tfoot>
@@ -250,9 +232,147 @@
 	<script src="js/vendor/bootstrap.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/ajax.js?ver=11"></script>
 
 	<!-- Load and execute javascript code used only in this page -->
 	<script src="js/pages/tablesGeneral.js"></script>
 	<script>$(function(){ TablesGeneral.init(); });</script>
+	<script>
+		var page, size_page;
+		var source, source2;
+		$(function() {
+			page = 1;
+			size_page = 10;
+			start_sse();
+		});
+		function start_sse() {
+			if(typeof(EventSource) !== "undefined") {
+				var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page;
+			    source = new EventSource("/sse/vehicle"+param);
+			    source.onmessage = function(event) {
+			    	var msg = JSON.parse(event.data);
+			    	make_rows(msg);
+			    };
+			    source2 = new EventSource("/sse/vehicle/count");
+			    source2.onmessage = function(event) {
+			    	make_pages(event.data);
+			    };
+			}
+		}
+		function stop_sse() {
+			source.close();
+			source2.close();
+		}
+		function set_page(to_page) {
+			stop_sse();
+			page = to_page;
+			start_sse();
+		}
+		function make_rows(list) {
+			var format;
+			var label_is_notifiable;
+			var state_is_notifiable;
+			var tbody = $("#general-table tbody");
+			tbody.empty();
+			if(list.keys(list).length == 0) {
+				format =	"<tr>"
+						+		"<td colspan='7'>등록된 차량이 없습니다.</td>"
+						+	"</tr>";
+				tbody.append(format);
+			}
+			else {
+				for(var idx = 0, item; item = list[idx]; idx++) {
+					if(item.is_NOTIFIABLE == "1") {
+						label_is_notifiable = "알림";
+						state_is_notifiable = "success";
+					} else {
+						label_is_notifiable = "알림해제";
+						state_is_notifiable = "danger";
+					}
+					format =	"<tr class='unit' id='"+item.history_ID+"'>"
+							+		"<td class='text-center'>"
+							+			"<input type='checkbox' id='checkbox1-1' name='checkbox1-1'>"
+							+		"</td>"
+							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
+							+		"<td>"+item.model+"</td>"
+							+		"<td>"+item.user_NAME+"</td>"
+							+		"<td>"
+							+			"<a href='javascript:toggle_notifiable("+item.vehicle_ID+")' class='label label-"+state_is_notifiable+"' id='label_is_notifiable"+item.vehicle_ID+"'>"+label_is_notifiable+"</a>"
+							+			"<input type='hidden' id='input_is_notifiable"+item.vehicle_ID+"' value='"+item.is_NOTIFIABLE+"'>"
+							+		"</td>"
+							+		"<td class='text-center'>"
+							+			"<div class='btn-group btn-group-xs'>"
+							+				"<a href='/vehicle/"+item.vehicle_ID+"/editview' data-toggle='tooltip' title='수정' class='btn btn-default'>"
+							+					"<i class='fa fa-pencil'></i>"
+							+				"</a>"
+							+				"<a href='javascript:delete_prompt("+item.vehicle_ID+")' data-toggle='tooltip' title='삭제' class='btn btn-danger'>"
+							+					"<i class='fa fa-times'></i>"
+							+				"</a>"
+							+			"</div>"
+							+		"</td>"
+							+	"</tr>";
+					tbody.append(format);
+				}
+			}
+		}
+		function make_pages(data) {
+			var first = page - 5;
+			var last = page + 5;
+			var format;
+			var page_wrapper = $("#page_wrapper");
+			
+			page_wrapper.empty();
+			
+			if(first < 1) {
+				first = 1;
+			}
+			if(last > (data-1)/size_page + 1) {
+				last = (data-1)/size_page + 1;
+			}
+			
+			if(first > 1) {
+				format = "<a href='javascript:set_page(1)' style='margin: 10px;'>&lt;&lt;</a>";
+				page_wrapper.append(format);
+			}
+			for(var idx = first; idx < last; idx++) {
+				if(idx != page) {
+					format = "<a href='javascript:set_page("+idx+")' style='margin: 10px;'>"+idx+"</a>";
+				} else {
+					format = "<span style='margin: 10px;'>"+idx+"</span>";
+				}
+				page_wrapper.append(format);
+			}
+			if(last < (data-1)/size_page+1) {
+				format = "<a href='javascript:set_page("+((data-1)/size_page+1)+")' style='margin: 10px;'>&gt;&gt;</a>";
+				page_wrapper.append(format);
+			}
+		}
+		function toggle_notifiable(vehicle_id) {
+			var state_now = $("#input_is_notifiable"+vehicle_id).val();
+			if(state_now == 1) {
+				state_now = "on";
+			} else {
+				state_now = "off";
+			}
+			ajax_toggle_notifiable(vehicle_id, state_now, function(json) {
+				var jsonObj = JSON.parse(JSON.stringify(json));
+				if(jsonObj.is_NOTIFIABLE == "1") {
+					$("#label_is_notifiable"+vehicle_id).attr("class", "label label-success");
+					$("#label_is_notifiable"+vehicle_id).html("알림");
+					$("#input_is_notifiable"+vehicle_id).val(1);
+				} else {
+					$("#label_is_notifiable"+vehicle_id).attr("class", "label label-danger");
+					$("#label_is_notifiable"+vehicle_id).html("알림해제");
+					$("#input_is_notifiable"+vehicle_id).val(0);
+				}
+			});
+		}
+		function delete_prompt(vehicle_id) {
+			var test = confirm("정말로 삭제하시겠습니까?");
+			if(test == true) {
+				location.href = "/vehicle/"+vehicle_id+"/delete";
+			}
+		}
+	</script>
 </body>
 </html>

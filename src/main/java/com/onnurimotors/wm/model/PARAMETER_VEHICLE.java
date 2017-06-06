@@ -15,6 +15,7 @@ public class PARAMETER_VEHICLE {
 	private String FROM_DATE;
 	private String TO_DATE;
 	private int MANAGEMENT_ID;
+	private int HISTORY_ID;
 	
 	public int getVEHICLE_ID() {
 		return VEHICLE_ID;
@@ -94,5 +95,11 @@ public class PARAMETER_VEHICLE {
 	}
 	public void setMANAGEMENT_ID(int mANAGEMENT_ID) {
 		MANAGEMENT_ID = mANAGEMENT_ID;
+	}
+	public int getHISTORY_ID() {
+		return HISTORY_ID;
+	}
+	public void setHISTORY_ID(int hISTORY_ID) {
+		HISTORY_ID = hISTORY_ID;
 	}
 }

@@ -102,13 +102,13 @@
                         <div class="content-header">
                             <div class="header-section">
                                 <h1>
-                                    <i class="gi gi-group"></i>수신자 추가<br><small>카카오톡 알림을 받을 수신자를 추가 하세요.</small>
+                                    <i class="gi gi-cars"></i>차량 수정<br><small>관리할 차량의 정보를 수정 하세요.</small>
                                 </h1>
                             </div>
                         </div>
                         <ul class="breadcrumb breadcrumb-top">
-                            <li><a href="/receivers">수신자 목록</a></li>
-                            <li>수신자 추가</li>
+                            <li><a href="/list_vehicle">차량 목록</a></li>
+                            <li>차량 정</li>
                         </ul>
                         <!-- END Page Header -->
 
@@ -116,40 +116,59 @@
 	                        <!-- Basic Form Elements Title -->
 	                        <div class="block-title">
 	                            <div class="block-options pull-right">
-	                                <a href="/receivers" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
+	                                <a href="/list_vehicle" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
 	                            </div>
-	                            <h2><strong>수신자 추가</strong> 정보입력</h2>
+	                            <h2><strong>차량</strong> 수정입력</h2>
 	                        </div>
 	                        <!-- END Form Elements Title -->
 	
 	                        <!-- Basic Form Elements Content -->
-	                        <form action="add" method="post" class="form-horizontal form-bordered">
+	                        <form action="/vehicle/${vehicles[0].VEHICLE_ID}/edit" method="post" class="form-horizontal form-bordered">
 	                        	<div class="form-group">
-	                                <label class="col-md-3 control-label" for="NAME">이름</label>
+	                                <label class="col-md-3 control-label" for="NAME">차량번호</label>
+	                                <div class="col-md-9">${vehicles[0].LICENSE}</div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">모델</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름">
+	                                    <input type="text" id="input_model" name="MODEL" class="form-control" placeholder="모델" value="${vehicles[0].MODEL}">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">고객명</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID">
+	                                    <input type="text" id="input_user_name" name="USER_NAME" class="form-control" placeholder="고객명" value="${vehicles[0].USER_NAME}">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-select">직급</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">연락처</label>
 	                                <div class="col-md-9">
-	                                    <select id="example-select" name="example-select" class="form-control" size="1">
-	                                        <option value="0">Please select</option>
-	                                        <option value="1">Option #1</option>
-	                                        <option value="2">Option #2</option>
-	                                        <option value="3">Option #3</option>
-	                                    </select>
+	                                    <input type="text" id="input_phone_number" name="PHONE_NUMBER" class="form-control" placeholder="연락처" value="${vehicles[0].PHONE_NUMBER}">
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">생년월일</label>
+	                                <div class="col-md-9">
+	                                    <input type="text" id="input_birth" name="BIRTH" class="form-control" placeholder="생년월일" value="${vehicles[0].BIRTH}">
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">알림여부</label>
+	                                <div class="col-md-9">
+	                                    <label class="switch switch-default"><input type="checkbox" 
+	                                    <c:if test="${vehicles[0].IS_NOTIFIABLE eq 1}">checked</c:if> onchange="javascript:toggle_is_notifiable(this)"><span></span></label>
+	                                    <input type="hidden" id="input_is_notifiable" name="IS_NOTIFIABLE" value="${vehicles[0].IS_NOTIFIABLE}" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">메모</label>
+	                                <div class="col-md-9">
+	                                    <textarea id="input_comment" name="COMMENT" class="form-control" placeholder="메모"></textarea>
 	                                </div>
 	                            </div>
 	                            <div class="form-group form-actions">
 	                                <div class="col-md-9 col-md-offset-3">
-	                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> 제출</button>
+	                                    <button type="button" class="btn btn-sm btn-primary" onclick="javascript:submit_fn()"><i class="fa fa-angle-right"></i> 제출</button>
 	                                    <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 리셋</button>
 	                                </div>
 	                            </div>
@@ -186,5 +205,24 @@
         <script src="<c:url value='/'/>js/vendor/bootstrap.min.js"></script>
         <script src="<c:url value='/'/>js/plugins.js"></script>
         <script src="<c:url value='/'/>js/app.js"></script>
+        <script src="<c:url value='/'/>js/ajax.js?ver=12"></script>
+		<script src="<c:url value='/'/>js/refinestring.js?ver=2"></script>
+        <script>
+        	$(function() {
+        		$("#input_comment").val(refineContentRev("${vehicles[0].COMMENT}"));
+        	});
+        	function toggle_is_notifiable(obj) {
+        		if(obj.checked) {
+					$("#input_is_notifiable").val(1);
+        		} else {
+					$("#input_is_notifiable").val(0);
+        		}
+        	}
+        	function submit_fn() {
+        		ajax_update_vehicle("${vehicles[0].VEHICLE_ID}", "${vehicles[0].LICENSE}", $("#input_is_notifiable").val(), $("#input_model").val(), $("#input_user_name").val(), $("#input_birth").val(), $("#input_phone_number").val(), refineContent($("#input_comment").val()), function(json) {
+        			location.href = "/list_management?vehicle_id=${vehicles[0].VEHICLE_ID}";
+        		});
+        	}
+        </script>
     </body>
 </html>
