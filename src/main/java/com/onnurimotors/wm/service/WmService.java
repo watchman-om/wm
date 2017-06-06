@@ -224,7 +224,7 @@ public class WmService {
 		if(vid != -1) {
 			vehicle.setVEHICLE_ID(vid);
 		}
-		ArrayList<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
+		List<VEHICLE> vehicles = (ArrayList<VEHICLE>) session.selectList("watchman.mybatis.selectVehicle", vehicle);
 		
 		if(model != null) {
 			model.addAttribute("vehicles", vehicles);
@@ -237,21 +237,6 @@ public class WmService {
 
 	public void dbViewer(Model model) {
 		getVehicle(null, model, -1);
-	}
-
-	public Object getEmployee(HttpServletRequest request, Model model) {
-		SqlSession session = sqlSession();
-		EMPLOYEE employee = new EMPLOYEE();
-		employee.setEMPLOYEE_ID(-1);
-		ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>) session.selectList("watchman.mybatis.selectEmployee", employee);
-		
-		if(model != null) {
-			model.addAttribute("employees", employees);
-		}
-		
-		session.close();
-		
-		return employees;
 	}
 
 	public Object getVehicleManagement(HttpServletRequest request, Model model) {

@@ -5,6 +5,7 @@ public class EMPLOYEE {
 	private String KAKAO_ACCOUNT;
 	private int IS_RECEIVING_KAKAO;
 	private String NAME;
+	
 	public int getEMPLOYEE_ID() {
 		return EMPLOYEE_ID;
 	}

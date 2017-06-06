@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onnurimotors.wm.model.VEHICLE;
+import com.onnurimotors.wm.service.ReceiverService;
 import com.onnurimotors.wm.service.WmService;
 
 @RestController
@@ -29,6 +30,9 @@ public class WmRestController {
 	@Autowired
 	private WmService service;
 
+	@Autowired
+	private ReceiverService rSerivce;
+	
 	@RequestMapping(value="/visit", method = RequestMethod.POST)
 	public Object visit(HttpServletRequest request) {
 		return service.visit(request);
@@ -77,7 +81,7 @@ public class WmRestController {
 	
 	@RequestMapping(value="/employee", method = RequestMethod.POST)
 	public Object employee(HttpServletRequest request) {
-		return service.getEmployee(request, null);
+		return rSerivce.getEmployee(request, null);
 	}
 	
 	@RequestMapping(value="/vehicle_management", method = RequestMethod.POST)
