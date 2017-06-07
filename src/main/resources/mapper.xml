@@ -38,7 +38,7 @@
 		LIMIT 5
     </select>
     <insert id="insertEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
-    	INSERT INTO EMPLOYEE(EMPLOYEE_ID, KAKAO_ACCOUNT, IS_RECEIVING_KAKAO, NAME) VALUES(#{EMPLOYEE_ID}, #{KAKAO_ACCOUNT}, #{IS_RECEIVING_KAKAO}, #{NAME})
+    	INSERT INTO EMPLOYEE(KAKAO_ACCOUNT, IS_RECEIVING_KAKAO, NAME) VALUES(#{KAKAO_ACCOUNT}, #{IS_RECEIVING_KAKAO}, #{NAME})
     </insert>
     <select id="selectEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE WHERE #{EMPLOYEE_ID} = -1 OR EMPLOYEE_ID = #{EMPLOYEE_ID}
@@ -111,4 +111,35 @@
     <insert id="insertVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
     	INSERT INTO VEHICLE_MANAGEMENT(VEHICLE_ID, MANAGEMENT_ID) VALUES(#{VEHICLE_ID}, #{MANAGEMENT_ID})
     </insert>
+    <delete id="deleteManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    	DELETE FROM MANAGEMENT
+    	WHERE (#{VEHICLE_ID} = -1 AND MANAGEMENT_ID = #{MANAGEMENT_ID})
+    		OR (#{MANAGEMENT_ID} = -1 AND MANAGEMENT_ID IN (SELECT MANAGEMENT_ID FROM VEHICLE_MANAGEMENT WHERE VEHICLE_ID = #{VEHICLE_ID}))
+    </delete>
+    <delete id="deleteVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    	DELETE FROM VEHICLE_MANAGEMENT WHERE (MANAGEMENT_ID = #{MANAGEMENT_ID} OR #{MANAGEMENT_ID} = -1) AND (VEHICLE_ID = #{VEHICLE_ID} OR #{VEHICLE_ID} = -1)
+    </delete>
+    <select id="selectEmployeePage" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
+    	SELECT * FROM EMPLOYEE
+    	WHERE (#{NAME} = "" OR NAME = #{NAME})
+    		AND (#{EMPLOYEE_ID} = -1 OR EMPLOYEE_ID = #{EMPLOYEE_ID})
+    	ORDER BY EMPLOYEE_ID
+    	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
+    </select>
+    <select id="selectAllEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
+    	SELECT * FROM EMPLOYEE
+    	WHERE (#{NAME} = "" OR NAME = #{NAME})
+    		AND (#{EMPLOYEE_ID} = -1 OR EMPLOYEE_ID = #{EMPLOYEE_ID})
+    	ORDER BY EMPLOYEE_ID
+    </select>
+    <update id="updateEmployeeIsReceivingKakao" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
+    	UPDATE EMPLOYEE SET IS_RECEIVING_KAKAO = #{IS_RECEIVING_KAKAO} WHERE EMPLOYEE_ID = #{EMPLOYEE_ID} 
+    </update>
+    <update id="updateEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
+    	UPDATE EMPLOYEE SET KAKAO_ACCOUNT = #{KAKAO_ACCOUNT}, IS_RECEIVING_KAKAO = #{IS_RECEIVING_KAKAO}, NAME = #{NAME}
+    	WHERE EMPLOYEE_ID = #{EMPLOYEE_ID}
+    </update>
+    <delete id="deleteEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
+    	DELETE FROM EMPLOYEE WHERE EMPLOYEE_ID = #{EMPLOYEE_ID}
+    </delete>
 </mapper>

@@ -285,3 +285,19 @@ function ajax_insert_vehicle_total(license, is_notifiable, model, user_name, bir
 		}
 	});
 }
+
+function ajax_toggle_receiving_kakao(employee_id, is_receiving_kakao, callback) {
+	$.ajax({
+		type:"POST",
+		url:"/toggle_receiving_kakao",
+		data : {EMPLOYEE_ID: employee_id, IS_RECEIVING_KAKAO: is_receiving_kakao},
+		dataType : "json",
+        async: true,
+	    success: function(json){
+	    	callback(json);
+	    },
+	    error: function(xhr, status, error) {
+	        alert(error);
+	    }
+	});
+}

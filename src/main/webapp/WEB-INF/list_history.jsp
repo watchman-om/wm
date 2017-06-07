@@ -250,6 +250,9 @@
 			start_sse();
 		}
 		function make_rows(list) {
+			if($("#general-table input[name='checkbox1']:checked").length > 0) {
+				return;
+			}
 			var format;
 			var tbody = $("#general-table tbody");
 			tbody.empty();
@@ -263,7 +266,7 @@
 				for(var idx = 0, item; item = list[idx]; idx++) {
 					format =	"<tr class='unit' id='"+item.history_ID+"'>"
 							+		"<td class='text-center'>"
-							+			"<input type='checkbox' id='checkbox1-1' name='checkbox1-1'>"
+							+			"<input type='checkbox' id='cb1"+item.history_ID+"' name='checkbox1'>"
 							+		"</td>"
 							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
 							+		"<td>"+item.date_VISIT+" "+item.time_VISIT+"</td>"
@@ -286,6 +289,9 @@
 			}
 		}
 		function make_pages(data) {
+			if($("#general-table input[name='checkbox1']:checked").length > 0) {
+				return;
+			}
 			var first = page - 5;
 			var last = page + 5;
 			var format;
@@ -304,7 +310,7 @@
 				format = "<a href='javascript:set_page(1)' style='margin: 10px;'>&lt;&lt;</a>";
 				page_wrapper.append(format);
 			}
-			for(var idx = first; idx < last; idx++) {
+			for(var idx = first; idx <= last; idx++) {
 				if(idx != page) {
 					format = "<a href='javascript:set_page("+idx+")' style='margin: 10px;'>"+idx+"</a>";
 				} else {

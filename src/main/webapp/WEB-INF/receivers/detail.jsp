@@ -117,7 +117,7 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
-                                    <a href="/receivers/${employee.EMPLOYEE_ID}/editview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수정"><i class="fa fa-pencil"></i></a>
+                                    <a href="/receivers/${employees[0].EMPLOYEE_ID}/editview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수정"><i class="fa fa-pencil"></i></a>
                                 </div>
                                 <h2>수신자 상세</h2>
                             </div>
@@ -128,9 +128,9 @@
 	                            <div class="widget-simple themed-background-autumn">
 	                                <h4 class="widget-content widget-content-light">
 	                                    <a href="" class="themed-color-dark-autumn">
-	                                        <strong>${employee.NAME}</strong>
+	                                        <strong>${employees[0].NAME}</strong>
 	                                    </a>
-	                                    <small>${employee.KAKAO_ACCOUNT}</small>
+	                                    <small>${employees[0].KAKAO_ACCOUNT}</small>
 	                                </h4>
 	                            </div>
 	                            <div class="widget-extra themed-background-dark-autumn">
@@ -138,7 +138,7 @@
 	                                    <div class="col-xs-4">
 	                                        <h3 class="widget-content-light">
 	                                        	<c:choose>
-													<c:when test="${employee.IS_RECEIVING_KAKAO==1}">
+													<c:when test="${employees[0].IS_RECEIVING_KAKAO==1}">
 														<a href="javascript:void(0)" class="themed-color-autumn">수신중</a>
 													</c:when>
 													<c:otherwise>

@@ -90,9 +90,6 @@ public class WmService {
         session.commit();
         
         // TODO
-        // SSE
-        
-        // TODO
         // msg to app used by employee of onnurimotors
         msg = "";
         if(vehicle.getIS_NOTIFIABLE() == 1) {
@@ -522,9 +519,14 @@ public class WmService {
 	}
 	
 	public Object deleteVehicle(int vehicle_id) {
-		SqlSession session = sqlSession();
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setVEHICLE_ID(vehicle_id);
+		VEHICLE_MANAGEMENT vm = new VEHICLE_MANAGEMENT();
+		vm.setVEHICLE_ID(vehicle_id);
+		vm.setMANAGEMENT_ID(-1);
+		deleteManagementByVehicle(vm);
+		deleteVehicleManagement(vm);
+		SqlSession session = sqlSession();
 		session.delete("watchman.mybatis.deleteVehicle", vehicle);
 		session.commit();
 		
@@ -776,5 +778,141 @@ public class WmService {
 		session.close();
 
 		return vehicle;
+	}
+
+	public void deleteManagement(int mid) {
+		VEHICLE_MANAGEMENT vm = new VEHICLE_MANAGEMENT();
+		vm.setMANAGEMENT_ID(mid);
+		vm.setVEHICLE_ID(-1);
+		
+		deleteVehicleManagement(vm);
+		
+		SqlSession session = sqlSession();
+		session.delete("watchman.mybatis.deleteManagement", vm);
+		session.commit();
+		
+		session.close();
+	}
+	
+	public void deleteManagementByVehicle(VEHICLE_MANAGEMENT vm) {
+		SqlSession session = sqlSession();
+		session.delete("watchman.mybatis.deleteManagement", vm);
+		session.commit();
+		session.close();
+	}
+
+	private void deleteVehicleManagement(VEHICLE_MANAGEMENT vm) {
+		SqlSession session = sqlSession();
+		session.delete("watchman.mybatis.deleteVehicleManagement", vm);
+		session.commit();
+		session.close();
+	}
+
+	public ResponseBodyEmitter sseEmployee(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(getEmployeePage(request, null));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
+	}
+
+	public ResponseBodyEmitter sseEmployeeCount(HttpServletRequest request) {
+        final SseEmitter emitter = new SseEmitter();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+        	try {
+        		emitter.send(getEmployeeCount(request));
+                Thread.sleep(2000);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		emitter.completeWithError(e);
+        		return;
+        	}
+        	emitter.complete();
+        });
+
+        return emitter;
+	}
+
+	public Object getEmployeePage(HttpServletRequest request, Model model) {
+		SqlSession session = sqlSession();
+		EMPLOYEE employee = new EMPLOYEE();
+		if(request != null) {
+			String name = request.getParameter("name");
+			String employee_id = request.getParameter("employee_id");
+			String flimit = request.getParameter("flimit");
+			String nlimit = request.getParameter("nlimit");
+			employee.setNAME("");
+			employee.setEMPLOYEE_ID(-1);
+			employee.setFROM_LIMIT(0);
+			employee.setNUM_LIMIT(10);
+			if(name != null && !name.equals("")) {
+				employee.setNAME(name);
+			}
+			if(employee_id != null && !employee_id.equals("")) {
+				employee.setEMPLOYEE_ID(Integer.parseInt(employee_id));
+			}
+			if(flimit != null && !flimit.equals("")) {
+				employee.setFROM_LIMIT(Integer.parseInt(flimit));
+			}
+			if(nlimit != null && !nlimit.equals("")) {
+				employee.setNUM_LIMIT(Integer.parseInt(nlimit));
+			}
+		}
+		ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>) session.selectList("watchman.mybatis.selectEmployeePage", employee);
+		
+		if(model != null) {
+			model.addAttribute("vehicles", employees);
+		}
+		
+		session.close();
+		
+		return employees;
+	}
+
+	private int getEmployeeCount(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		EMPLOYEE employee = new EMPLOYEE();
+		String name = request.getParameter("name");
+		String employee_id = request.getParameter("employee_id");
+		employee.setNAME("");
+		employee.setEMPLOYEE_ID(-1);
+		if(name != null && !name.equals("")) {
+			employee.setNAME(name);
+		}
+		if(employee_id != null && !employee_id.equals("")) {
+			employee.setEMPLOYEE_ID(Integer.parseInt(employee_id));
+		}
+		ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>)session.selectList("watchman.mybatis.selectAllEmployee", employee);
+		session.close();
+		return employees.size();
+	}
+
+	public Object toggleReceivingKakao(HttpServletRequest request) {
+		SqlSession session = sqlSession();
+		EMPLOYEE employee = new EMPLOYEE();
+		String is_receiving_kakao = request.getParameter("IS_RECEIVING_KAKAO");
+		employee.setEMPLOYEE_ID(Integer.parseInt(request.getParameter("EMPLOYEE_ID")));
+		if(is_receiving_kakao.equals("on")) {
+			employee.setIS_RECEIVING_KAKAO(0);
+		} else {
+			employee.setIS_RECEIVING_KAKAO(1);
+		}
+		session.update("watchman.mybatis.updateEmployeeIsReceivingKakao", employee);
+		session.commit();
+		
+		session.close();
+		
+		return employee;
 	}
 }

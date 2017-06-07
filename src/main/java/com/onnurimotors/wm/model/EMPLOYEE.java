@@ -5,6 +5,8 @@ public class EMPLOYEE {
 	private String KAKAO_ACCOUNT;
 	private int IS_RECEIVING_KAKAO;
 	private String NAME;
+	private int FROM_LIMIT;
+	private int NUM_LIMIT;
 	
 	public int getEMPLOYEE_ID() {
 		return EMPLOYEE_ID;
@@ -29,6 +31,18 @@ public class EMPLOYEE {
 	}
 	public void setNAME(String nAME) {
 		NAME = nAME;
+	}
+	public int getFROM_LIMIT() {
+		return FROM_LIMIT;
+	}
+	public void setFROM_LIMIT(int fROM_LIMIT) {
+		FROM_LIMIT = fROM_LIMIT;
+	}
+	public int getNUM_LIMIT() {
+		return NUM_LIMIT;
+	}
+	public void setNUM_LIMIT(int nUM_LIMIT) {
+		NUM_LIMIT = nUM_LIMIT;
 	}
 	@Override
 	public String toString() {

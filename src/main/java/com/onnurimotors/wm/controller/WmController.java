@@ -128,4 +128,19 @@ public class WmController {
     public ResponseBodyEmitter sse_vehicle_page(HttpServletRequest request) {
     	return service.sseVehicleCount(request);
     }
+
+    @RequestMapping("/testPost")
+    public String testPost(HttpServletRequest request) {
+    	return "/exPost";
+    }
+
+    @RequestMapping("/sse/employee")
+    public ResponseBodyEmitter sse_employee(HttpServletRequest request) {
+    	return service.sseEmployee(request);
+    }
+
+    @RequestMapping("/sse/employee/count")
+    public ResponseBodyEmitter sse_employee_page(HttpServletRequest request) {
+    	return service.sseEmployeeCount(request);
+    }
 }

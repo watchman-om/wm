@@ -124,33 +124,25 @@
 	
 	                        <!-- Basic Form Elements Content -->
 	                        <form action="edit" method="post" class="form-horizontal form-bordered">
-	                        	<input type="hidden" name="EMPLOYEE_ID" value="${employee.EMPLOYEE_ID}">
+	                        	<input type="hidden" name="EMPLOYEE_ID" value="${employees[0].EMPLOYEE_ID}">
 	                            <div class="form-group">
 	                                <label class="col-md-3 control-label" for="NAME">이름</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름" value="${employee.NAME}">
+	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름" value="${employees[0].NAME}">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID" value="${employee.KAKAO_ACCOUNT}">
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID" value="${employees[0].KAKAO_ACCOUNT}">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="IS_RECEIVING_KAKAO">수신 상태</label>
+	                                <label class="col-md-3 control-label" for="example-select">수신여부</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="IS_RECEIVING_KAKAO" name="IS_RECEIVING_KAKAO" class="form-control" placeholder="ID" value="${employee.IS_RECEIVING_KAKAO}">
-	                                </div>
-	                            </div>
-	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-select">직급</label>
-	                                <div class="col-md-9">
-	                                    <select id="example-select" name="example-select" class="form-control" size="1">
-	                                        <option value="0">Please select</option>
-	                                        <option value="1">Option #1</option>
-	                                        <option value="2">Option #2</option>
-	                                        <option value="3">Option #3</option>
+	                                    <select id="IS_RECEIVING_KAKAO" name="IS_RECEIVING_KAKAO" class="form-control" size="1">
+	                                        <option value="1">수신</option>
+	                                        <option value="0"<c:if test="${employees[0].IS_RECEIVING_KAKAO eq 0}">selected</c:if>>수신거부</option>
 	                                    </select>
 	                                </div>
 	                            </div>

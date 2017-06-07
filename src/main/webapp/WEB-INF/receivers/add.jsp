@@ -137,13 +137,11 @@
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="example-select">직급</label>
+	                                <label class="col-md-3 control-label" for="example-select">수신여부</label>
 	                                <div class="col-md-9">
-	                                    <select id="example-select" name="example-select" class="form-control" size="1">
-	                                        <option value="0">Please select</option>
-	                                        <option value="1">Option #1</option>
-	                                        <option value="2">Option #2</option>
-	                                        <option value="3">Option #3</option>
+	                                    <select id="IS_RECEIVING_KAKAO" name="IS_RECEIVING_KAKAO" class="form-control" size="1">
+	                                        <option value="1">수신</option>
+	                                        <option value="0">수신거부</option>
 	                                    </select>
 	                                </div>
 	                            </div>

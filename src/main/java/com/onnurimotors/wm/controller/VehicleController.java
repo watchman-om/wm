@@ -71,6 +71,7 @@ public class VehicleController {
 	@RequestMapping("/vehicle/{vid}/managements/{mid}/delete")
 	public String delManagements(HttpServletRequest request, Map<String,Object> model
 			, @PathVariable int vid, @PathVariable int mid) {
+		service.deleteManagement(mid);
 		return "redirect:/list_management?vehicle_id="+vid;
 	}
 }

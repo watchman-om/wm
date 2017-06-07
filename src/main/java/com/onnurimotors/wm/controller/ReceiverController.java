@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.onnurimotors.wm.model.EMPLOYEE;
 import com.onnurimotors.wm.service.PushService;
@@ -26,7 +27,8 @@ public class ReceiverController {
 	
 	@RequestMapping("/receivers")
 	public String listReceiver(HttpServletRequest request, Map<String,Object> model) {
-		List<EMPLOYEE> list = new ArrayList<EMPLOYEE>();
+		//rService.getEmployee(request, model);
+		/*List<EMPLOYEE> list = new ArrayList<EMPLOYEE>();
 		EMPLOYEE e = new EMPLOYEE();
 		e.setNAME("임시이름");
 		e.setKAKAO_ACCOUNT("임시ID");
@@ -42,7 +44,7 @@ public class ReceiverController {
 		
 		model.put("employees", list);
 		
-		System.out.println("list: " + list.size());
+		System.out.println("list: " + list.size());*/
 		return "receivers/list_receivers";
 	}
 	@RequestMapping("/receivers/register")
@@ -68,13 +70,7 @@ public class ReceiverController {
 	
 	@RequestMapping("/receivers/{empId}")
 	public String detailReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
-		
-		EMPLOYEE e = new EMPLOYEE();
-		e.setNAME("임시이름");
-		e.setKAKAO_ACCOUNT("임시ID");
-		e.setIS_RECEIVING_KAKAO(1);
-		
-		model.put("employee", e);
+		rService.getEmployee(request, model, empId);
 		return "receivers/detail";
 	}
 
@@ -85,35 +81,32 @@ public class ReceiverController {
 	
 	@RequestMapping("/receivers/add")
 	public String addReceiver(HttpServletRequest request, Map<String,Object> model, @ModelAttribute("emp") EMPLOYEE emp) {
-		System.out.println("emp: " + emp.toString());
+		//System.out.println("emp: " + emp.toString());
+		rService.insertEmployee(emp);
 		return "redirect:/receivers";
 	}
 	
 	@RequestMapping("/receivers/{empId}/editview")
 	public String editViewReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
-		EMPLOYEE e = new EMPLOYEE();
-		e.setNAME("임시이름");
-		e.setKAKAO_ACCOUNT("임시ID");
-		e.setIS_RECEIVING_KAKAO(1);
-		
-		model.put("employee", e);
-		
+		rService.getEmployee(request, model, empId);
 		return "receivers/edit";
 	}
 	@RequestMapping("/receivers/{empId}/edit")
 	public String editReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId, @ModelAttribute("emp") EMPLOYEE emp) {
-		System.out.println("emp: " + emp.toString());
+		//System.out.println("emp: " + emp.toString());
+		rService.updateEmployee(emp);
 		return "redirect:/receivers/"+empId;
 	}
 	
 	@RequestMapping("/receivers/{empId}/delete")
 	public String delReceiver(HttpServletRequest request, Map<String,Object> model, @PathVariable int empId) {
-		return "receivers/receivers";
+		rService.deleteEmployee(empId);
+		return "redirect:/receivers";
 	}
 	
 	@RequestMapping("/messages/send")
-	public String sendMsg(HttpServletRequest request, Model model) {
-		List<EMPLOYEE> list = rService.getEmployee(request, model);
+	public String sendMsg(HttpServletRequest request, Map<String,Object> model) {
+		List<EMPLOYEE> list = rService.getEmployee(request, model, -1);
 		pService.sendAll("온누리TEST 메세지 입니다", list);
 		return "redirect:/receivers";
 	}

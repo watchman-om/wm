@@ -133,36 +133,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${employees}" var="employee">
-										<tr>
-											<td class="text-center">
-												<input type="checkbox" id="${employee.EMPLOYEE_ID}" name="checkbox1-1">
-											</td>
-											<td><a href="receivers/${employee.EMPLOYEE_ID}">${employee.NAME}</a></td>
-											<td>${employee.KAKAO_ACCOUNT}</td>
-											<td>
-												<c:choose>
-													<c:when test="${employee.IS_RECEIVING_KAKAO==1}">
-														<a href="javascript:void(0)" class="label label-success">수신중</a>
-													</c:when>
-													<c:otherwise>
-														<a href="javascript:void(0)" class="label label-danger">거부중</a>
-													</c:otherwise>
-												</c:choose>
-											</td>
-											<td class="text-center">
-												<div class="btn-group btn-group-xs">
-													<a href="receivers/${employee.EMPLOYEE_ID}/editview" data-toggle="tooltip"
-														title="Edit" class="btn btn-default"><i
-														class="fa fa-pencil"></i></a> 
-													<a href="receivers/${employee.EMPLOYEE_ID}/delete"
-														data-toggle="tooltip" title="Delete" class="btn btn-danger"><i
-														class="fa fa-times"></i></a>
-												</div>
-											</td>
-										</tr>
-									</c:forEach>
-									<tr>
+									<!-- <tr>
 										<td class="text-center"><input type="checkbox"
 											id="checkbox1-1" name="checkbox1-1"></td>
 										<td><a href="receivers/detail">이승훈</a></td>
@@ -178,7 +149,7 @@
 													class="fa fa-times"></i></a>
 											</div>
 										</td>
-									</tr>
+									</tr> -->
 								</tbody>
 								<tfoot>
 									<tr>
@@ -188,6 +159,10 @@
 													class="btn btn-primary" data-toggle="tooltip"
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
+										</td>
+									</tr>
+									<tr>
+										<td id="page_wrapper" colspan="6" style="text-align: center;">
 										</td>
 									</tr>
 								</tfoot>
@@ -222,5 +197,152 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/app.js"></script>
+        <script src="js/ajax.js?ver=13"></script>
+	
+		<!-- Load and execute javascript code used only in this page -->
+		<script src="js/pages/tablesGeneral.js"></script>
+		<script>$(function(){ TablesGeneral.init(); });</script>
+		<script>
+			var page, size_page;
+			var source, source2;
+			$(function() {
+				page = 1;
+				size_page = 10;
+				start_sse();
+			});
+			function start_sse() {
+				if(typeof(EventSource) !== "undefined") {
+					var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page;
+				    source = new EventSource("/sse/employee"+param);
+				    source.onmessage = function(event) {
+				    	var msg = JSON.parse(event.data);
+				    	make_rows(msg);
+				    };
+				    source2 = new EventSource("/sse/employee/count");
+				    source2.onmessage = function(event) {
+				    	make_pages(event.data);
+				    };
+				}
+			}
+			function stop_sse() {
+				source.close();
+				source2.close();
+			}
+			function set_page(to_page) {
+				stop_sse();
+				page = to_page;
+				start_sse();
+			}
+			function make_rows(list) {
+				if($("#general-table input[name='checkbox1']:checked").length > 0) {
+					return;
+				}
+				var format;
+				var label_is_receiving_kakao;
+				var state_is_receiving_kakao;
+				var tbody = $("#general-table tbody");
+				tbody.empty();
+				if(list.keys(list).length == 0) {
+					format =	"<tr>"
+							+		"<td colspan='6'>등록된 수신자가 없습니다.</td>"
+							+	"</tr>";
+					tbody.append(format);
+				}
+				else {
+					for(var idx = 0, item; item = list[idx]; idx++) {
+						if(item.is_RECEIVING_KAKAO == "1") {
+							label_is_receiving_kakao = "수신";
+							state_is_receiving_kakao = "success";
+						} else {
+							label_is_receiving_kakao = "수신거부";
+							state_is_receiving_kakao = "danger";
+						}
+						format =	"<tr class='unit' id='"+item.employee_ID+"'>"
+								+		"<td class='text-center'>"
+								+			"<input type='checkbox' id='cb1"+item.employee_ID+"' name='checkbox1'>"
+								+		"</td>"
+								+		"<td><a href='receivers/"+item.employee_ID+"'>"+item.name+"</a></td>"
+								+		"<td>"+item.kakao_ACCOUNT+"</td>"
+								+		"<td>"
+								+			"<a href='javascript:toggle_receiving_kakao("+item.employee_ID+")' class='label label-"+state_is_receiving_kakao+"' id='label_is_receiving_kakao"+item.employee_ID+"'>"+label_is_receiving_kakao+"</a>"
+								+			"<input type='hidden' id='input_is_receiving_kakao"+item.employee_ID+"' value='"+item.is_RECEIVING_KAKAO+"'>"
+								+		"</td>"
+								+		"<td class='text-center'>"
+								+			"<div class='btn-group btn-group-xs'>"
+								+				"<a href='/receivers/"+item.employee_ID+"/editview' data-toggle='tooltip' title='수정' class='btn btn-default'>"
+								+					"<i class='fa fa-pencil'></i>"
+								+				"</a>"
+								+				"<a href='javascript:delete_prompt("+item.employee_ID+")' data-toggle='tooltip' title='삭제' class='btn btn-danger'>"
+								+					"<i class='fa fa-times'></i>"
+								+				"</a>"
+								+			"</div>"
+								+		"</td>"
+								+	"</tr>";
+						tbody.append(format);
+					}
+				}
+			}
+			function make_pages(data) {
+				if($("#general-table input[name='checkbox1']:checked").length > 0) {
+					return;
+				}
+				var first = page - 5;
+				var last = page + 5;
+				var format;
+				var page_wrapper = $("#page_wrapper");
+				
+				page_wrapper.empty();
+				
+				if(first < 1) {
+					first = 1;
+				}
+				if(last > (data-1)/size_page + 1) {
+					last = (data-1)/size_page + 1;
+				}
+				
+				if(first > 1) {
+					format = "<a href='javascript:set_page(1)' style='margin: 10px;'>&lt;&lt;</a>";
+					page_wrapper.append(format);
+				}
+				for(var idx = first; idx <= last; idx++) {
+					if(idx != page) {
+						format = "<a href='javascript:set_page("+idx+")' style='margin: 10px;'>"+idx+"</a>";
+					} else {
+						format = "<span style='margin: 10px;'>"+idx+"</span>";
+					}
+					page_wrapper.append(format);
+				}
+				if(last < (data-1)/size_page+1) {
+					format = "<a href='javascript:set_page("+((data-1)/size_page+1)+")' style='margin: 10px;'>&gt;&gt;</a>";
+					page_wrapper.append(format);
+				}
+			}
+			function toggle_receiving_kakao(employee_id) {
+				var state_now = $("#input_is_receiving_kakao"+employee_id).val();
+				if(state_now == 1) {
+					state_now = "on";
+				} else {
+					state_now = "off";
+				}
+				ajax_toggle_receiving_kakao(employee_id, state_now, function(json) {
+					var jsonObj = JSON.parse(JSON.stringify(json));
+					if(jsonObj.is_RECEIVING_KAKAO == "1") {
+						$("#label_is_receiving_kakao"+employee_id).attr("class", "label label-success");
+						$("#label_is_receiving_kakao"+employee_id).html("수신");
+						$("#input_is_receiving_kakao"+employee_id).val(1);
+					} else {
+						$("#label_is_receiving_kakao"+employee_id).attr("class", "label label-danger");
+						$("#label_is_receiving_kakao"+employee_id).html("수신거부");
+						$("#input_is_receiving_kakao"+employee_id).val(0);
+					}
+				});
+			}
+			function delete_prompt(employee_id) {
+				var test = confirm("정말로 삭제하시겠습니까?");
+				if(test == true) {
+					location.href = "/receivers/"+employee_id+"/delete";
+				}
+			}
+		</script>
     </body>
 </html>

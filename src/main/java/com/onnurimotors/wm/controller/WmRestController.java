@@ -81,7 +81,7 @@ public class WmRestController {
 	
 	@RequestMapping(value="/employee", method = RequestMethod.POST)
 	public Object employee(HttpServletRequest request) {
-		return rSerivce.getEmployee(request, null);
+		return rSerivce.getEmployee(request, null, -1);
 	}
 	
 	@RequestMapping(value="/vehicle_management", method = RequestMethod.POST)
@@ -122,5 +122,10 @@ public class WmRestController {
 	@RequestMapping(value="/update_vehicle_comment", method = RequestMethod.POST)
 	public Object update_vehicle_comment(HttpServletRequest request) {
 		return service.updateVehicleComment(request);
+	}
+	
+	@RequestMapping(value="/toggle_receiving_kakao", method = RequestMethod.POST)
+	public Object toggle_receiving_kakao(HttpServletRequest request) {
+		return service.toggleReceivingKakao(request);
 	}
 }
