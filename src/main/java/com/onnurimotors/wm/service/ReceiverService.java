@@ -6,18 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.onnurimotors.wm.model.EMPLOYEE;
-import com.onnurimotors.wm.model.MANAGEMENT;
-import com.onnurimotors.wm.model.VEHICLE;
-import com.onnurimotors.wm.model.VEHICLE_MANAGEMENT;
 
 @Service
 public class ReceiverService {
