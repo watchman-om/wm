@@ -913,4 +913,19 @@ public class WmService {
 		
 		return employee;
 	}
+
+	public String generateDB() {
+		SqlSession session = sqlSession();
+		session.insert("watchman.mybatis.createEmployeeTable");
+		session.commit();
+		session.insert("watchman.mybatis.createManagementTable");
+		session.commit();
+		session.insert("watchman.mybatis.createVehicleManagementTable");
+		session.commit();
+		session.insert("watchman.mybatis.createVehicleTable");
+		session.commit();
+		session.insert("watchman.mybatis.createHistoryTable");
+		session.commit();
+		return "Success";
+	}
 }

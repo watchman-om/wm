@@ -115,4 +115,9 @@ public class WmRestController {
 	public Object toggle_receiving_kakao(HttpServletRequest request) {
 		return service.toggleReceivingKakao(request);
 	}
+	
+	@RequestMapping(value="/makeDB", method = RequestMethod.GET)
+	public String makeDB() {
+		return service.generateDB();
+	}
 }
