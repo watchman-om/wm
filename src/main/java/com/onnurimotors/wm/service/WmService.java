@@ -926,6 +926,7 @@ public class WmService {
 		session.commit();
 		session.insert("watchman.mybatis.createHistoryTable");
 		session.commit();
+		session.close();
 		return "Success";
 	}
 }
