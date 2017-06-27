@@ -184,8 +184,10 @@
 			TIME_VISIT TIME NOT NULL
 		)
     </insert>
-    
     <select id="selectReceivers" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE WHERE IS_RECEIVING_KAKAO = 1
     </select>
+    <update id="updateManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT">
+    	UPDATE MANAGEMENT SET COMMENT = #{COMMENT}, DATE_MNG = #{DATE_MNG} WHERE MANAGEMENT_ID = #{MANAGEMENT_ID}
+    </update>
 </mapper>

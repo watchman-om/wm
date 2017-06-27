@@ -73,27 +73,27 @@
                 <!-- Main Container -->
                 <div id="main-container">
                     <!-- Header -->
-                    <header class="navbar navbar-default">
+                    <!-- <header class="navbar navbar-default"> -->
                         <!-- Left Header Navigation -->
-                        <ul class="nav navbar-nav-custom">
+                        <!-- <ul class="nav navbar-nav-custom"> -->
                             <!-- Main Sidebar Toggle Button -->
-                            <li>
+                            <!-- <li>
                                 <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
                                     <i class="fa fa-bars fa-fw"></i>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- END Main Sidebar Toggle Button -->
-                        </ul>
+                        <!-- </ul> -->
                         <!-- END Left Header Navigation -->
 
                         <!-- Search Form -->
-                        <form action="index" method="post" class="navbar-form-custom">
+                        <!-- <form action="index" method="post" class="navbar-form-custom">
                             <div class="form-group">
                                 <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
                             </div>
-                        </form>
+                        </form> -->
                         <!-- END Search Form -->
-                    </header>
+                    <!-- </header> -->
                     <!-- END Header -->
 
                     <!-- Page content -->
@@ -117,7 +117,7 @@
 	                        <!-- Basic Form Elements Title -->
 	                        <div class="block-title">
 	                            <div class="block-options pull-right">
-	                                <a href="/list_vehicle" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
+	                                <a href="/list_management?vehicle_id=${vehicle.VEHICLE_ID}" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" title="취소하고 목록으로 돌아가기">취소</a>
 	                            </div>
 	                            <h2><strong>점검내역</strong> 정보입력</h2>
 	                        </div>

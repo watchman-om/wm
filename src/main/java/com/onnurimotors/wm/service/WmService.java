@@ -955,4 +955,12 @@ public class WmService {
 		session.close();
 		return "Success";
 	}
+
+	public MANAGEMENT getOneManagement(int mid) {
+		SqlSession session = sqlSession();
+		MANAGEMENT management = new MANAGEMENT();
+		management.setMANAGEMENT_ID(mid);
+		management = (MANAGEMENT) session.selectOne("watchman.mybatis.selectManagement", management);
+		return management;
+	}
 }

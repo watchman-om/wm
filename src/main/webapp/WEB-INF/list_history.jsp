@@ -82,28 +82,28 @@
 			<!-- Main Container -->
 			<div id="main-container">
 				<!-- Header -->
-				<header class="navbar navbar-default">
+				<!-- <header class="navbar navbar-default"> -->
 					<!-- Left Header Navigation -->
-					<ul class="nav navbar-nav-custom">
+					<!-- <ul class="nav navbar-nav-custom"> -->
 						<!-- Main Sidebar Toggle Button -->
-						<li><a href="javascript:void(0)"
+						<!-- <li><a href="javascript:void(0)"
 							onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
 								class="fa fa-bars fa-fw"></i>
-						</a></li>
+						</a></li> -->
 						<!-- END Main Sidebar Toggle Button -->
-					</ul>
+					<!-- </ul> -->
 					<!-- END Left Header Navigation -->
 
 					<!-- Search Form -->
-					<form action="page_ready_search_results.html" method="post"
+					<!-- <form action="page_ready_search_results.html" method="post"
 						class="navbar-form-custom">
 						<div class="form-group">
 							<input type="text" id="top-search" name="top-search"
 								class="form-control" placeholder="Search..">
 						</div>
-					</form>
+					</form> -->
 					<!-- END Search Form -->
-				</header>
+				<!-- </header> -->
 				<!-- END Header -->
 
 				<!-- Page content -->
@@ -134,7 +134,7 @@
 
 						<!-- Table Styles Content -->
 						<!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
-						<div class="table-options clearfix">
+						<!-- <div class="table-options clearfix">
 							<div class="btn-group btn-group-sm pull-right">
 								<a href="/history/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title="방문내역 추가">추가</a>
@@ -146,24 +146,24 @@
 									type="radio" name="style-options"> 삭제
 								</label>
 							</div>
-						</div>
+						</div> -->
 						<div class="table-responsive">
 							<table id="general-table"
 								class="table table-striped table-vcenter">
 								<thead>
 									<tr>
-										<th style="width: 80px;" class="text-center"><input
-											type="checkbox"></th>
+										<!-- <th style="width: 80px;" class="text-center"><input
+											type="checkbox"></th> -->
 										<th>차량번호</th>
 										<th>날짜</th>
-										<th>상태</th>
-										<th style="width: 150px;" class="text-center">Actions</th>
+										<!-- <th>상태</th>
+										<th style="width: 150px;" class="text-center">Actions</th> -->
 									</tr>
 								</thead>
 								<tbody>
 								</tbody>
 								<tfoot>
-									<tr>
+									<!-- <tr>
 										<td colspan="6">
 											<div class="btn-group btn-group-sm">
 												<a href="javascript:void(0)" class="btn btn-primary"
@@ -173,7 +173,7 @@
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
 										</td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td id="page_wrapper" colspan="6" style="text-align: center;">
 										</td>
@@ -265,12 +265,12 @@
 			else {
 				for(var idx = 0, item; item = list[idx]; idx++) {
 					format =	"<tr class='unit' id='"+item.history_ID+"'>"
-							+		"<td class='text-center'>"
+							/*+		"<td class='text-center'>"
 							+			"<input type='checkbox' id='cb1"+item.history_ID+"' name='checkbox1'>"
-							+		"</td>"
+							+		"</td>"*/
 							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
 							+		"<td>"+item.date_VISIT+" "+item.time_VISIT+"</td>"
-							+		"<td>"
+							/*+		"<td>"
 							+			"<a href='javascript:void(0)' class='label label-warning'>상태값</a>"
 							+		"</td>"
 							+		"<td class='text-center'>"
@@ -282,7 +282,7 @@
 							+					"<i class='fa fa-times'></i>"
 							+				"</a>"
 							+			"</div>"
-							+		"</td>"
+							+		"</td>"*/
 							+	"</tr>";
 					tbody.append(format);
 				}

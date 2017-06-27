@@ -83,28 +83,28 @@
 
 			<!-- Main Container -->
 			<div id="main-container">
-				<header class="navbar navbar-default">
+				<!-- <header class="navbar navbar-default"> -->
 					<!-- Left Header Navigation -->
-					<ul class="nav navbar-nav-custom">
+					<!-- <ul class="nav navbar-nav-custom"> -->
 						<!-- Main Sidebar Toggle Button -->
-						<li><a href="javascript:void(0)"
+						<!-- <li><a href="javascript:void(0)"
 							onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
 								class="fa fa-bars fa-fw"></i>
-						</a></li>
+						</a></li> -->
 						<!-- END Main Sidebar Toggle Button -->
-					</ul>
+					<!-- </ul> -->
 					<!-- END Left Header Navigation -->
 
 					<!-- Search Form -->
-					<form action="page_ready_search_results.html" method="post"
+					<!-- <form action="page_ready_search_results.html" method="post"
 						class="navbar-form-custom">
 						<div class="form-group">
 							<input type="text" id="top-search" name="top-search"
 								class="form-control" placeholder="Search..">
 						</div>
-					</form>
+					</form> -->
 					<!-- END Search Form -->
-				</header>
+				<!-- </header> -->
 				<!-- END Header -->
 
 				<!-- Page content -->
@@ -141,17 +141,17 @@
 								<a href="/vehicle/addview" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 추가</a>
 							</div>
-							<div class="btn-group btn-group-sm pull-left">
+							<!-- <div class="btn-group btn-group-sm pull-left">
 								<a href="/vehicle/delete" class="btn btn-primary"
 									id="style-hover" data-toggle="tooltip" title=".table-hover">차량 삭제</a>
-							</div>
+							</div> -->
 						</div>
 						<div class="table-responsive">
 							<table id="general-table" class="table table-striped table-vcenter">
 								<thead>
 									<tr>
-										<th style="width: 80px;" class="text-center"><input
-											type="checkbox"></th>
+										<!-- <th style="width: 80px;" class="text-center"><input
+											type="checkbox"></th> -->
 										<th>차량번호</th>
 										<th>차종</th>
 										<th>소유주</th>
@@ -162,7 +162,7 @@
 								<tbody>
 								</tbody>
 								<tfoot>
-									<tr>
+									<!-- <tr>
 										<td colspan="7">
 											<div class="btn-group btn-group-sm pull-right">
 												<a href="javascript:void(0)" class="btn btn-primary"
@@ -191,7 +191,7 @@
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
 										</td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td id="page_wrapper" colspan="7" style="text-align: center;">
 										</td>
@@ -293,9 +293,9 @@
 						state_is_notifiable = "danger";
 					}
 					format =	"<tr class='unit' id='"+item.vehicle_ID+"'>"
-							+		"<td class='text-center'>"
+							/*+		"<td class='text-center'>"
 							+			"<input type='checkbox' id='cb1"+item.vehicle_ID+"' name='checkbox1'>"
-							+		"</td>"
+							+		"</td>"*/
 							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
 							+		"<td>"+item.model+"</td>"
 							+		"<td>"+item.user_NAME+"</td>"

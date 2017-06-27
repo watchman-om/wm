@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.onnurimotors.wm.model.MANAGEMENT;
 import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.service.WmService;
 
@@ -57,12 +58,14 @@ public class VehicleController {
 	public String managements(HttpServletRequest request, Model model, @PathVariable int vid) {
 		return "vehicle/add_vehicle";
 	}
+	
 	@RequestMapping("/vehicle/{vid}/managements/addview")
 	public String addviewManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
 		VEHICLE v = service.getOneVehicle(vid);
 		model.put("vehicle", v);
 		return "management/add_management";
 	}
+	
 	@RequestMapping("/vehicle/{vid}/managements/add")
 	public String addManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
 		service.submitManagement(request);
@@ -73,6 +76,21 @@ public class VehicleController {
 	public String delManagements(HttpServletRequest request, Map<String,Object> model
 			, @PathVariable int vid, @PathVariable int mid) {
 		service.deleteManagement(mid);
+		return "redirect:/list_management?vehicle_id="+vid;
+	}
+	
+	@RequestMapping(value="/vehicle/{vid}/managements/{mid}/editview")
+	public String editviewManagement(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int mid) {
+		VEHICLE v = service.getOneVehicle(vid);
+		model.put("vehicle", v);
+		MANAGEMENT m = service.getOneManagement(mid);
+		model.put("management", m);
+		return "management/edit_management";
+	}
+	
+	@RequestMapping("/vehicle/{vid}/managements/{mid}/edit")
+	public String editManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
+		service.submitManagement(request);
 		return "redirect:/list_management?vehicle_id="+vid;
 	}
 }

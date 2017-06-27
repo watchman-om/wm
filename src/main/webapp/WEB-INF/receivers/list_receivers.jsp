@@ -73,27 +73,27 @@
                 <!-- Main Container -->
                 <div id="main-container">
                     <!-- Header -->
-                    <header class="navbar navbar-default">
+                    <!-- <header class="navbar navbar-default"> -->
                         <!-- Left Header Navigation -->
-                        <ul class="nav navbar-nav-custom">
+                        <!-- <ul class="nav navbar-nav-custom"> -->
                             <!-- Main Sidebar Toggle Button -->
-                            <li>
+                            <!-- <li>
                                 <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
                                     <i class="fa fa-bars fa-fw"></i>
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- END Main Sidebar Toggle Button -->
-                        </ul>
+                        <!-- </ul> -->
                         <!-- END Left Header Navigation -->
 
                         <!-- Search Form -->
-                        <form action="index.html" method="post" class="navbar-form-custom">
+                        <!-- <form action="index.html" method="post" class="navbar-form-custom">
                             <div class="form-group">
                                 <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
                             </div>
-                        </form>
+                        </form> -->
                         <!-- END Search Form -->
-                    </header>
+                    <!-- </header> -->
                     <!-- END Header -->
 
                     <!-- Page content -->
@@ -124,8 +124,8 @@
 								class="table table-striped table-vcenter">
 								<thead>
 									<tr>
-										<th style="width: 80px;" class="text-center"><input
-											type="checkbox"></th>
+										<!-- <th style="width: 80px;" class="text-center"><input
+											type="checkbox"></th> -->
 										<th>이름</th>
 										<th>푸쉬ID</th>
 										<th>상태</th>
@@ -152,7 +152,7 @@
 									</tr> -->
 								</tbody>
 								<tfoot>
-									<tr>
+									<!-- <tr>
 										<td colspan="6">
 											<div class="btn-group btn-group-sm">
 												<a href="javascript:void(0)"
@@ -160,7 +160,7 @@
 													title="Delete Selected"><i class="fa fa-times"></i></a>
 											</div>
 										</td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td id="page_wrapper" colspan="6" style="text-align: center;">
 										</td>
@@ -258,9 +258,9 @@
 							state_is_receiving_kakao = "danger";
 						}
 						format =	"<tr class='unit' id='"+item.employee_ID+"'>"
-								+		"<td class='text-center'>"
+								/*+		"<td class='text-center'>"
 								+			"<input type='checkbox' id='cb1"+item.employee_ID+"' name='checkbox1'>"
-								+		"</td>"
+								+		"</td>"*/
 								+		"<td><a href='receivers/"+item.employee_ID+"'>"+item.name+"</a></td>"
 								+		"<td>"+item.kakao_ACCOUNT+"</td>"
 								+		"<td>"
