@@ -83,28 +83,28 @@
 
 			<!-- Main Container -->
 			<div id="main-container">
-				<!-- <header class="navbar navbar-default"> -->
+				<header class="navbar navbar-default">
 					<!-- Left Header Navigation -->
-					<!-- <ul class="nav navbar-nav-custom"> -->
+					<ul class="nav navbar-nav-custom">
 						<!-- Main Sidebar Toggle Button -->
-						<!-- <li><a href="javascript:void(0)"
+						<li><a href="javascript:void(0)"
 							onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
 								class="fa fa-bars fa-fw"></i>
-						</a></li> -->
+						</a></li>
 						<!-- END Main Sidebar Toggle Button -->
-					<!-- </ul> -->
+					</ul>
 					<!-- END Left Header Navigation -->
 
 					<!-- Search Form -->
-					<!-- <form action="page_ready_search_results.html" method="post"
+					<form action="list_vehicle" method="post"
 						class="navbar-form-custom">
 						<div class="form-group">
-							<input type="text" id="top-search" name="top-search"
+							<input type="text" id="top-search" name="license"
 								class="form-control" placeholder="Search..">
 						</div>
-					</form> -->
+					</form>
 					<!-- END Search Form -->
-				<!-- </header> -->
+				</header>
 				<!-- END Header -->
 
 				<!-- Page content -->
@@ -244,10 +244,19 @@
 			page = 1;
 			size_page = 10;
 			start_sse();
+			$("header").css("display", "table");
+			$("header").css("width", "100%");
+			$("header form").css("display", "table-cell");
+			$("header form").css("width", "100%");
+			$("header form").css("float", "none");
+			$("header div").css("margin-bottom", "0px");
 		});
 		function start_sse() {
 			if(typeof(EventSource) !== "undefined") {
-				var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page;
+				var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page+"&license=";
+				if("${license}" != "") {
+					param = param + "${license}";
+				}
 			    source = new EventSource("/sse/vehicle"+param);
 			    source.onmessage = function(event) {
 			    	var msg = JSON.parse(event.data);

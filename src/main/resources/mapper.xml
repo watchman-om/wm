@@ -5,7 +5,7 @@
 <mapper namespace="watchman.mybatis">
     <select id="selectVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
     	SELECT * FROM VEHICLE
-    	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
+    	WHERE (#{LICENSE} = "" OR LICENSE LIKE #{LICENSE})
     		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
     	ORDER BY VEHICLE_ID
     </select>
@@ -82,7 +82,7 @@
     </delete>
     <select id="selectVehiclePage" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
     	SELECT * FROM VEHICLE
-    	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
+    	WHERE (#{LICENSE} = "" OR LICENSE LIKE #{LICENSE})
     		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
     	ORDER BY VEHICLE_ID
     	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
@@ -184,6 +184,18 @@
 			TIME_VISIT TIME NOT NULL
 		)
     </insert>
+    <delete id="dropManagementTable">
+    	DROP TABLE MANAGEMENT
+    </delete>
+    <delete id="dropVehicleManagementTable">
+    	DROP TABLE VEHICLE_MANAGEMENT
+    </delete>
+    <delete id="dropVehicleTable">
+    	DROP TABLE VEHICLE
+    </delete>
+    <delete id="dropHistoryTable">
+    	DROP TABLE HISTORY
+    </delete>
     <select id="selectReceivers" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE WHERE IS_RECEIVING_KAKAO = 1
     </select>

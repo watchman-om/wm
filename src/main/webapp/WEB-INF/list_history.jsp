@@ -82,16 +82,16 @@
 			<!-- Main Container -->
 			<div id="main-container">
 				<!-- Header -->
-				<!-- <header class="navbar navbar-default"> -->
+				<header class="navbar navbar-default">
 					<!-- Left Header Navigation -->
-					<!-- <ul class="nav navbar-nav-custom"> -->
+					<ul class="nav navbar-nav-custom">
 						<!-- Main Sidebar Toggle Button -->
-						<!-- <li><a href="javascript:void(0)"
+						<li><a href="javascript:void(0)"
 							onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
 								class="fa fa-bars fa-fw"></i>
-						</a></li> -->
+						</a></li>
 						<!-- END Main Sidebar Toggle Button -->
-					<!-- </ul> -->
+					</ul>
 					<!-- END Left Header Navigation -->
 
 					<!-- Search Form -->
@@ -103,7 +103,7 @@
 						</div>
 					</form> -->
 					<!-- END Search Form -->
-				<!-- </header> -->
+				</header>
 				<!-- END Header -->
 
 				<!-- Page content -->

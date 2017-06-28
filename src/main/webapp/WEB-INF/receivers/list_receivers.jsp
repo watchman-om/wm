@@ -73,27 +73,28 @@
                 <!-- Main Container -->
                 <div id="main-container">
                     <!-- Header -->
-                    <!-- <header class="navbar navbar-default"> -->
-                        <!-- Left Header Navigation -->
-                        <!-- <ul class="nav navbar-nav-custom"> -->
-                            <!-- Main Sidebar Toggle Button -->
-                            <!-- <li>
-                                <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
-                                    <i class="fa fa-bars fa-fw"></i>
-                                </a>
-                            </li> -->
-                            <!-- END Main Sidebar Toggle Button -->
-                        <!-- </ul> -->
-                        <!-- END Left Header Navigation -->
-
-                        <!-- Search Form -->
-                        <!-- <form action="index.html" method="post" class="navbar-form-custom">
-                            <div class="form-group">
-                                <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
-                            </div>
-                        </form> -->
-                        <!-- END Search Form -->
-                    <!-- </header> -->
+                    <header class="navbar navbar-default">
+						<!-- Left Header Navigation -->
+						<ul class="nav navbar-nav-custom">
+							<!-- Main Sidebar Toggle Button -->
+							<li><a href="javascript:void(0)"
+								onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
+									class="fa fa-bars fa-fw"></i>
+							</a></li>
+							<!-- END Main Sidebar Toggle Button -->
+						</ul>
+						<!-- END Left Header Navigation -->
+	
+						<!-- Search Form -->
+						<!-- <form action="page_ready_search_results.html" method="post"
+							class="navbar-form-custom">
+							<div class="form-group">
+								<input type="text" id="top-search" name="top-search"
+									class="form-control" placeholder="Search..">
+							</div>
+						</form> -->
+						<!-- END Search Form -->
+					</header>
                     <!-- END Header -->
 
                     <!-- Page content -->
@@ -127,7 +128,7 @@
 										<!-- <th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th> -->
 										<th>이름</th>
-										<th>푸쉬ID</th>
+										<!-- <th>푸쉬ID</th> -->
 										<th>상태</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
 									</tr>
@@ -262,7 +263,7 @@
 								+			"<input type='checkbox' id='cb1"+item.employee_ID+"' name='checkbox1'>"
 								+		"</td>"*/
 								+		"<td><a href='receivers/"+item.employee_ID+"'>"+item.name+"</a></td>"
-								+		"<td>"+item.kakao_ACCOUNT+"</td>"
+								//+		"<td>"+item.kakao_ACCOUNT+"</td>"
 								+		"<td>"
 								+			"<a href='javascript:toggle_receiving_kakao("+item.employee_ID+")' class='label label-"+state_is_receiving_kakao+"' id='label_is_receiving_kakao"+item.employee_ID+"'>"+label_is_receiving_kakao+"</a>"
 								+			"<input type='hidden' id='input_is_receiving_kakao"+item.employee_ID+"' value='"+item.is_RECEIVING_KAKAO+"'>"

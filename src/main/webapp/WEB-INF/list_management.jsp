@@ -167,27 +167,28 @@
                 <!-- Main Container -->
                 <div id="main-container">
                     <!-- Header -->
-                    <!-- <header class="navbar navbar-default"> -->
-                        <!-- Left Header Navigation -->
-                        <!-- <ul class="nav navbar-nav-custom"> -->
-                            <!-- Main Sidebar Toggle Button -->
-                            <!-- <li>
-                                <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
-                                    <i class="fa fa-bars fa-fw"></i>
-                                </a>
-                            </li> -->
-                            <!-- END Main Sidebar Toggle Button -->
-                        <!-- </ul> -->
-                        <!-- END Left Header Navigation -->
-
-                        <!-- Search Form -->
-                        <!-- <form action="index.html" method="post" class="navbar-form-custom">
-                            <div class="form-group">
-                                <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
-                            </div>
-                        </form> -->
-                        <!-- END Search Form -->
-                    <!-- </header> -->
+                    <header class="navbar navbar-default">
+						<!-- Left Header Navigation -->
+						<ul class="nav navbar-nav-custom">
+							<!-- Main Sidebar Toggle Button -->
+							<li><a href="javascript:void(0)"
+								onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
+									class="fa fa-bars fa-fw"></i>
+							</a></li>
+							<!-- END Main Sidebar Toggle Button -->
+						</ul>
+						<!-- END Left Header Navigation -->
+	
+						<!-- Search Form -->
+						<!-- <form action="page_ready_search_results.html" method="post"
+							class="navbar-form-custom">
+							<div class="form-group">
+								<input type="text" id="top-search" name="top-search"
+									class="form-control" placeholder="Search..">
+							</div>
+						</form> -->
+						<!-- END Search Form -->
+					</header>
                     <!-- END Header -->
 
                     <!-- Page content -->
@@ -276,7 +277,6 @@
 								<thead>
 									<tr>
 										<th>점검 날짜</th>
-										<th>차량ID</th>
 										<th>기록</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
 									</tr>
@@ -284,7 +284,6 @@
 								<c:forEach items="${managements}" var="management">
 									<tr>
 										<td>${management.DATE_MNG}</td>
-										<td>${param.vehicle_id}</td>
 										<td>${management.COMMENT}</td>
 										<td>
 											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"

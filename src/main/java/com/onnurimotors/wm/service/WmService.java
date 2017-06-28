@@ -53,7 +53,7 @@ public class WmService {
 	
 	public Object visit(HttpServletRequest request) {
 		SqlSession session = sqlSession();
-		String license = request.getParameter("license");
+		String license = request.getParameter("license").replaceAll("\\s+","");
 		int is_new_customer;
 		String msg;
 		Date date = new Date();
@@ -123,7 +123,7 @@ public class WmService {
             
             ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>) session.selectList("watchman.mybatis.selectReceivers");
             for(int i = 0; i < employees.size(); i++) {
-            	pService.sendPush(employees.get(i).getKAKAO_ACCOUNT(), msg);
+            	pService.sendPushNotification(employees.get(i).getKAKAO_ACCOUNT(), msg);
             }
         }
         
@@ -234,7 +234,14 @@ public class WmService {
 			String license = request.getParameter("license");
 			String vehicle_id = request.getParameter("vehicle_id");
 			if(license != null && !license.equals("")) {
-				vehicle.setLICENSE(license);
+				vehicle.setLICENSE("%"+license+"%");
+				if(model != null) {
+					model.addAttribute("license", license);
+				}
+			} else {
+				if(model != null) {
+					model.addAttribute("license", "");
+				}
 			}
 			if(vehicle_id != null && !vehicle_id.equals("")) {
 				vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
@@ -723,7 +730,7 @@ public class WmService {
 			vehicle.setFROM_LIMIT(0);
 			vehicle.setNUM_LIMIT(10);
 			if(license != null && !license.equals("")) {
-				vehicle.setLICENSE(license);
+				vehicle.setLICENSE("%"+license+"%");
 			}
 			if(vehicle_id != null && !vehicle_id.equals("")) {
 				vehicle.setVEHICLE_ID(Integer.parseInt(vehicle_id));
@@ -940,15 +947,25 @@ public class WmService {
 
 	public String generateDB() {
 		SqlSession session = sqlSession();
-		session.insert("watchman.mybatis.createEmployeeTable");
+
+		//session.delete("watchman.mybatis.dropEmployeeTable");
+		//session.commit();
+		session.delete("watchman.mybatis.dropManagementTable");
 		session.commit();
+		session.delete("watchman.mybatis.dropVehicleManagementTable");
+		session.commit();
+		session.delete("watchman.mybatis.dropVehicleTable");
+		session.commit();
+		session.delete("watchman.mybatis.dropHistoryTable");
+		session.commit();
+		
+		//session.insert("watchman.mybatis.createEmployeeTable");
+		//session.commit();
 		session.insert("watchman.mybatis.createManagementTable");
 		session.commit();
 		session.insert("watchman.mybatis.createVehicleManagementTable");
 		session.commit();
 		session.insert("watchman.mybatis.createVehicleTable");
-		session.commit();
-		session.insert("watchman.mybatis.createHistoryTable");
 		session.commit();
 		session.insert("watchman.mybatis.createHistoryTable");
 		session.commit();

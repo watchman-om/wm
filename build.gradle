@@ -20,7 +20,7 @@ war {
     baseName = 'onnuri'
 }
 
-version = '0.0.11.2-SNAPSHOT'
+version = '0.0.11.4-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
