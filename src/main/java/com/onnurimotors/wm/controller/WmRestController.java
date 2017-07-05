@@ -58,7 +58,7 @@ public class WmRestController {
 	
 	@RequestMapping(value="/history", method = RequestMethod.GET)
 	public Object history(HttpServletRequest request) {
-		return service.listHistory(request, null, -1);
+		return service.getAllHistory(request, null, -1);
 	}
 
 	@RequestMapping(value={"/historyvehicle", "/vehiclehistory"}, method = RequestMethod.GET)
@@ -71,9 +71,9 @@ public class WmRestController {
 		return rSerivce.getEmployee(request, null, -1);
 	}
 	
-	@RequestMapping(value="/vehicle_management", method = RequestMethod.POST)
+	@RequestMapping(value="/history_management", method = RequestMethod.POST)
 	public Object vehicle_management(HttpServletRequest request) {
-		return service.getVehicleManagement(request, null);
+		return service.getHistoryManagement(request, null);
 	}
 	
 	@RequestMapping(value="/management", method = RequestMethod.POST)
@@ -119,5 +119,15 @@ public class WmRestController {
 	@RequestMapping(value="/makeDB", method = RequestMethod.GET)
 	public String makeDB() {
 		return service.generateDB();
+	}
+	
+	@RequestMapping(value="/clearDB", method = RequestMethod.GET)
+	public String clearDB() {
+		return service.regenerateDB();
+	}
+	
+	@RequestMapping(value="/updateDB", method = RequestMethod.GET)
+	public String updateDB() {
+		return service.modifyDB();
 	}
 }

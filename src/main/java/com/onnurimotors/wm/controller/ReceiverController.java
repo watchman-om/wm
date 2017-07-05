@@ -48,10 +48,14 @@ public class ReceiverController {
 	@RequestMapping("/receivers/register")
 	public String registerReceiver(HttpServletRequest request, Map<String,Object> model) {
 		System.out.println("registerReceiver");
-		
+
 		String token = request.getParameter("token");
+		String pid = request.getParameter("pid");
+		String phoneNum = request.getParameter("phoneNum");
 		
 		EMPLOYEE emp = new EMPLOYEE();
+		emp.setPID(Integer.parseInt(pid));
+		emp.setPHONE_NUMBER(phoneNum);
 		emp.setNAME("name");
 		emp.setKAKAO_ACCOUNT(token);
 		

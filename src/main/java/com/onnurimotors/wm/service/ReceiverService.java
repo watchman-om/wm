@@ -33,7 +33,15 @@ public class ReceiverService {
 	public void saveReceiver(EMPLOYEE emp) {
 		SqlSession session = sqlSession();
 		
-		session.insert("watchman.mybatis.insertEmployee", emp);
+		ArrayList<EMPLOYEE> emps = (ArrayList<EMPLOYEE>)session.selectList("watchman.mybatis.selectEmployeeByPid", emp);
+		if(emps.size() == 0) {
+			session.insert("watchman.mybatis.insertEmployee", emp);
+		} else {
+			EMPLOYEE emp2 = emps.get(0);
+			emp2.setPHONE_NUMBER(emp.getPHONE_NUMBER());
+			emp2.setKAKAO_ACCOUNT(emp.getKAKAO_ACCOUNT());
+			session.update("watchman.mybatis.updateEmployee", emp2);
+		}
 		session.commit();
 		
 		session.close();

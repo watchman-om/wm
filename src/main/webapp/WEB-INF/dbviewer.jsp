@@ -60,8 +60,8 @@
 			jsonToTable("vehicle", json);
 			ajax_get_all_history(function(json) {
 				jsonToTable("history", json);
-				ajax_get_vehicle_management(function(json) {
-					jsonToTable("vehicle_management", json);
+				ajax_get_history_management(function(json) {
+					jsonToTable("history_management", json);
 					ajax_get_management(function(json) {
 						jsonToTable("management", json);
 						ajax_get_employee(function(json) {

@@ -38,13 +38,13 @@
 		LIMIT 5
     </select>
     <insert id="insertEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
-    	INSERT INTO EMPLOYEE(KAKAO_ACCOUNT, IS_RECEIVING_KAKAO, NAME) VALUES(#{KAKAO_ACCOUNT}, #{IS_RECEIVING_KAKAO}, #{NAME})
+    	INSERT INTO EMPLOYEE(KAKAO_ACCOUNT, IS_RECEIVING_KAKAO, NAME, PID, PHONE_NUMBER) VALUES(#{KAKAO_ACCOUNT}, #{IS_RECEIVING_KAKAO}, #{NAME}, #{PID}, #{PHONE_NUMBER})
     </insert>
     <select id="selectEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE WHERE #{EMPLOYEE_ID} = -1 OR EMPLOYEE_ID = #{EMPLOYEE_ID}
     </select>
-    <select id="selectVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT" resultType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
-    	SELECT * FROM VEHICLE_MANAGEMENT WHERE (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID}) AND (#{MANAGEMENT_ID} = -1 OR MANAGEMENT_ID = #{MANAGEMENT_ID})
+    <select id="selectHistoryManagement" parameterType="com.onnurimotors.wm.model.HISTORY_MANAGEMENT" resultType="com.onnurimotors.wm.model.HISTORY_MANAGEMENT">
+    	SELECT * FROM HISTORY_MANAGEMENT WHERE (#{HISTORY_ID} = -1 OR HISTORY_ID = #{HISTORY_ID}) AND (#{MANAGEMENT_ID} = -1 OR MANAGEMENT_ID = #{MANAGEMENT_ID})
     </select>
     <select id="selectManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT" resultType="com.onnurimotors.wm.model.MANAGEMENT">
     	SELECT * FROM MANAGEMENT WHERE #{MANAGEMENT_ID} = -1 OR MANAGEMENT_ID = #{MANAGEMENT_ID}
@@ -59,10 +59,9 @@
 		LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
     </select>
     <select id="selectManagementOfVehicle" parameterType="com.onnurimotors.wm.model.PARAMETER_VEHICLE" resultType="com.onnurimotors.wm.model.MANAGEMENT">
-    	SELECT M.* FROM MANAGEMENT M, VEHICLE_MANAGEMENT VM	WHERE M.MANAGEMENT_ID = VM.MANAGEMENT_ID
-    		AND VM.VEHICLE_ID = #{VEHICLE_ID}
+    	SELECT M.*, H.* FROM MANAGEMENT M, HISTORY_MANAGEMENT HM, HISTORY H WHERE M.MANAGEMENT_ID = HM.MANAGEMENT_ID AND HM.HISTORY_ID = H.HISTORY_ID
+    		AND H.VEHICLE_ID = #{VEHICLE_ID}
     	ORDER BY M.MANAGEMENT_ID DESC
-    	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
     </select>
     <update id="updateVehicleIsNotifiable" parameterType="com.onnurimotors.wm.model.VEHICLE">
     	UPDATE VEHICLE SET IS_NOTIFIABLE = #{IS_NOTIFIABLE} WHERE VEHICLE_ID = #{VEHICLE_ID} 
@@ -80,14 +79,14 @@
     <delete id="deleteHistory" parameterType="com.onnurimotors.wm.model.HISTORY">
     	DELETE FROM HISTORY WHERE HISTORY_ID = #{HISTORY_ID}
     </delete>
-    <select id="selectVehiclePage" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    <select id="selectVehiclePage" parameterType="com.onnurimotors.wm.model.PARAMETER_VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
     	SELECT * FROM VEHICLE
     	WHERE (#{LICENSE} = "" OR LICENSE LIKE #{LICENSE})
     		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
     	ORDER BY VEHICLE_ID
     	LIMIT #{FROM_LIMIT}, #{NUM_LIMIT}
     </select>
-    <select id="selectAllVehicle" parameterType="com.onnurimotors.wm.model.VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
+    <select id="selectAllVehicle" parameterType="com.onnurimotors.wm.model.PARAMETER_VEHICLE" resultType="com.onnurimotors.wm.model.VEHICLE">
     	SELECT * FROM VEHICLE
     	WHERE (#{LICENSE} = "" OR LICENSE = #{LICENSE})
     		AND (#{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID})
@@ -106,18 +105,21 @@
     	UPDATE VEHICLE SET COMMENT = #{COMMENT} WHERE VEHICLE_ID = #{VEHICLE_ID}
     </update>
     <insert id="insertManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT" useGeneratedKeys="true" keyProperty="MANAGEMENT_ID">
-    	INSERT INTO MANAGEMENT(DATE_MNG, COMMENT) VALUES(#{DATE_MNG}, #{COMMENT})
+    	INSERT INTO MANAGEMENT(COMMENT) VALUES(#{COMMENT})
     </insert>
-    <insert id="insertVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
-    	INSERT INTO VEHICLE_MANAGEMENT(VEHICLE_ID, MANAGEMENT_ID) VALUES(#{VEHICLE_ID}, #{MANAGEMENT_ID})
+    <insert id="insertHistoryManagement" parameterType="com.onnurimotors.wm.model.HISTORY_MANAGEMENT">
+    	INSERT INTO HISTORY_MANAGEMENT(HISTORY_ID, MANAGEMENT_ID) VALUES(#{HISTORY_ID}, #{MANAGEMENT_ID})
     </insert>
-    <delete id="deleteManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
+    <delete id="deleteManagement" parameterType="com.onnurimotors.wm.model.HISTORY_MANAGEMENT">
     	DELETE FROM MANAGEMENT
     	WHERE (#{VEHICLE_ID} = -1 AND MANAGEMENT_ID = #{MANAGEMENT_ID})
-    		OR (#{MANAGEMENT_ID} = -1 AND MANAGEMENT_ID IN (SELECT MANAGEMENT_ID FROM VEHICLE_MANAGEMENT WHERE VEHICLE_ID = #{VEHICLE_ID}))
+    		OR (#{MANAGEMENT_ID} = -1
+    			AND MANAGEMENT_ID
+    				IN (SELECT HM.MANAGEMENT_ID FROM HISTORY_MANAGEMENT HM, HISTORY H
+    					WHERE HM.HISTORY_ID = H.HISTORY_ID AND H.VEHICLE_ID = #{VEHICLE_ID}))
     </delete>
-    <delete id="deleteVehicleManagement" parameterType="com.onnurimotors.wm.model.VEHICLE_MANAGEMENT">
-    	DELETE FROM VEHICLE_MANAGEMENT WHERE (MANAGEMENT_ID = #{MANAGEMENT_ID} OR #{MANAGEMENT_ID} = -1) AND (VEHICLE_ID = #{VEHICLE_ID} OR #{VEHICLE_ID} = -1)
+    <delete id="deleteVehicleManagement" parameterType="com.onnurimotors.wm.model.HISTORY_MANAGEMENT">
+    	DELETE FROM HISTORY_MANAGEMENT WHERE (MANAGEMENT_ID = #{MANAGEMENT_ID} OR #{MANAGEMENT_ID} = -1) AND (VEHICLE_ID = #{VEHICLE_ID} OR #{VEHICLE_ID} = -1)
     </delete>
     <select id="selectEmployeePage" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE
@@ -136,7 +138,9 @@
     	UPDATE EMPLOYEE SET IS_RECEIVING_KAKAO = #{IS_RECEIVING_KAKAO} WHERE EMPLOYEE_ID = #{EMPLOYEE_ID} 
     </update>
     <update id="updateEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
-    	UPDATE EMPLOYEE SET KAKAO_ACCOUNT = #{KAKAO_ACCOUNT}, IS_RECEIVING_KAKAO = #{IS_RECEIVING_KAKAO}, NAME = #{NAME}
+    	UPDATE EMPLOYEE SET KAKAO_ACCOUNT = #{KAKAO_ACCOUNT},
+    		IS_RECEIVING_KAKAO = #{IS_RECEIVING_KAKAO},
+    		NAME = #{NAME}, PHONE_NUMBER = #{PHONE_NUMBER}
     	WHERE EMPLOYEE_ID = #{EMPLOYEE_ID}
     </update>
     <delete id="deleteEmployee" parameterType="com.onnurimotors.wm.model.EMPLOYEE">
@@ -147,21 +151,22 @@
 			EMPLOYEE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
 			KAKAO_ACCOUNT VARCHAR(50) NULL,
 			IS_RECEIVING_KAKAO INTEGER NOT NULL DEFAULT '0',
-			NAME VARCHAR(32) NULL DEFAULT NULL
+			NAME VARCHAR(32) NULL DEFAULT NULL,
+			PID INTEGER NULL DEFAULT NULL,
+			PHONE_NUMBER VARCHAR(20) NULL DEFAULT NULL
 		)
     </insert>
     <insert id="createManagementTable">
     	CREATE TABLE MANAGEMENT (
 			MANAGEMENT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-			DATE_MNG DATE NULL,
 			COMMENT VARCHAR(1024) NOT NULL
 		)
     </insert>
-    <insert id="createVehicleManagementTable">
-    	CREATE TABLE VEHICLE_MANAGEMENT (
-			VEHICLE_ID INTEGER NOT NULL,
+    <insert id="createHistoryManagementTable">
+    	CREATE TABLE HISTORY_MANAGEMENT (
+			HISTORY_ID INTEGER NOT NULL,
 			MANAGEMENT_ID INTEGER NOT NULL,
-			PRIMARY KEY (VEHICLE_ID, MANAGEMENT_ID)
+			PRIMARY KEY (HISTORY_ID, MANAGEMENT_ID)
 		)
     </insert>
     <insert id="createVehicleTable">
@@ -187,8 +192,8 @@
     <delete id="dropManagementTable">
     	DROP TABLE MANAGEMENT
     </delete>
-    <delete id="dropVehicleManagementTable">
-    	DROP TABLE VEHICLE_MANAGEMENT
+    <delete id="dropHistoryManagementTable">
+    	DROP TABLE HISTORY_MANAGEMENT
     </delete>
     <delete id="dropVehicleTable">
     	DROP TABLE VEHICLE
@@ -196,10 +201,47 @@
     <delete id="dropHistoryTable">
     	DROP TABLE HISTORY
     </delete>
+    <delete id="dropEmployeeTable">
+    	DROP TABLE EMPLOYEE
+    </delete>
     <select id="selectReceivers" resultType="com.onnurimotors.wm.model.EMPLOYEE">
     	SELECT * FROM EMPLOYEE WHERE IS_RECEIVING_KAKAO = 1
     </select>
     <update id="updateManagement" parameterType="com.onnurimotors.wm.model.MANAGEMENT">
     	UPDATE MANAGEMENT SET COMMENT = #{COMMENT}, DATE_MNG = #{DATE_MNG} WHERE MANAGEMENT_ID = #{MANAGEMENT_ID}
     </update>
+    <select id="selectAllHistoryByVehicle" parameterType="com.onnurimotors.wm.model.PARAMETER_VEHICLE" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT * FROM HISTORY
+    	WHERE #{VEHICLE_ID} = -1 OR VEHICLE_ID = #{VEHICLE_ID}
+    	ORDER BY HISTORY_ID DESC
+    </select>
+    <select id="selectAllManagementByHistory" parameterType="com.onnurimotors.wm.model.PARAMETER_HISTORY" resultType="com.onnurimotors.wm.model.MANAGEMENT">
+    	SELECT M.* FROM MANAGEMENT M, HISTORY H, HISTORY_MANAGEMENT HM
+    	WHERE M.MANAGEMENT_ID = HM.MANAGEMENT_ID AND HM.HISTORY_ID = H.HISTORY_ID
+    		AND (#{HISTORY_ID} = -1 OR H.HISTORY_ID = #{HISTORY_ID})
+    	ORDER BY MANAGEMENT_ID DESC
+    </select>
+    <select id="selectEmployeeByPid" parameterType="com.onnurimotors.wm.model.EMPLOYEE" resultType="com.onnurimotors.wm.model.EMPLOYEE">
+    	SELECT * FROM EMPLOYEE WHERE PID = #{PID}
+    </select>
+    <update id="modifyEmployeeTable">
+    	ALTER TABLE EMPLOYEE ADD PID INTEGER, ADD PHONE_NUMBER VARCHAR(20)
+    </update>
+    <delete id="dropVehicleManagementTable">
+    	DROP TABLE VEHICLE_MANAGEMENT
+    </delete>
+    <select id="selectPrevHistory" parameterType="com.onnurimotors.wm.model.PARAMETER_HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT P.* FROM HISTORY H, HISTORY P
+    	WHERE H.HISTORY_ID = #{HISTORY_ID} AND H.VEHICLE_ID = P.VEHICLE_ID
+    		AND P.DATE_VISIT &lt; H.DATE_VISIT
+    	ORDER BY P.DATE_VISIT DESC
+    	LIMIT 1
+    </select>
+    <select id="selectNextHistory" parameterType="com.onnurimotors.wm.model.PARAMETER_HISTORY" resultType="com.onnurimotors.wm.model.HISTORY">
+    	SELECT P.* FROM HISTORY H, HISTORY P
+    	WHERE H.HISTORY_ID = #{HISTORY_ID} AND H.VEHICLE_ID = P.VEHICLE_ID
+    		AND P.DATE_VISIT &gt; H.DATE_VISIT
+    	ORDER BY P.DATE_VISIT ASC
+    	LIMIT 1
+    </select>
 </mapper>

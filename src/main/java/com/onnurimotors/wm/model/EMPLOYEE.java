@@ -5,6 +5,8 @@ public class EMPLOYEE {
 	private String KAKAO_ACCOUNT;
 	private int IS_RECEIVING_KAKAO;
 	private String NAME;
+	private int PID;
+	private String PHONE_NUMBER;
 	private int FROM_LIMIT;
 	private int NUM_LIMIT;
 	
@@ -44,9 +46,22 @@ public class EMPLOYEE {
 	public void setNUM_LIMIT(int nUM_LIMIT) {
 		NUM_LIMIT = nUM_LIMIT;
 	}
+	public int getPID() {
+		return PID;
+	}
+	public void setPID(int pID) {
+		PID = pID;
+	}
+	public String getPHONE_NUMBER() {
+		return PHONE_NUMBER;
+	}
+	public void setPHONE_NUMBER(String pHONE_NUMBER) {
+		PHONE_NUMBER = pHONE_NUMBER;
+	}
 	@Override
 	public String toString() {
 		return "EMPLOYEE [EMPLOYEE_ID=" + EMPLOYEE_ID + ", KAKAO_ACCOUNT=" + KAKAO_ACCOUNT + ", IS_RECEIVING_KAKAO="
-				+ IS_RECEIVING_KAKAO + ", NAME=" + NAME + "]";
+				+ IS_RECEIVING_KAKAO + ", NAME=" + NAME + ", PID=" + PID + ", PHONE_NUMBER=" + PHONE_NUMBER
+				+ ", FROM_LIMIT=" + FROM_LIMIT + ", NUM_LIMIT=" + NUM_LIMIT + "]";
 	}
 }

@@ -10,9 +10,6 @@ public class VEHICLE {
 	private String PHONE_NUMBER;
 	private String COMMENT;
 	
-	private int FROM_LIMIT;
-	private int NUM_LIMIT;
-	
 	public int getVEHICLE_ID() {
 		return VEHICLE_ID;
 	}
@@ -60,17 +57,5 @@ public class VEHICLE {
 	}
 	public void setCOMMENT(String cOMMENT) {
 		COMMENT = cOMMENT;
-	}
-	public int getFROM_LIMIT() {
-		return FROM_LIMIT;
-	}
-	public void setFROM_LIMIT(int fROM_LIMIT) {
-		FROM_LIMIT = fROM_LIMIT;
-	}
-	public int getNUM_LIMIT() {
-		return NUM_LIMIT;
-	}
-	public void setNUM_LIMIT(int nUM_LIMIT) {
-		NUM_LIMIT = nUM_LIMIT;
 	}
 }

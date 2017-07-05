@@ -271,31 +271,20 @@
                                 <div class="block-options pull-right">
                                 	<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="차량 점검 내역 추가" ><i class="fa fa-plus"></i></a>
                                 </div>
-                                <h2>차량 점검 내역</h2>
+                                <h2>차량 방문 내역</h2>
                             </div>
 							<table class="table table-striped table-vcenter">
 								<thead>
 									<tr>
-										<th>점검 날짜</th>
-										<th>기록</th>
-										<th style="width: 150px;" class="text-center">Actions</th>
+										<th>시간</th>
 									</tr>
 								</thead>
-								<c:forEach items="${managements}" var="management">
+								<c:forEach items="${historys}" var="history">
 									<tr>
-										<td>${management.DATE_MNG}</td>
-										<td>${management.COMMENT}</td>
-										<td>
-											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"
-												title="수정" class="btn btn-default"><i
-												class="fa fa-pencil"></i></a>
-											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/delete"
-												data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
-												class="fa fa-times"></i></a>
-										</td>
+										<td><a href="/vehicle/${vehicles[0].VEHICLE_ID}/history/${history.HISTORY_ID}/managements">${history.DATE_VISIT}</a></td>
 									</tr>
 								</c:forEach>
-								<c:if test="${fn:length(managements) == 0}">
+								<c:if test="${fn:length(historys) == 0}">
 									<tr>
 										<td colspan="4">
 											점검 내역이 없습니다.

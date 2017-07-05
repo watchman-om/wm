@@ -62,10 +62,10 @@ function ajax_get_employee(callback) {
 	});
 }
 
-function ajax_get_vehicle_management(callback) {
+function ajax_get_history_management(callback) {
 	$.ajax({
 		type:"POST",
-		url:"/vehicle_management",
+		url:"/history_management",
 		data : {},
 		dataType : "json",
         async: true,

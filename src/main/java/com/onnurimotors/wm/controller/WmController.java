@@ -58,10 +58,9 @@ public class WmController {
 		return "redirect:/list_history";
 	}
 	
-	
 	@RequestMapping(value="/list_management")
 	public String list_management(HttpServletRequest request, Model model) {
-		service.listManagement(request, model);
+		service.getAllHistoryByVehicle(request, model, -1);
 		return "list_management";
 	}
 	

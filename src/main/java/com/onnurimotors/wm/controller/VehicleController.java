@@ -1,5 +1,6 @@
 package com.onnurimotors.wm.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.onnurimotors.wm.model.HISTORY;
 import com.onnurimotors.wm.model.MANAGEMENT;
 import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.service.WmService;
@@ -59,14 +61,16 @@ public class VehicleController {
 		return "vehicle/add_vehicle";
 	}
 	
-	@RequestMapping("/vehicle/{vid}/managements/addview")
-	public String addviewManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
+	@RequestMapping("/vehicle/{vid}/history/{hid}/managements/addview")
+	public String addviewManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int hid) {
 		VEHICLE v = service.getOneVehicle(vid);
 		model.put("vehicle", v);
+		ArrayList<HISTORY> h = (ArrayList<HISTORY>) service.getAllHistory(null, (Model) model, hid);
+		model.put("historys", h);
 		return "management/add_management";
 	}
 	
-	@RequestMapping("/vehicle/{vid}/managements/add")
+	@RequestMapping("/vehicle/{vid}/history/{hid}/managements/add")
 	public String addManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
 		service.submitManagement(request);
 		return "redirect:/list_management?vehicle_id="+vid;
@@ -92,5 +96,12 @@ public class VehicleController {
 	public String editManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
 		service.submitManagement(request);
 		return "redirect:/list_management?vehicle_id="+vid;
+	}
+	
+	@RequestMapping("/vehicle/{vid}/history/{hid}/managements")
+	public String detailviewManagement(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int hid) {
+		model.put("vehicle_id", vid);
+		service.getManagementByHistory(request, model, hid);
+		return "list_management_detail";
 	}
 }

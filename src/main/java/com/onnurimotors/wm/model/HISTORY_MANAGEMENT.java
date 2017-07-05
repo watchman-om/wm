@@ -1,13 +1,13 @@
 package com.onnurimotors.wm.model;
 
-public class VEHICLE_MANAGEMENT {
-	private int VEHICLE_ID;
+public class HISTORY_MANAGEMENT {
+	private int HISTORY_ID;
 	private int MANAGEMENT_ID;
-	public int getVEHICLE_ID() {
-		return VEHICLE_ID;
+	public int getHISTORY_ID() {
+		return HISTORY_ID;
 	}
-	public void setVEHICLE_ID(int vEHICLE_ID) {
-		VEHICLE_ID = vEHICLE_ID;
+	public void setHISTORY_ID(int hISTORY_ID) {
+		HISTORY_ID = hISTORY_ID;
 	}
 	public int getMANAGEMENT_ID() {
 		return MANAGEMENT_ID;

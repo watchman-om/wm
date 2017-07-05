@@ -133,15 +133,15 @@
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검내용</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검일자</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="COMMENT" class="form-control" placeholder="점검내용">
+										${historys[0].DATE_VISIT}
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검일자</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검내용</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="DATE_MNG" class="form-control" placeholder="점검일자">
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="COMMENT" class="form-control" placeholder="점검내용">
 	                                </div>
 	                            </div>
 	                            <div class="form-group form-actions">
@@ -152,6 +152,7 @@
 	                            </div>
 	                            <input type="hidden" name="IS_NEW" value="1">
 	                            <input type="hidden" name="VEHICLE_ID" value="${vehicle.VEHICLE_ID}">
+	                            <input type="hidden" name="HISTORY_ID" value="${historys[0].HISTORY_ID}">
 	                        </form>
 	                        <!-- END Basic Form Elements Content -->
 	                    </div>
