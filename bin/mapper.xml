@@ -193,7 +193,7 @@
     	DROP TABLE MANAGEMENT
     </delete>
     <delete id="dropHistoryManagementTable">
-    	DROP TABLE HISTORY_MANAGEMENT
+    	DROP TABLE VEHICLE_MANAGEMENT
     </delete>
     <delete id="dropVehicleTable">
     	DROP TABLE VEHICLE
