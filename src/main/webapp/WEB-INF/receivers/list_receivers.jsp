@@ -116,9 +116,9 @@
                         <div class="block">
                             <!-- Example Title -->
                             <div class="block-title">
-                                <div class="block-options pull-right">
+                                <!-- <div class="block-options pull-right">
                                     <a href="/receivers/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="수신자 추가" ><i class="fa fa-plus"></i></a>
-                                </div>
+                                </div> -->
                                 <h2>수신자 목록</h2>
                             </div>
                             <table id="general-table"
@@ -128,6 +128,7 @@
 										<!-- <th style="width: 80px;" class="text-center"><input
 											type="checkbox"></th> -->
 										<th>이름</th>
+										<th>휴대폰 번호</th>
 										<!-- <th>푸쉬ID</th> -->
 										<th>상태</th>
 										<th style="width: 150px;" class="text-center">Actions</th>
@@ -263,6 +264,7 @@
 								+			"<input type='checkbox' id='cb1"+item.employee_ID+"' name='checkbox1'>"
 								+		"</td>"*/
 								+		"<td><a href='receivers/"+item.employee_ID+"'>"+item.name+"</a></td>"
+								+		"<td>"+item.phone_NUMBER+"</td>"
 								//+		"<td>"+item.kakao_ACCOUNT+"</td>"
 								+		"<td>"
 								+			"<a href='javascript:toggle_receiving_kakao("+item.employee_ID+")' class='label label-"+state_is_receiving_kakao+"' id='label_is_receiving_kakao"+item.employee_ID+"'>"+label_is_receiving_kakao+"</a>"

@@ -54,10 +54,11 @@ public class ReceiverController {
 		String phoneNum = request.getParameter("phoneNum");
 		
 		EMPLOYEE emp = new EMPLOYEE();
-		emp.setPID(Integer.parseInt(pid));
+		emp.setPID(pid);
 		emp.setPHONE_NUMBER(phoneNum);
 		emp.setNAME("name");
 		emp.setKAKAO_ACCOUNT(token);
+		emp.setIS_RECEIVING_KAKAO(1);
 		
 		System.out.println("emp:" +emp.toString());
 		
@@ -109,7 +110,7 @@ public class ReceiverController {
 	@RequestMapping("/messages/send")
 	public String sendMsg(HttpServletRequest request, Map<String,Object> model) {
 		List<EMPLOYEE> list = rService.getEmployee(request, model, -1);
-		pService.sendAll("온누리TEST 메세지 입니다", list);
+		pService.sendAll("온누리TEST 메세지 입니다", "title", list);
 		return "redirect:/receivers";
 	}
 }

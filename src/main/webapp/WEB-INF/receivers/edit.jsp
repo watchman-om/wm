@@ -126,16 +126,18 @@
 	                        <!-- Basic Form Elements Content -->
 	                        <form action="edit" method="post" class="form-horizontal form-bordered">
 	                        	<input type="hidden" name="EMPLOYEE_ID" value="${employees[0].EMPLOYEE_ID}">
+	                        	<input type="hidden" name="PHONE_NUMBER" value="${employees[0].PHONE_NUMBER}">
+	                        	<input type="hidden" name="KAKAO_ACCOUNT" value="${employees[0].KAKAO_ACCOUNT}">
+	                        	<div class="form-group">
+	                                <label class="col-md-3 control-label" for="NAME">휴대폰 번호</label>
+	                                <div class="col-md-9">
+	                                    ${employees[0].PHONE_NUMBER}
+	                                </div>
+	                            </div>
 	                            <div class="form-group">
 	                                <label class="col-md-3 control-label" for="NAME">이름</label>
 	                                <div class="col-md-9">
 	                                    <input type="text" id="NAME" name="NAME" class="form-control" placeholder="이름" value="${employees[0].NAME}">
-	                                </div>
-	                            </div>
-	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">수신자ID</label>
-	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="KAKAO_ACCOUNT" class="form-control" placeholder="ID" value="${employees[0].KAKAO_ACCOUNT}">
 	                                </div>
 	                            </div>
 	                            <div class="form-group">

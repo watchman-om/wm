@@ -133,15 +133,15 @@
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검내용</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검일자</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="COMMENT" class="form-control" value="${management.COMMENT}" placeholder="점검내용">
+										${management.DATE_VISIT}
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
-	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검일자</label>
+	                                <label class="col-md-3 control-label" for="KAKAO_ACCOUNT">점검내용</label>
 	                                <div class="col-md-9">
-	                                    <input type="text" id="KAKAO_ACCOUNT" name="DATE_MNG" class="form-control" value="${management.DATE_MNG}" placeholder="점검일자">
+	                                    <input type="text" id="KAKAO_ACCOUNT" name="COMMENT" class="form-control" value="${management.COMMENT}" placeholder="점검내용">
 	                                </div>
 	                            </div>
 	                            <div class="form-group form-actions">

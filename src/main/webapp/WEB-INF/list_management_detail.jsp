@@ -122,7 +122,7 @@
                             <!-- Example Title -->
                             <div class="block-title">
                                 <div class="block-options pull-right">
-                                    <a href="/vehicle/${vehicle_id}/history/${history.HISTORY_ID}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="점검 내역 추가" ><i class="fa fa-plus"></i></a>
+                                    <a href="/vehicle/${vehicle_id}/history/${history.DATE_VISIT}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="점검 내역 추가" ><i class="fa fa-plus"></i></a>
                                 </div>
                                 <h2>점검 내역</h2>
                             </div>
@@ -135,7 +135,7 @@
 										<div class="fc-button-group">
 											<button type="button"
 												class="fc-prev-button fc-button fc-state-default fc-corner-left"
-												onclick="location.href='/vehicle/${vehicle_id}/history/${prev_history.HISTORY_ID}/managements'">
+												onclick="location.href='/vehicle/${vehicle_id}/history/${prev_history.DATE_VISIT}/managements'">
 												<span class="fc-icon fc-icon-left-single-arrow"></span>
 											</button>
 										</div>
@@ -146,7 +146,7 @@
 										<div class="fc-button-group">
 											<button type="button"
 												class="fc-next-button fc-button fc-state-default fc-corner-right"
-												onclick="location.href='/vehicle/${vehicle_id}/history/${next_history.HISTORY_ID}/managements'">
+												onclick="location.href='/vehicle/${vehicle_id}/history/${next_history.DATE_VISIT}/managements'">
 												<span class="fc-icon fc-icon-right-single-arrow"></span>
 											</button>
 										</div>
@@ -168,10 +168,10 @@
 									<tr>
 										<td>${management.COMMENT}</td>
 										<td>
-											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"
+											<a href="/vehicle/${vehicle_id}/managements/${management.MANAGEMENT_ID}/editview" data-toggle="tooltip"
 												title="수정" class="btn btn-default"><i
 												class="fa fa-pencil"></i></a>
-											<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/${management.MANAGEMENT_ID}/delete"
+											<a href="/vehicle/${vehicle_id}/managements/${management.MANAGEMENT_ID}/delete"
 												data-toggle="tooltip" title="삭제" class="btn btn-danger"><i
 												class="fa fa-times"></i></a>
 										</td>

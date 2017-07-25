@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.onnurimotors.wm.model.HISTORY;
 import com.onnurimotors.wm.model.MANAGEMENT;
+import com.onnurimotors.wm.model.MANAGEMENT_DATE;
 import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.service.WmService;
 
@@ -61,19 +62,19 @@ public class VehicleController {
 		return "vehicle/add_vehicle";
 	}
 	
-	@RequestMapping("/vehicle/{vid}/history/{hid}/managements/addview")
-	public String addviewManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int hid) {
+	@RequestMapping("/vehicle/{vid}/history/{dv}/managements/addview")
+	public String addviewManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable String dv) {
 		VEHICLE v = service.getOneVehicle(vid);
 		model.put("vehicle", v);
-		ArrayList<HISTORY> h = (ArrayList<HISTORY>) service.getAllHistory(null, (Model) model, hid);
+		ArrayList<HISTORY> h = (ArrayList<HISTORY>) service.getAllHistory(null, (Model) model, dv);
 		model.put("historys", h);
 		return "management/add_management";
 	}
 	
-	@RequestMapping("/vehicle/{vid}/history/{hid}/managements/add")
-	public String addManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid) {
+	@RequestMapping("/vehicle/{vid}/history/{dv}/managements/add")
+	public String addManagements(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable String dv) {
 		service.submitManagement(request);
-		return "redirect:/list_management?vehicle_id="+vid;
+		return "redirect:/vehicle/"+vid+"/history/"+dv+"/managements";
 	}
 	
 	@RequestMapping("/vehicle/{vid}/managements/{mid}/delete")
@@ -87,8 +88,8 @@ public class VehicleController {
 	public String editviewManagement(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int mid) {
 		VEHICLE v = service.getOneVehicle(vid);
 		model.put("vehicle", v);
-		MANAGEMENT m = service.getOneManagement(mid);
-		model.put("management", m);
+		MANAGEMENT_DATE md = service.getOneManagement(mid);
+		model.put("management", md);
 		return "management/edit_management";
 	}
 	
@@ -98,10 +99,11 @@ public class VehicleController {
 		return "redirect:/list_management?vehicle_id="+vid;
 	}
 	
-	@RequestMapping("/vehicle/{vid}/history/{hid}/managements")
-	public String detailviewManagement(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable int hid) {
+	@RequestMapping("/vehicle/{vid}/history/{date_visit}/managements")
+	public String detailviewManagement(HttpServletRequest request, Map<String,Object> model, @PathVariable int vid, @PathVariable String date_visit) {
 		model.put("vehicle_id", vid);
-		service.getManagementByHistory(request, model, hid);
+		System.out.println(date_visit);
+		service.getManagementByHistory(request, model, vid, date_visit);
 		return "list_management_detail";
 	}
 }

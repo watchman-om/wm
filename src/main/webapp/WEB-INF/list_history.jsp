@@ -126,9 +126,13 @@
 					<div class="block">
 						<!-- Table Styles Title -->
 						<div class="block-title">
-							<h2>
-								<strong>방문</strong> 내역
-							</h2>
+							<form action="list_history" method="POST">
+								<h2>
+									<strong>방문 내역</strong>
+								</h2>
+								<input type="text" name="fdate" value="${param.fdate}" /> ~ <input type="text" name="tdate" value="${param.tdate}" />
+								<input type="submit" value="검색" />
+							</form>
 						</div>
 						<!-- END Table Styles Title -->
 
@@ -221,6 +225,7 @@
 	<script>
 		var page, size_page;
 		var source, source2;
+		var range_date = "?fdate=${param.fdate}&tdate=${param.tdate}";
 		$(function() {
 			page = 1;
 			size_page = 10;
@@ -228,13 +233,13 @@
 		});
 		function start_sse() {
 			if(typeof(EventSource) !== "undefined") {
-				var param = "?flimit="+((page-1)*size_page)+"&nlimit="+size_page;
-			    source = new EventSource("/sse/history"+param);
+				var param = "&flimit="+((page-1)*size_page)+"&nlimit="+size_page;
+			    source = new EventSource("/sse/history"+range_date+param);
 			    source.onmessage = function(event) {
 			    	var msg = JSON.parse(event.data);
 			    	make_rows(msg);
 			    };
-			    source2 = new EventSource("/sse/history/count");
+			    source2 = new EventSource("/sse/history/count"+range_date);
 			    source2.onmessage = function(event) {
 			    	make_pages(event.data);
 			    };
@@ -269,7 +274,7 @@
 							+			"<input type='checkbox' id='cb1"+item.history_ID+"' name='checkbox1'>"
 							+		"</td>"*/
 							+		"<td><a href='list_management?vehicle_id="+item.vehicle_ID+"'>"+item.license+"</a></td>"
-							+		"<td>"+item.date_VISIT+" "+item.time_VISIT+"</td>"
+							+		"<td><a href='/vehicle/"+item.vehicle_ID+"/history/"+item.date_VISIT+"/managements'>"+item.date_VISIT+"</a> "+item.time_VISIT+"</td>"
 							/*+		"<td>"
 							+			"<a href='javascript:void(0)' class='label label-warning'>상태값</a>"
 							+		"</td>"

@@ -58,7 +58,7 @@ public class WmRestController {
 	
 	@RequestMapping(value="/history", method = RequestMethod.GET)
 	public Object history(HttpServletRequest request) {
-		return service.getAllHistory(request, null, -1);
+		return service.getAllHistory(request, null, "");
 	}
 
 	@RequestMapping(value={"/historyvehicle", "/vehiclehistory"}, method = RequestMethod.GET)

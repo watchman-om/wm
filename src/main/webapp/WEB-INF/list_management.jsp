@@ -268,9 +268,6 @@
 						<div class="block">
                             <!-- Example Title -->
                             <div class="block-title">
-                                <div class="block-options pull-right">
-                                	<a href="/vehicle/${vehicles[0].VEHICLE_ID}/managements/addview" class="btn btn-alt btn-sm btn-default" data-toggle="tooltip" title="차량 점검 내역 추가" ><i class="fa fa-plus"></i></a>
-                                </div>
                                 <h2>차량 방문 내역</h2>
                             </div>
 							<table class="table table-striped table-vcenter">
@@ -281,7 +278,7 @@
 								</thead>
 								<c:forEach items="${historys}" var="history">
 									<tr>
-										<td><a href="/vehicle/${vehicles[0].VEHICLE_ID}/history/${history.HISTORY_ID}/managements">${history.DATE_VISIT}</a></td>
+										<td><a href="/vehicle/${vehicles[0].VEHICLE_ID}/history/${history.DATE_VISIT}/managements">${history.DATE_VISIT}</a></td>
 									</tr>
 								</c:forEach>
 								<c:if test="${fn:length(historys) == 0}">

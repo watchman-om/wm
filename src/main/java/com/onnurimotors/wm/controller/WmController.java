@@ -134,6 +134,11 @@ public class WmController {
     	return "/exPost";
     }
 
+    @RequestMapping("/testPost2")
+    public String testPost2(HttpServletRequest request) {
+    	return "/exPost2";
+    }
+
     @RequestMapping("/sse/employee")
     public ResponseBodyEmitter sse_employee(HttpServletRequest request) {
     	return service.sseEmployee(request);

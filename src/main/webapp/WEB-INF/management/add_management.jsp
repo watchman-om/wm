@@ -152,7 +152,7 @@
 	                            </div>
 	                            <input type="hidden" name="IS_NEW" value="1">
 	                            <input type="hidden" name="VEHICLE_ID" value="${vehicle.VEHICLE_ID}">
-	                            <input type="hidden" name="HISTORY_ID" value="${historys[0].HISTORY_ID}">
+	                            <input type="hidden" name="DATE_VISIT" value="${historys[0].DATE_VISIT}">
 	                        </form>
 	                        <!-- END Basic Form Elements Content -->
 	                    </div>

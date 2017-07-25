@@ -21,13 +21,13 @@ public class PushService {
 	public final static String SERVER_KEY = "AAAApU0c0CE:APA91bFLoDy5_4P07Uov149_BOizpkBqqghyv1f8Okg4mYqjVGn8CTQu1K4-byXNLlT-KuXoeXk62aR72n7VA8WsHpBxPHiKERdHtFwLaKFD1-OmlInyUwvdsCEip4Zra6YQF55Q-OE9";
 
 	
-	public void sendAll(String message, List<EMPLOYEE> emps) {
+	public void sendAll(String message, String title, List<EMPLOYEE> emps) {
 		System.out.println("receiver List : " + emps.size());
 		for(EMPLOYEE e : emps) {
-			sendPush(e.getKAKAO_ACCOUNT() ,message);
+			sendPush(e.getKAKAO_ACCOUNT(), title, message);
 		}
 	}
-	static void sendPush(String tokenId, String message){
+	static void sendPush(String tokenId, String title, String message){
 		try{
 
 			// Create URL instance.
@@ -52,7 +52,7 @@ public class PushService {
 
 			//Create JSON Object & pass value
 			JSONObject infoJson = new JSONObject();
-			infoJson.put("title","Here is your notification.");
+			infoJson.put("title", title);
 			infoJson.put("keyname", message);
 
 			JSONObject json = new JSONObject();
@@ -107,7 +107,7 @@ public class PushService {
 		}
 
 	}
-	static void sendPushNotification(String tokenId, String message){
+	static void sendPushNotification(String tokenId, String title, String message){
 		try{
 
 			// Create URL instance.
@@ -132,7 +132,7 @@ public class PushService {
 
 			//Create JSON Object & pass value
 			JSONObject infoJson = new JSONObject();
-			infoJson.put("title","Here is your notification.");
+			infoJson.put("title", title);
 			infoJson.put("body", message);
 
 			JSONObject json = new JSONObject();
@@ -194,11 +194,13 @@ public class PushService {
 
 		String tokenId = "cfndQvCA6WM:APA91bHQZCpr-OJSPnF56IFUsYv5vS55lbxNIlwWdQy40w6bGEfwU2UrUd7h09zVvMnH24sEKB6mCFr9Ek4KfaiyQj87Xn4Qz5YxGwZEKZYvVtULjusEb3Yv6nKYBTk5HUyg6HKi9eyO";
 
+		String title = "Title";
+
 		String message = "Welcome to FCM Server push notification!.";
 
 		//Method to send Push Notification
 
-		sendPush( tokenId,message);
+		sendPush(tokenId, title, message);
 
 	}
 

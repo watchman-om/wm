@@ -5,7 +5,7 @@ public class EMPLOYEE {
 	private String KAKAO_ACCOUNT;
 	private int IS_RECEIVING_KAKAO;
 	private String NAME;
-	private int PID;
+	private String PID;
 	private String PHONE_NUMBER;
 	private int FROM_LIMIT;
 	private int NUM_LIMIT;
@@ -46,10 +46,10 @@ public class EMPLOYEE {
 	public void setNUM_LIMIT(int nUM_LIMIT) {
 		NUM_LIMIT = nUM_LIMIT;
 	}
-	public int getPID() {
+	public String getPID() {
 		return PID;
 	}
-	public void setPID(int pID) {
+	public void setPID(String pID) {
 		PID = pID;
 	}
 	public String getPHONE_NUMBER() {

@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.onnurimotors.wm.model.HISTORY;
 import com.onnurimotors.wm.model.MANAGEMENT;
 import com.onnurimotors.wm.model.MANAGEMENT_DATE;
 import com.onnurimotors.wm.model.PARAMETER_HISTORY;
+import com.onnurimotors.wm.model.PARAMETER_MANAGEMENT;
 import com.onnurimotors.wm.model.PARAMETER_VEHICLE;
 import com.onnurimotors.wm.model.VEHICLE;
 import com.onnurimotors.wm.model.VEHICLE_HISTORY;
@@ -57,8 +59,12 @@ public class WmService {
 		SqlSession session = sqlSession();
 		String license = request.getParameter("license").replaceAll("\\s+","");
 		int is_new_customer;
-		String msg;
+		String title, msg;
 		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.HOUR_OF_DAY, 9);
+		date = cal.getTime();
         DateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat format_time = new SimpleDateFormat("HH:mm:ss");
 		VEHICLE vehicle = new VEHICLE();
@@ -94,18 +100,21 @@ public class WmService {
         session.commit();
         
         // msg to app used by employee of onnurimotors
+        title = "";
         msg = "";
         if(vehicle.getIS_NOTIFIABLE() == 1) {
         	if(is_new_customer == 0) {
-        		msg = msg + "재방문 고객<br />";
+        		title = title + "재방문 고객\n";
+        		msg = msg + "재방문 고객\n";
         	} else {
-        		msg = msg + "처음 방문한 고객<br />";
+        		title = title + "처음 방문한 고객\n";
+        		msg = msg + "재방문 고객\n";
         	}
-        	msg = msg + "차량번호: " + vehicle.getLICENSE() + "<br />";
-        	msg = msg + "차량모델: " + vehicle.getMODEL() + "<br />";
-        	msg = msg + "손님이름: " + vehicle.getUSER_NAME() + "<br />";
-        	msg = msg + "생년월일: " + vehicle.getBIRTH() + "<br />";
-        	msg = msg + "메모: " + vehicle.getCOMMENT() + "<br />";
+        	msg = msg + "차량번호: " + vehicle.getLICENSE() + "\n";
+        	msg = msg + "차량모델: " + vehicle.getMODEL() + "\n";
+        	msg = msg + "손님이름: " + vehicle.getUSER_NAME() + "\n";
+        	msg = msg + "생년월일: " + vehicle.getBIRTH() + "\n";
+        	msg = msg + "메모: " + vehicle.getCOMMENT() + "\n";
         	
             /*ArrayList<VEHICLE_HISTORY> result2 = (ArrayList<VEHICLE_HISTORY>) session.selectList("watchman.mybatis.selectAllHistoryVehicle", vehicle);
             for(int i = 0; i < result2.size(); i++) {
@@ -114,15 +123,16 @@ public class WmService {
             
             PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
             parameter_vehicle.setVEHICLE_ID(vehicle.getVEHICLE_ID());
-            ArrayList<MANAGEMENT_DATE> result3 = (ArrayList<MANAGEMENT_DATE>) session.selectList("watchman.mybatis.selectManagementOfVehicle", parameter_vehicle);
-            msg = msg + "&lt;점검 내역&gt;<br />";
+            ArrayList<MANAGEMENT_DATE> result3 = (ArrayList<MANAGEMENT_DATE>) session.selectList("watchman.mybatis.selectManagementDateOfVehicle", parameter_vehicle);
+            msg = msg + "<점검 내역>\n";
             for(int i = 0; i < 10 && i < result3.size(); i++) {
-            	msg = msg + result3.get(i).getDATE_VISIT() + " " + result3.get(i).getCOMMENT() + "<br />";
+            	msg = msg + result3.get(i).getDATE_VISIT() + " " + result3.get(i).getCOMMENT() + "\n";
             }
             
             ArrayList<EMPLOYEE> employees = (ArrayList<EMPLOYEE>) session.selectList("watchman.mybatis.selectReceivers");
             for(int i = 0; i < employees.size(); i++) {
-            	pService.sendPushNotification(employees.get(i).getKAKAO_ACCOUNT(), msg);
+            	pService.sendPushNotification(employees.get(i).getKAKAO_ACCOUNT(), title, msg);
+            	pService.sendPush(employees.get(i).getKAKAO_ACCOUNT(), title, msg);
             }
         }
         
@@ -195,6 +205,8 @@ public class WmService {
 		if(history_id != null && !history_id.equals("")) {
 			param.setHISTORY_ID(Integer.parseInt(history_id));
 		}
+		param.setDATE_VISIT("");
+		param.setVEHICLE_ID(-1);
 		
 		String page = request.getParameter("PAGE");
 		String size_page = request.getParameter("SIZE_PAGE");
@@ -267,7 +279,7 @@ public class WmService {
 	public Object getHistoryManagement(HttpServletRequest request, Model model) {
 		SqlSession session = sqlSession();
 		HISTORY_MANAGEMENT history_management = new HISTORY_MANAGEMENT();
-		history_management.setHISTORY_ID(-1);
+		history_management.setDATE_VISIT("");
 		history_management.setMANAGEMENT_ID(-1);
 		ArrayList<HISTORY_MANAGEMENT> history_managements = (ArrayList<HISTORY_MANAGEMENT>) session.selectList("watchman.mybatis.selectHistoryManagement", history_management);
 		
@@ -434,7 +446,8 @@ public class WmService {
 			session.insert("watchman.mybatis.insertManagement", management);
 			session.commit();
 			hm.setMANAGEMENT_ID(management.getMANAGEMENT_ID());
-			hm.setHISTORY_ID(Integer.parseInt(request.getParameter("HISTORY_ID")));
+			hm.setDATE_VISIT(request.getParameter("DATE_VISIT"));
+			hm.setVEHICLE_ID(Integer.parseInt(request.getParameter("VEHICLE_ID")));
 			session.insert("watchman.mybatis.insertHistoryManagement", hm);
 			session.commit();
 		} else {
@@ -536,11 +549,7 @@ public class WmService {
 	public Object deleteVehicle(int vehicle_id) {
 		VEHICLE vehicle = new VEHICLE();
 		vehicle.setVEHICLE_ID(vehicle_id);
-		HISTORY_MANAGEMENT vm = new HISTORY_MANAGEMENT();
-		vm.setHISTORY_ID(vehicle_id);
-		vm.setMANAGEMENT_ID(-1);
-		deleteManagementByVehicle(vm);
-		deleteVehicleManagement(vm);
+		deleteHistoryByVehicle(vehicle_id);
 		SqlSession session = sqlSession();
 		session.delete("watchman.mybatis.deleteVehicle", vehicle);
 		session.commit();
@@ -577,6 +586,8 @@ public class WmService {
 		if(history_id != null && !history_id.equals("")) {
 			param.setHISTORY_ID(Integer.parseInt(history_id));
 		}
+		param.setDATE_VISIT("");
+		param.setVEHICLE_ID(-1);
 		
 		String page = request.getParameter("PAGE");
 		String size_page = request.getParameter("SIZE_PAGE");
@@ -602,9 +613,25 @@ public class WmService {
 
 	public Object deleteHistory(HttpServletRequest request, Model model, int hid) {
 		SqlSession session = sqlSession();
-		HISTORY history = new HISTORY();
-		history.setHISTORY_ID(hid);
+		PARAMETER_HISTORY parameter_history = new PARAMETER_HISTORY();
+		parameter_history.setHISTORY_ID(hid);
+		parameter_history.setDATE_VISIT("");
+		parameter_history.setVEHICLE_ID(-1);
+		parameter_history.setPAGE(0);
+		parameter_history.setSIZE_PAGE(1);
+		HISTORY history = (HISTORY) session.selectOne("watchman.mybatis.selectHistory", parameter_history);
 		session.delete("watchman.mybatis.deleteHistory", history);
+		session.commit();
+		
+		HISTORY_MANAGEMENT hm = new HISTORY_MANAGEMENT();
+		hm.setMANAGEMENT_ID(-1);
+		hm.setDATE_VISIT(history.getDATE_VISIT());
+		hm.setVEHICLE_ID(history.getVEHICLE_ID());
+		System.out.println(hm.getDATE_VISIT()+":"+hm.getVEHICLE_ID()+":"+hm.getMANAGEMENT_ID());
+		session.delete("watchman.mybatis.deleteManagement", hm);
+		session.commit();
+		
+		session.delete("watchman.mybatis.deleteHistoryManagement", hm);
 		session.commit();
 		
 		session.close();
@@ -632,9 +659,20 @@ public class WmService {
 
 	private int getHistoryCount(HttpServletRequest request) {
 		SqlSession session = sqlSession();
-		HISTORY history = new HISTORY();
-		history.setHISTORY_ID(-1);
-		ArrayList<HISTORY> historys = (ArrayList<HISTORY>)session.selectList("watchman.mybatis.selectAllHistory", history);
+		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
+		String fdate = request.getParameter("fdate");
+		String tdate = request.getParameter("tdate");
+		if(fdate != null && !fdate.equals("")) {
+			parameter_vehicle.setFROM_DATE(fdate);
+		} else {
+			parameter_vehicle.setFROM_DATE("");
+		}
+		if(tdate != null && !tdate.equals("")) {
+			parameter_vehicle.setTO_DATE(tdate);
+		} else {
+			parameter_vehicle.setTO_DATE("");
+		}
+		ArrayList<HISTORY> historys = (ArrayList<HISTORY>)session.selectList("watchman.mybatis.selectAllHistoryInDate", parameter_vehicle);
 		session.close();
 		return historys.size();
 	}
@@ -796,29 +834,31 @@ public class WmService {
 	}
 
 	public void deleteManagement(int mid) {
-		HISTORY_MANAGEMENT vm = new HISTORY_MANAGEMENT();
-		vm.setMANAGEMENT_ID(mid);
-		vm.setHISTORY_ID(-1);
+		HISTORY_MANAGEMENT hm = new HISTORY_MANAGEMENT();
+		hm.setMANAGEMENT_ID(mid);
+		hm.setVEHICLE_ID(-1);
+		hm.setDATE_VISIT("");
 		
-		deleteVehicleManagement(vm);
+		deleteHistoryManagement(hm);
 		
 		SqlSession session = sqlSession();
-		session.delete("watchman.mybatis.deleteManagement", vm);
+		session.delete("watchman.mybatis.deleteManagement", hm);
 		session.commit();
 		
 		session.close();
 	}
 	
-	public void deleteManagementByVehicle(HISTORY_MANAGEMENT vm) {
+	public void deleteManagementByVehicle(HISTORY_MANAGEMENT hm) {
 		SqlSession session = sqlSession();
-		session.delete("watchman.mybatis.deleteManagement", vm);
+		hm.setMANAGEMENT_ID(-1);
+		session.delete("watchman.mybatis.deleteManagement", hm);
 		session.commit();
 		session.close();
 	}
 
-	private void deleteVehicleManagement(HISTORY_MANAGEMENT vm) {
+	private void deleteHistoryManagement(HISTORY_MANAGEMENT hm) {
 		SqlSession session = sqlSession();
-		session.delete("watchman.mybatis.deleteVehicleManagement", vm);
+		session.delete("watchman.mybatis.deleteHistoryManagement", hm);
 		session.commit();
 		session.close();
 	}
@@ -950,24 +990,28 @@ public class WmService {
 		return "Success";
 	}
 
-	public MANAGEMENT getOneManagement(int mid) {
+	public MANAGEMENT_DATE getOneManagement(int mid) {
 		SqlSession session = sqlSession();
 		MANAGEMENT management = new MANAGEMENT();
 		management.setMANAGEMENT_ID(mid);
-		management = (MANAGEMENT) session.selectOne("watchman.mybatis.selectManagement", management);
+		MANAGEMENT_DATE md = (MANAGEMENT_DATE) session.selectOne("watchman.mybatis.selectManagementDate", management);
 		session.close();
-		return management;
+		return md;
 	}
 
-	public Object getAllHistory(HttpServletRequest request, Model model, int history_id) {
+	public Object getAllHistory(HttpServletRequest request, Model model, String date_visit) {
 		SqlSession session = sqlSession();
 		PARAMETER_HISTORY parameter_history = new PARAMETER_HISTORY();
-		parameter_history.setHISTORY_ID(history_id);
+		parameter_history.setHISTORY_ID(-1);
 		if(request != null) {
 			String parameter = request.getParameter("HISTORY_ID");
 			if(parameter != null && !parameter.equals("")) {
 				parameter_history.setHISTORY_ID(Integer.parseInt(parameter));
 			}
+		}
+		parameter_history.setDATE_VISIT("");
+		if(date_visit != null && !date_visit.equals("")) {
+			parameter_history.setDATE_VISIT(date_visit);
 		}
 		
 		ArrayList<HISTORY> historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectAllHistory", parameter_history);
@@ -980,18 +1024,18 @@ public class WmService {
 	}
 
 	public Object getAllHistoryByVehicle(HttpServletRequest request, Model model, int vehicle_id) {
-		getVehicle(null, model, vehicle_id);
+		getVehicle(request, model, vehicle_id);
 		SqlSession session = sqlSession();
 		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
 		parameter_vehicle.setVEHICLE_ID(vehicle_id);
 		if(request != null) {
-			String parameter = request.getParameter("VEHICLE_ID");
+			String parameter = request.getParameter("vehicle_id");
 			if(parameter != null && !parameter.equals("")) {
 				parameter_vehicle.setVEHICLE_ID(Integer.parseInt(parameter));
 			}
 		}
 		
-		ArrayList<HISTORY> historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectAllHistoryByVehicle", parameter_vehicle);
+		ArrayList<HISTORY> historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectAllDateVisitByVehicle", parameter_vehicle);
 		session.close();
 		
 		if(model != null) {
@@ -1001,16 +1045,23 @@ public class WmService {
 		return historys;
 	}
 
-	public Object getManagementByHistory(HttpServletRequest request, Map<String, Object> model, int hid) {
+	public Object getManagementByHistory(HttpServletRequest request, Map<String, Object> model, int vehicle_id, String date_visit) {
 		SqlSession session = sqlSession();
 		PARAMETER_HISTORY parameter_history = new PARAMETER_HISTORY();
-		parameter_history.setHISTORY_ID(hid);
+		parameter_history.setDATE_VISIT(date_visit);
+		parameter_history.setVEHICLE_ID(vehicle_id);
+		parameter_history.setHISTORY_ID(-1);
 		parameter_history.setPAGE(0);
 		parameter_history.setSIZE_PAGE(1);
 		
-		ArrayList<MANAGEMENT> managements = (ArrayList<MANAGEMENT>) session.selectList("watchman.mybatis.selectAllManagementByHistory", parameter_history);
+		PARAMETER_MANAGEMENT parameter_management = new PARAMETER_MANAGEMENT();
+		parameter_management.setVEHICLE_ID(vehicle_id);
+		parameter_management.setDATE_VISIT(date_visit);
+		
+		ArrayList<MANAGEMENT> managements = (ArrayList<MANAGEMENT>) session.selectList("watchman.mybatis.selectAllManagementByDateVisitVehicle", parameter_management);
 		
 		HISTORY history = (HISTORY) session.selectOne("watchman.mybatis.selectHistory", parameter_history);
+		parameter_history.setHISTORY_ID(history.getHISTORY_ID());
 		HISTORY prev_history = (HISTORY) session.selectOne("watchman.mybatis.selectPrevHistory", parameter_history);
 		HISTORY next_history = (HISTORY) session.selectOne("watchman.mybatis.selectNextHistory", parameter_history);
 		
@@ -1067,5 +1118,17 @@ public class WmService {
 		session.close();
 		
 		return "Success";
+	}
+
+	private void deleteHistoryByVehicle(int vehicle_id) {
+		SqlSession session = sqlSession();
+		PARAMETER_VEHICLE parameter_vehicle = new PARAMETER_VEHICLE();
+		parameter_vehicle.setVEHICLE_ID(vehicle_id);
+		ArrayList<HISTORY> historys = (ArrayList<HISTORY>) session.selectList("watchman.mybatis.selectAllHistoryByVehicle", parameter_vehicle);
+		session.close();
+		for(int i = 0; i < historys.size(); i++) {
+			deleteHistory(null, null, historys.get(i).getHISTORY_ID());
+		}
+		
 	}
 }
